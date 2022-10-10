@@ -11,19 +11,19 @@ interface Props {
 }
 const HeroTitle: React.FC<Props> = (props) => {
   return (
-    <div className="flex flex-col grow min-w-[500px]">
+    <div className="flex flex-col grow min-w-[700px]">
       <h1 className="font-bold text-[68px] text-white mb-4">{props.title}</h1>
       <div className="flex gap-10">
         <NavigateButton
           type={"prev"}
-          className="hover:bg-white"
+          className="hover:bg-white hover:text-black"
           color="white"
           onClick={props.handlePrev}
 					disabled={props.activeHeroText === 0}
         />
         <NavigateButton
           type={"next"}
-          className="hover:bg-white"
+          className="hover:bg-white hover:text-black"
           color="white"
           onClick={props.handleNext}
 					disabled={props.activeHeroText === 5}

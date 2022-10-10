@@ -14,7 +14,7 @@ interface Props {
 const IconButton: React.FC<Props> = (props) => {
   return (
     <button
-      className={`${props.className} text-${props.color} ${props.disabled ? 'opacity-20' : ''} hover:text-black rounded-full bg-transparent flex items-center justify-center p-4 border border-white w-10 h-10`}
+      className={`${props.className} text-${props.color} ${props.disabled ? 'opacity-20' : ''} rounded-full bg-transparent flex items-center justify-center p-4 border border-white w-10 h-10`}
       onClick={props.onClick}
 			disabled={props.disabled}
     >

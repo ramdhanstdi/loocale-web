@@ -42,7 +42,7 @@ const Hero = () => {
 	}
 
 	return (
-		<div className='min-h-[544px] duration-500' style={{
+		<section className='min-h-[544px] duration-500' style={{
 			backgroundImage: `url(${HERO_TEXT_AND_BG[activeHeroText].background})`,
 			backgroundRepeat: 'no-repeat',
 			backgroundSize: 'cover'
@@ -57,7 +57,7 @@ const Hero = () => {
 			<HeroDescription></HeroDescription>
 			</div>
 			
-		</div>
+		</section>
 	)
 }
 

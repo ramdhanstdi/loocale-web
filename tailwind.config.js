@@ -15,6 +15,9 @@ module.exports = {
 				secondary: {
 					500: '#F1614B',
 					800: '#C2493C'
+				},
+				grayscale: {
+					100: '#D2D9DE'
 				}
 			}
 		}
