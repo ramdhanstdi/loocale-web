@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Card from './Card'
 import NavigateButton from '../NavigateButton/index';
+import ResponsiveCard from './ResponsiveCard';
 
 const SHARE_LIST = [
 	{
@@ -72,15 +73,20 @@ const ShareHome = () => {
 	}, [carouselEndIndex])
 
 	return (
-		<section className='max-w-[1280px] mx-auto flex flex-col pt-[70px] px-16 text-center pb-[80px]'>
-			<h1 className='font-bold text-primary-800 text-[68px] mb-3'>Share</h1>
-			<p className='text-[21px] mb-8'>Your Unique and Insightful Experiences</p>
-			<div className="flex gap-10 flex-wrap justify-center mb-9">
+		<section className='max-w-[1280px] mx-auto flex flex-col pt-6 sm:pt-[70px] px-7 sm:px-16 text-center pb-[80px]'>
+			<h1 className='font-bold text-primary-800 text-[38px] sm:text-[68px] mb-3'>Share</h1>
+			<p className='font-light sm:text-[21px] mb-8'>Your Unique and Insightful Experiences</p>
+			<div className="sm:flex gap-10 flex-wrap justify-center mb-9 hidden">
 			{ shownCards.map((item) => (
 				<Card data={item} key={item.username}></Card>
 			))}
 			</div>
-			<div className="flex justify-center gap-10">
+			<div className="flex flex-col gap-3 sm:hidden">
+				{ SHARE_LIST.map((item) => (
+					<ResponsiveCard data={item} key={item.username}></ResponsiveCard>
+				))}
+			</div>
+			<div className="hidden sm:flex justify-center gap-10">
 				<NavigateButton type='prev' color='secondary-500' className='border-secondary-500 hover:bg-secondary-500 hover:text-white' disabled={carouselStartIndex === 0} onClick={handlePrev}/>
 				<NavigateButton type='next' color='secondary-500' className='border-secondary-500 hover:bg-secondary-500 hover:text-white' disabled={carouselEndIndex >= SHARE_LIST.length} onClick={handleNext}/>
 			</div>

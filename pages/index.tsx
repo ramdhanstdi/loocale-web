@@ -6,6 +6,9 @@ import Navbar from '../components/navbar'
 import Hero from '../components/Hero'
 import DiscoverHome from '@components/DiscoverHome'
 import ShareHome from '@components/ShareHome'
+import CommunityHome from '@components/CommunityHome'
+import CallToAction from '@components/CallToAction'
+import Footer from '@components/Footer'
 
 const Home: NextPage = () => {
   return (
@@ -14,6 +17,9 @@ const Home: NextPage = () => {
 			<Hero/>
 			<DiscoverHome/>
 			<ShareHome/>
+			<CommunityHome/>
+			<CallToAction/>
+			<Footer/>
     </div>
   )
 }

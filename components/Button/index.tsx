@@ -3,7 +3,6 @@ import React from "react";
 interface ButtonProps {
   onClick: () => void;
   variant: "outlined" | "contained";
-  color: string;
   children?: React.ReactNode;
   className?: string;
   disabled?: boolean;

@@ -1,6 +1,8 @@
 import React from "react";
 import Image from "next/image";
 import Button from "../Button";
+import Hamburger from "@components/Hamburger";
+import { useRouter } from "next/router";
 
 const NAVBAR_MENU = [
   {
@@ -9,25 +11,29 @@ const NAVBAR_MENU = [
   },
   {
     title: "EXPLORE",
-    href: "/explore",
+    href: "#discover",
   },
   {
     title: "COMMUNITY",
-    href: "/community",
+    href: "#community",
   },
 ];
 
 const Navbar = () => {
+	const router = useRouter();
+
   return (
-    <nav className=" fixed w-full bg-white">
-      <div className="max-w-[1280px] py-2 mx-auto px-16 flex items-center justify-between">
+    <nav className=" fixed w-screen bg-white z-10 shadow-md">
+      <div className="w-screen sm:max-w-[1280px] py-2 mx-0 sm:mx-auto px-16 flex items-center justify-center sm:justify-between relative">
         <Image
           src={"/NavbarLogo.svg"}
           height={52}
           width={126}
           alt="Loocale Logo"
+					className="hover:cursor-pointer"
+					onClick={() => router.push('/')}
         />
-        <div className="flex gap-9 items-center">
+        <div className="hidden sm:flex gap-9 items-center">
           <ul className="flex gap-9">
             {NAVBAR_MENU.map((menu) => (
               <a href={menu.href} key={menu.title}>
@@ -37,13 +43,13 @@ const Navbar = () => {
           </ul>
           <Button
             variant="outlined"
-            color="#F1614B"
             onClick={() => {}}
             className={"py-1 px-3 rounded-lg font-bold"}
           >
             SIGN UP
           </Button>
         </div>
+				<Hamburger menu={NAVBAR_MENU} className='sm:hidden'></Hamburger>
       </div>
     </nav>
   );

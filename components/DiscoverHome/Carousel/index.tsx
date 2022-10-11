@@ -5,6 +5,7 @@ import Card from "./Card";
 interface Props {
   children: React.ReactNode[];
   displayPerDot: number;
+	className?: string
 }
 const Carousel: React.FC<Props> = (props) => {
   const [carouselStartIndex, setCarouselStartIndex] = useState(0);
@@ -35,7 +36,7 @@ const Carousel: React.FC<Props> = (props) => {
 		}
 	})
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className={`w-full flex flex-col items-center ${props.className}`}>
       {/* Carousel Items */}
       <div className="flex justify-between w-full mb-8">
 				{shownCarousel}
