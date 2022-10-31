@@ -1,4 +1,5 @@
 import React from "react";
+import { ShareCardInterface } from "models/Home";
 
 interface Props {
   data: ShareCardInterface;
@@ -9,10 +10,10 @@ const ResponsiveCard: React.FC<Props> = (props) => {
       <div
         style={{
           backgroundImage: `url(${props.data.image})`,
-					backgroundSize: 'cover',
+          backgroundSize: "cover",
           width: "240px",
           height: "56px",
-					backgroundPosition: '50% 10%'
+          backgroundPosition: "50% 10%",
         }}
       ></div>
       <div className="flex relative min-h-[80px]">
@@ -24,7 +25,9 @@ const ResponsiveCard: React.FC<Props> = (props) => {
             {props.data.username}
           </p>
         </div>
-        <p className="text-[9px] text-start p-2 w-[160px]">{props.data.story}</p>
+        <p className="text-[9px] text-start p-2 w-[160px]">
+          {props.data.story}
+        </p>
         <div className="absolute flex gap-1 text-white -top-4 items-center left-[88px]">
           <svg
             width="6"
@@ -38,9 +41,14 @@ const ResponsiveCard: React.FC<Props> = (props) => {
               fill="currentColor"
             />
           </svg>
-					<p className="font-bold text-[9px]">{props.data.location}</p>
+          <p className="font-bold text-[9px]">{props.data.location}</p>
         </div>
-				<img src={props.data.profilepic} className='absolute border border-white z-10 rounded-full -top-[13px] left-4' width={49} height={49}></img>
+        <img
+          src={props.data.profilepic}
+          className="absolute border border-white z-10 rounded-full -top-[13px] left-4"
+          width={49}
+          height={49}
+        ></img>
       </div>
     </div>
   );

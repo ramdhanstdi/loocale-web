@@ -1,3 +1,4 @@
+import { CommunityListInterface } from 'models/Home';
 import React from 'react';
 import useWindowDimensions from 'utils/hooks';
 import Card from './Card'
@@ -49,9 +50,9 @@ const COMMUNITY_LIST = [
 	},
 ]
 
-const CommunityHome = () => {
+const CommunityHome = (props: { communityList: CommunityListInterface[]}) => {
 	const { height, width } = useWindowDimensions();
-	const shownCommunity = width && (width < 702) ? COMMUNITY_LIST.slice(0, 3) : COMMUNITY_LIST;
+	const shownCommunity = width && (width < 702) ? props.communityList.slice(0, 3) : props.communityList;
 	return (
 		<section id='community' className='max-w-[1280px] mx-auto flex flex-col pt-6 sm:pt-[70px] px-8 sm:px-16 text-center pb-[48px]'>
 			<h1 className='font-bold text-primary-800 text-[38px] sm:text-[68px] mb-3'>Connect</h1>

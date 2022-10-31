@@ -5,12 +5,19 @@ import LocationIcon from "@icons/location-icon.svg";
 interface Props {
   image: string;
   location: string;
-	className?: string;
+  className?: string;
+  href?: string;
 }
 const Card: React.FC<Props> = (props) => {
   return (
-    <div className={`rounded-2xl border border-[#EDEFF1] flex flex-col shrink shadow-md text-primary-800 ${props.className}`}>
+    <a
+      href={props.href}
+      target="_blank"
+      rel="noreferrer"
+      className={`rounded-2xl border border-[#EDEFF1] flex flex-col shrink shadow-md text-primary-800 ${props.className}`}
+    >
       <Image
+        loader={() => props.image}
         src={props.image}
         width={360}
         height={192}
@@ -21,7 +28,7 @@ const Card: React.FC<Props> = (props) => {
         <Image src={LocationIcon} width={13} height={18} alt="location" />
         <p className="py-3">{props.location}</p>
       </div>
-    </div>
+    </a>
   );
 };
 

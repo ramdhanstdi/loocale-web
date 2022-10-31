@@ -1,6 +1,7 @@
 import React from "react";
 import LocationIcon from "@icons/location-icon.svg";
 import Image from "next/image";
+import { ShareCardInterface } from "models/Home";
 
 interface Props {
   data: ShareCardInterface;

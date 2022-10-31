@@ -18,6 +18,10 @@ const Carousel: React.FC<Props> = (props) => {
       ? React.Children.count(props.children) / props.displayPerDot
       : React.Children.count(props.children) / props.displayPerDot + 1;
   const dotsArray = Array.from(Array(dotsAmount).keys());
+	const handleClick = (index: number) => {
+		setCarouselStartIndex(index * props.displayPerDot)
+		setCarouselEndIndex((index+1) * props.displayPerDot)
+	}
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -44,7 +48,7 @@ const Carousel: React.FC<Props> = (props) => {
       {/* Carousel Dots */}
       <div className="flex gap-3 items-center">
         {dotsArray.map((number) => (
-          <Dots key={number} active={Math.floor(carouselEndIndex / props.displayPerDot) - 1 === number}></Dots>
+          <Dots key={number} active={Math.floor(carouselEndIndex / props.displayPerDot) - 1 === number} onClick={() => handleClick(number)}/>
         ))}
       </div>
     </div>

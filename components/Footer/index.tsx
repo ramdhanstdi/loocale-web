@@ -40,15 +40,15 @@ const FOOTER_MENU = [
     children: [
       {
         subtitle: "Instagram",
-        href: "#",
+        href: "https://www.instagram.com/loocale.id/",
       },
       {
         subtitle: "Email",
-        href: "#",
+        href: "mailto:loocale.id@gmail.com",
       },
       {
         subtitle: "Whatsapp",
-        href: "#",
+        href: "https://wa.me/628111722233?text=",
       },
     ],
   },
@@ -66,9 +66,9 @@ const Footer = () => {
           className="mb-4"
         />
         <div className="flex justify-center items-center gap-3 ml-6 sm:ml-0">
-          <Image src={InstagramIcon} alt="Instagram" width={18} height={18} />
-          <Image src={WhatsAppIcon} alt="WhatsApp" width={20} height={20} />
-          <Image src={MailIcon} alt="Email" width={24} height={16} />
+          <a href="https://www.instagram.com/loocale.id/" target={"_blank"} rel='noreferrer'><Image src={InstagramIcon} alt="Instagram" width={18} height={18}/></a>
+          <a href="mailto:loocale.id@gmail.com" target={"_blank"} rel='noreferrer'><Image src={WhatsAppIcon} alt="WhatsApp" width={20} height={20} /></a>
+          <a href="https://wa.me/628111722233?text=" target={"_blank"} rel='noreferrer'><Image src={MailIcon} alt="Email" width={24} height={16} /></a>
         </div>
       </div>
       <div className="sm:flex gap-8 hidden">
@@ -76,7 +76,7 @@ const Footer = () => {
           <div className="flex flex-col gap-1" key={menu.title}>
             <p className="font-bold">{menu.title}</p>
             {menu.children.map((child) => (
-              <a href={child.href} key={child.subtitle}>
+              <a href={child.href} key={child.subtitle} target='_blank' rel='noreferrer'>
                 {child.subtitle}
               </a>
             ))}
@@ -86,9 +86,9 @@ const Footer = () => {
       <div className="flex flex-col gap-1 max-w-[210px] mb-[95px] sm:mb-0">
         <p className="font-bold">Loocale Indonesia</p>
         <p>
-          Jl. H. Sidin 1 No. 23 Duren Sawit, Jakarta Timur +62 811 1722 233
-          (Adel)
+          Jl. H. Sidin 1 No. 23 Duren Sawit, Jakarta Timur 
         </p>
+				<p>+62 811 1722 233 (Adel)</p>
       </div>
 			<div className="sm:flex flex-col gap-1 max-w-[210px] hidden">
 				<p className="font-bold">Download Loocale</p>
