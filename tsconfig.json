@@ -16,13 +16,13 @@
 		"baseUrl": ".",
 		"paths": {
 			"@components/*": [
-				"components/*"
+				"src/components/*"
 			],
 			"@pages/*": [
-				"pages/*"
+				"src/pages/*"
 			],
 			"@icons/*": [
-				"icons/*"
+				"src/assets/icons/*"
 			]
 		},
     "incremental": true
