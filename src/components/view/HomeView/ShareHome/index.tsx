@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Card from "./Card";
-import NavigateButton from "../../NavigateButton/index";
+import NavigateButton from "@components/design/NavigateButton";
 import ResponsiveCard from "./ResponsiveCard";
 import { ShareCardInterface } from "src/models/Home";
 

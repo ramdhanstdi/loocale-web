@@ -1,9 +1,15 @@
-import React from "react";
-import Cookies from "js-cookie";
+import React, { useEffect, useState } from "react";
+import FirstSignInDialog from "./FirstSignIn/FirstSignInDialog";
+import Location from './FirstSignIn/steps/Location';
 
-const index = () => {
-  console.log(Cookies.get("token"));
-  return <div>index</div>;
+interface FeedProps {
+  
+}
+const Feed: React.FC<FeedProps> = (props) => {
+  const [step, setStep] = useState(1);
+  return (
+    <></>
+  );
 };
 
-export default index;
+export default Feed;

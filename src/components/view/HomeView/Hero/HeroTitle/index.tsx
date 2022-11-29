@@ -1,5 +1,5 @@
 import React from "react";
-import NavigateButton from "../../../NavigateButton/index";
+import NavigateButton from "@components/design/NavigateButton";
 import NavBeforeIcon from "@icons/nav-before-icon.svg";
 import Image from "next/image";
 

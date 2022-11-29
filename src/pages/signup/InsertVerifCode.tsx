@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState, useEffect, createRef } from "react";
-import VerifCodeInput from "src/components/VerifCodeInput";
+import VerifCodeInput from "@components/design/VerifCodeInput";
 import Button from "@components/design/Button";
 import axios from "axios";
 import { BE_URL } from "Config";

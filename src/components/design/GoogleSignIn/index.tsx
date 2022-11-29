@@ -17,12 +17,13 @@ const GoogleSignIn: React.FC<Props> = (props) => {
     window.onSignIn = (googleUser: any) => {
       console.log(googleUser);
       axios
-        .post(BE_URL + `/loocale/user/${props.variant}/googl`, {
+        .post(BE_URL + `/loocale/user/${props.variant}/google`, {
           clientID: googleUser.credential,
         })
         .then((res) => {
           console.log(res);
           Cookies.set("token", res.data.data.token, { expires: 7});
+          Cookies.set("username", res.data.data.user.username, { expires: 7});
           props.callback();
         })
         .catch((err) => {

@@ -4,11 +4,17 @@ import Link from "next/link";
 import Button from "@components/design/Button";
 import axios from "axios";
 import { BE_URL } from "Config";
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
+
 
 const SignInForm = () => {
   const [usernameOrEmail, setUsernameOrEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
+
+	const router = useRouter();
+
   const handleChange = (e: any, setState: (args: string) => void) => {
     setState(e.target.value);
   };
@@ -19,8 +25,11 @@ const SignInForm = () => {
         email: usernameOrEmail,
         password: password,
       })
-      .then(() => {
+      .then((res) => {
         console.log("sign insuccess");
+				Cookies.set("username", res.data.data.user.username)
+				Cookies.set("token", res.data.data.user.token)
+				router.push("/feed")
       })
       .catch(() => {
         setError(true);
