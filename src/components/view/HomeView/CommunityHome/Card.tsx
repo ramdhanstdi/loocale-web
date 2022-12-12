@@ -1,16 +1,43 @@
-import React from 'react'
+import React from "react";
+import Image from "next/image";
+import CheckedIcon from "@icons/checked_icon.svg";
 
 interface Props {
-	background: string
-	title: string
+  background: string;
+  title: string;
+  width?: string;
+  fontSize?: string;
+  height?: string;
+  className?: string;
+  borderRadius?: string;
+  onClick?: () => void;
+  active?: boolean;
 }
-const Card:React.FC<Props> = (props) => {
-	return (
-		<div className='flex items-center justify-center w-[260px] font-bold text-[21px] px-auto py-11 text-white rounded-2xl whitespace-nowrap' style={{
-			backgroundImage: `url(${props.background})`,
-			textShadow: '0px 4px 4px rgba(0, 0, 0, 0.3)',
-		}}>{props.title}</div>
-	)
-}
+const Card: React.FC<Props> = (props) => {
+  return (
+    <div
+      className={`flex items-center relative justify-center  font-bold px-auto py-auto text-white ${props.className}`}
+      onClick={props.onClick}
+      style={{
+        backgroundImage: `url(${props.background})`,
+        backgroundPosition: "center",
+        textShadow: "0px 4px 4px rgba(0, 0, 0, 0.3)",
+        width: props.width ? props.width : "260px",
+        fontSize: props.fontSize ? props.fontSize : "21px",
+        height: props.height ? props.height : "120px",
+        borderRadius: props.borderRadius ? props.borderRadius : "16px",
+      }}
+    >
+      {props.title}
+      {props.active ? (
+        <div className="absolute top-2 right-2">
+          <Image src={CheckedIcon} width={16} height={16} alt="checked" />
+        </div>
+      ) : (
+        <></>
+      )}
+    </div>
+  );
+};
 
-export default Card
+export default Card;

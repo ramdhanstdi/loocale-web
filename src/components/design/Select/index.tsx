@@ -13,7 +13,6 @@ interface SelectProps {
 }
 const Select: React.FC<SelectProps> = (props) => {
   const [openOptionList, setOpenOptionList] = useState(false);
-	console.log('value', props.value)
   const handleClickInput = () => {
     setOpenOptionList(!openOptionList);
     if (props.onClick) {
@@ -48,14 +47,14 @@ const Select: React.FC<SelectProps> = (props) => {
         />
       </div>
       {openOptionList ? (
-        <div className="py-2 absolute w-full bg-white rounded-lg text-left shadow-xl z-20">
+        <div className="py-2 absolute w-full bg-white rounded-lg text-left shadow-xl z-20 max-h-[256px] overflow-auto">
           {props.option.map((option) => (
             <div
-              key={option.label}
+              key={option.label ? option.label : option}
               onClick={() => handleSelectOption(option)}
               className="py-2 px-4 hover:bg-gray-200"
             >
-              <p className="">{option.label}</p>
+              <p className="">{option.label ? option.label : option}</p>
             </div>
           ))}
         </div>

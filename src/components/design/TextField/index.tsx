@@ -21,6 +21,7 @@ interface Props {
   errorMessage?: string;
   pattern?: string;
   required?: boolean;
+	label?: string;
 }
 const TextField: React.FC<Props> = (props) => {
   const [error, setError] = useState(props.error ? props.error : false);
@@ -34,6 +35,11 @@ const TextField: React.FC<Props> = (props) => {
   }, [props.error]);
   return (
     <div className={`${props.className ? props.className : ""} relative`}>
+			{(props.label && props.variant == "outlined") ? (
+				<p className="text-xs font-bold px-1 text-primary-900 text-left">{props.label}</p>
+			) : (
+				<></>
+			)}
       <input
         type={
           props.type
@@ -44,7 +50,7 @@ const TextField: React.FC<Props> = (props) => {
         }
         className={`w-full ${
           props.variant === "outlined"
-            ? "focus:outline-0 border-b-2 px-1 py-2 border-secondary-500"
+            ? "focus:outline-0 border-b-2 pl-1 pr-4 border-secondary-500 placeholder:text-xs"
             : `bg-grayscale-50 rounded-md px-3 h-[44px] sm:h-[48px] outline-0 sm:placeholder:text-base placeholder:text-xs text-xs sm:text-base ${
                 props.value ? "pb-3 pt-5" : ""
               } transition-all ${error ? "border-[#DC2A2D] border" : ""}`
@@ -74,7 +80,7 @@ const TextField: React.FC<Props> = (props) => {
         }}
         required={props.required}
         autoFocus={props.autofocus}
-        pattern={props.pattern}
+        //pattern={props.pattern}
       />
       {/* PLACEHOLDER AND MAX LENGTH ON TOP OF TEXT FIELD WHEN TEXT FIELD IS BEING INPUTTED */}
       {props.variant === "contained" && props.value.toString().length ? (
@@ -89,6 +95,12 @@ const TextField: React.FC<Props> = (props) => {
       ) : (
         <></>
       )}
+			{/* MAX CHARACTERS LEFT IN INPUT FIELD */}
+			{props.variant === "outlined" && props.maxLength ? (
+				<p className={`font-light text-[9px] absolute ${props.label ? "top-6" : "top-0"} right-0`}>{props.maxLength - props.value.toString().length}</p>
+			):(
+				<></>
+			)}
       {/* TOGGLE PASSWORD VISIBILITY */}
       {props.type === "password" ? (
         <div
