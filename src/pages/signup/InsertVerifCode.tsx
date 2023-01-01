@@ -82,7 +82,6 @@ const InsertVerifCode: React.FC<Props> = (props) => {
         variant="contained"
         className="w-[240px] sm:w-[261px] py-2 rounded-xl font-bold text-[21px]"
         onClick={async () => {
-          console.log(letters);
           axios
             .post(BE_URL + "/loocale/user/validate/otp", {
               email: props.email,

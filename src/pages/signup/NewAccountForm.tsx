@@ -3,7 +3,7 @@ import TextField from "@components/design/TextField";
 import Button from "@components/design/Button";
 import axios from "axios";
 import { BE_URL } from "Config";
-import { fullnameValidation, usernameValidation } from "./helper/validation";
+import { fullnameValidation, usernameValidation } from "./lib/validation";
 
 interface Props {
   email: string;

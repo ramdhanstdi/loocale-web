@@ -17,9 +17,17 @@ const SignInPage = () => {
       <Navbar />
       <div className="flex h-screen w-screen">
         <div className="px-16 py-7 relative hidden flex-col justify-center w-1/2 bg-[url('/sign-up-bg.jpg')] bg-cover sm:flex">
-          <h1 className="font-bold text-[90px] text-white w-full  leading-[96px]">
-            #Jalan Kemana Aja
+				<div className="font-bold text-[90px] text-white w-full  leading-[96px]">
+					<h1>
+            #Jalan
           </h1>
+					<h1>
+            Kemana
+          </h1>
+					<h1>
+            Aja
+          </h1>
+					</div>
           <div className="absolute bottom-[29px]">
             <Image
               src="/loocale_vertical_logo.png"
@@ -45,7 +53,8 @@ const SignInPage = () => {
           </div>
           <GoogleSignIn
             variant="login"
-            callback={() => {
+            callback={(res) => {
+							console.log(res)
               router.push("/feed");
             }}
           />

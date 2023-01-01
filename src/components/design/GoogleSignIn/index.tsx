@@ -6,6 +6,7 @@ import Head from "next/head";
 import axios from "axios";
 import { BE_URL } from "Config";
 import Cookies from "js-cookie";
+import request from "src/services/request";
 
 interface Props {
   callback: (res?: any) => void;
@@ -15,15 +16,13 @@ const GoogleSignIn: React.FC<Props> = (props) => {
   useEffect(() => {
     //@ts-ignore
     window.onSignIn = (googleUser: any) => {
-      console.log(googleUser);
-      axios
-        .post(BE_URL + `/loocale/user/${props.variant}/google`, {
+      request
+        .post(BE_URL + `/user/${props.variant}/google`, {
           clientID: googleUser.credential,
         })
         .then((res) => {
-          console.log(res);
-          Cookies.set("token", res.data.data.token, { expires: 7});
-          Cookies.set("username", res.data.data.user.username, { expires: 7});
+          Cookies.set("token", res.data.user.token, { expires: 7});
+          Cookies.set("username", res.data.user.username, { expires: 7});
           props.callback();
         })
         .catch((err) => {

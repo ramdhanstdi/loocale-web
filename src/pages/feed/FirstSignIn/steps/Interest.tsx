@@ -4,6 +4,7 @@ import axios from "axios";
 import { BE_URL } from "Config";
 import { CommunityListInterface } from "src/models/Home";
 import Button from "@components/design/Button";
+import request from "src/services/request";
 
 interface InterestProps {
   setStep: (args: number) => void;
@@ -42,8 +43,8 @@ const Interest: React.FC<InterestProps> = ({ chosenInterest, setChosenInterest, 
   };
 
   useEffect(() => {
-    axios.get(BE_URL + "/loocale/connect").then((res) => {
-      setInterestList(res.data.data);
+    request.get(BE_URL + "/connect").then((res) => {
+      setInterestList(res.data);
     });
   }, []);
   return (

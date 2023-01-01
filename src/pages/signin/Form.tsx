@@ -6,6 +6,7 @@ import axios from "axios";
 import { BE_URL } from "Config";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import request from "src/services/request";
 
 
 const SignInForm = () => {
@@ -20,15 +21,15 @@ const SignInForm = () => {
   };
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    axios
-      .post(BE_URL + "/loocale/login", {
+    request
+      .post(BE_URL + "/login", {
         email: usernameOrEmail,
         password: password,
       })
       .then((res) => {
         console.log("sign insuccess");
-				Cookies.set("username", res.data.data.user.username)
-				Cookies.set("token", res.data.data.user.token)
+				Cookies.set("username", res.data.user.username)
+				Cookies.set("token", res.data.user.token)
 				router.push("/feed")
       })
       .catch(() => {

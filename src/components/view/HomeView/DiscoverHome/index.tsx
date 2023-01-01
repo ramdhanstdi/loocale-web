@@ -6,7 +6,6 @@ import ResponsiveCard from "./ResponsiveCard";
 import { DiscoverListInterface } from "src/models/Home";
 
 const DiscoverHome = (props: { discoverList: DiscoverListInterface[] }) => {
-  console.log(props.discoverList);
 
   return (
     <section

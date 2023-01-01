@@ -5,12 +5,13 @@ interface DialogProps {
   open: boolean;
   onClose?: VoidFunction;
   children?: React.ReactNode;
-  maxWidth?: "sm" | "md" | "lg" | "xl";
+  maxWidth?: "xs" | "sm" | "md" | "lg" | "xl";
 	className?: string
 }
 
 const Dialog: React.FC<DialogProps> = (props) => {
   const breakpoints = {
+		xs: "320px",
     sm: "480px",
     md: "600px",
     lg: "900px",

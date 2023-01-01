@@ -4,6 +4,7 @@ import Select from "@components/design/Select";
 import Button from "@components/design/Button";
 import axios from "axios";
 import { BE_URL } from "Config";
+import request from "src/services/request";
 
 interface LocationProps {
   setStep: (args: number) => void;
@@ -16,10 +17,10 @@ const Location: React.FC<LocationProps> = ({ setStep, province, city }) => {
   const [username, setUsername] = useState("user");
 
   const getProvincesList = async () => {
-    axios
-      .get(BE_URL + "/loocale/provinces")
+    request
+      .get(BE_URL + "/provinces")
       .then((res) => {
-        setProvincesOption(res.data.data);
+        setProvincesOption(res.data);
       })
       .catch((err) => {
         console.error(err);
@@ -27,14 +28,12 @@ const Location: React.FC<LocationProps> = ({ setStep, province, city }) => {
   };
 
   const getCitiesList = async () => {
-    axios
-      .post(BE_URL + "/loocale/cities", {
-        province: province[0],
-      })
+    request
+      .get(BE_URL + "/cities?province=" + province[0])
       .then((res) => {
         const citiesArr = [];
-        for (let i = 0; i < res.data.data.length; i++) {
-          citiesArr.push(res.data.data[i].name);
+        for (let i = 0; i < res.data.length; i++) {
+          citiesArr.push(res.data[i].name);
         }
         setCitiesOption(citiesArr);
       })
@@ -57,9 +56,9 @@ const Location: React.FC<LocationProps> = ({ setStep, province, city }) => {
     }
   }, [province[0]]);
   return (
-    <div className="mt-[60px] text-center text-primary-900 ">
-      <h1 className="text-[28px] font-bold">Halo {username}!</h1>
-      <p className="text-xs font-light mb-16">
+    <div className="mt-[11px] text-center text-primary-900 ">
+      <h1 className="text-[21px] sm:text-[28px] font-bold">Halo {username}!</h1>
+      <p className="text-xs font-light mb-7 sm:mb-16">
         Kami butuh sedikit lagi informasi dari kamu nih!
       </p>
       <p className="text-sm font-bold mb-2">Lokasi domisili kamu saat ini?</p>

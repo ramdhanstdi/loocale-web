@@ -8,6 +8,7 @@ import Location from "./steps/Location";
 import Image from "next/image";
 import axios from "axios";
 import { BE_URL } from "Config";
+import request from "src/services/request";
 
 const FirstSignIn = () => {
   const [step, setStep] = useState(1);
@@ -27,13 +28,14 @@ const FirstSignIn = () => {
       const data = new FormData();
       //@ts-ignore
       data.append("profileImage", profileImage);
-      data.append("userId", "5");
       data.append("province", province[0]);
       data.append("city", city[0]);
-      data.append("connectId", "2");
+      for (let i = 0; i < chosenInterest.length; i++) {
+				data.append(`connectId[${i}]`, chosenInterest[i].id.toString())
+			}
 
-      axios
-        .post(BE_URL + "/loocale/userprofiles", data)
+      request
+        .post(BE_URL + "/userprofiles", data)
         .then(() => {
           setHasPostProfile(true);
         })
