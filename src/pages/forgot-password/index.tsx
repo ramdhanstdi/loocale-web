@@ -3,8 +3,14 @@ import Navbar from "@components/layout/Navbar";
 import Image from "next/image";
 import Head from "next/head";
 import Form from "./Form";
+import EmailSent from "./EmailSent";
 
 const ForgotPassword = () => {
+  const [hasEmailBeenSent, setHasEmailBeenSent] = useState(false);
+
+  const handleSubmit = () => {
+    setHasEmailBeenSent(true);
+  };
 
   return (
     <>
@@ -29,15 +35,19 @@ const ForgotPassword = () => {
             />
           </div>
         </div>
-        <div className="flex grow flex-col justify-center items-center text-center">
-          <h1 className="font-bold text-[21px] sm:text-[38px] text-primary-900">
-            Lupa Password
-          </h1>
-          <p className="text-xs text-primary-900">
-            Silakan ketik alamat email kamu untuk membuat password baru
-          </p>
-          <Form></Form>
-        </div>
+        {hasEmailBeenSent ? (
+          <EmailSent></EmailSent>
+        ) : (
+          <div className="flex grow flex-col justify-center items-center text-center">
+            <h1 className="font-bold text-[21px] sm:text-[38px] text-primary-900">
+              Lupa Password
+            </h1>
+            <p className="text-xs text-primary-900">
+              Silakan ketik alamat email kamu untuk membuat password baru
+            </p>
+            <Form onSubmit={handleSubmit}></Form>
+          </div>
+        )}
       </div>
     </>
   );
