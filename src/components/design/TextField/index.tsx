@@ -12,7 +12,7 @@ interface Props {
   placeholder?: string;
   name?: string;
   maxLength?: number;
-  onChange?: (...args: any) => void;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
   onBlur?: () => void;
   autofocus?: boolean;
   validation?: () => Promise<boolean>;
