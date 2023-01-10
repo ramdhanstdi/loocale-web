@@ -4,12 +4,25 @@ import Image from "next/image";
 import Head from "next/head";
 import Form from "./Form";
 import EmailSent from "./EmailSent";
+import axios from "axios";
+import { BE_URL } from "Config";
 
 const ForgotPassword = () => {
   const [hasEmailBeenSent, setHasEmailBeenSent] = useState(false);
+  const [email, setEmail] = useState("");
 
-  const handleSubmit = () => {
-    setHasEmailBeenSent(true);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+    axios
+      .post(BE_URL + "/user/forgot-password", {
+        email,
+      })
+      .then(() => {
+        setHasEmailBeenSent(true);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   return (
@@ -42,10 +55,10 @@ const ForgotPassword = () => {
             <h1 className="font-bold text-[21px] sm:text-[38px] text-primary-900">
               Lupa Password
             </h1>
-            <p className="text-xs text-primary-900">
+            <p className="text-xs text-primary-900 max-w-[300px] sm:max-w-[400px]">
               Silakan ketik alamat email kamu untuk membuat password baru
             </p>
-            <Form onSubmit={handleSubmit}></Form>
+            <Form onSubmit={(e) => handleSubmit(e)} email={email} setEmail={setEmail}></Form>
           </div>
         )}
       </div>

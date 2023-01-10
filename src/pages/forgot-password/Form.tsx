@@ -1,15 +1,19 @@
 import TextField from "@components/design/TextField";
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import Link from "next/link";
 import Button from "@components/design/Button";
 import EmailSent from "./EmailSent";
 
-const ForgotPasswordForm = (props: { onSubmit: VoidFunction }) => {
-  const [email, setEmail] = useState("");
+interface ForgotPasswordFormProps {
+	onSubmit: React.FormEventHandler<HTMLFormElement>;
+	email: string;
+	setEmail: Dispatch<SetStateAction<string>>
+}
+const ForgotPasswordForm:React.FC<ForgotPasswordFormProps> = ({onSubmit, email, setEmail}) => {
 
   return (
     <>
-      <form className="flex flex-col" onSubmit={props.onSubmit}>
+      <form className="flex flex-col" onSubmit={onSubmit}>
         <TextField
           variant="contained"
           autofocus

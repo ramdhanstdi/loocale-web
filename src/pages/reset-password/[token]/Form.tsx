@@ -12,18 +12,35 @@ import ResetPassword from ".";
 const ResetPasswordForm = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
+	const [hasPasswordBeenReset, setHasPasswordBeenReset] = useState(false);
+
+  const router = useRouter();
 
   const validatePassword = () => {
     const regex = /(?=.\d)(?=.[a-z])(?=.*[A-Z]).{8,}/;
     return regex.test(newPassword);
   };
 
-	const handleSubmit = () => {
-		
-	}
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    axios
+      .post(BE_URL + "/user/reset-password", {
+        password: newPassword,
+        token: router.query.token,
+      })
+      .then(() => {
+				setHasPasswordBeenReset(true)
+        console.log("password has been reset");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
   return (
-    <form className="flex flex-col">
+		<>
+		{!hasPasswordBeenReset ? (
+			<form className="flex flex-col" onSubmit={(e) => handleSubmit(e)}>
       <TextField
         variant="contained"
         autofocus
@@ -67,11 +84,19 @@ const ResetPasswordForm = () => {
         onClick={() => {}}
         variant="contained"
         type="submit"
+				disabled={!confirmNewPassword || !newPassword || confirmNewPassword !== newPassword}
         className="sm:text-[21px] mt-6 rounded-lg font-bold py-2 sm:py-2 w-[200px] sm:w-[260px] mx-auto"
       >
         {"Sign in >"}
       </Button>
     </form>
+		) : (
+			<p className="text-[9px] sm:text-xs">
+				Password telah diganti
+			</p>
+		)}
+    
+		</>
   );
 };
 
