@@ -34,7 +34,7 @@ const TREND_LIST = [
 
 const RightPanel = () => {
   return (
-    <div className="fixed top-6 bottom-6 right-16 flex flex-col items-center rounded-lg shadow-xl border border-black px-12 py-10">
+    <div className="fixed top-6 bottom-6 right-16 flex flex-col items-center rounded-lg shadow-md px-7 py-10">
       <h1 className="font-bold text-primary-800 sm:text-[21px] mb-1">
         Populer di Loocale
       </h1>

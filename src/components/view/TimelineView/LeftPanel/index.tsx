@@ -40,7 +40,7 @@ const LeftPanel = () => {
         <div className="rounded-full mb-3 flex justify-center">
           <Image width={50} height={50} className="" src={PeopleIcon} />
         </div>
-        <p className="text-secondary-500">@fakhrdwi</p>
+        <p className="text-secondary-500 text-[9px] text-center">@fakhrdwi</p>
       </div>
     </div>
   );

@@ -4,13 +4,15 @@ import EyeIcon from "@icons/eye_icon.svg";
 import CrossedEyeIcon from "@icons/eye_crossed_icon.svg";
 import ValidIcon from "@icons/valid_icon.svg";
 import NotValidIcon from "@icons/not_valid_icon.svg";
+import createTextFieldInputClassNames from "./classNames";
 
-interface Props {
+export interface TextFieldProps {
   className?: string;
   value?: any;
   variant?: string;
   placeholder?: string;
   name?: string;
+	size?: "sm" | "md";
   maxLength?: number;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   onBlur?: () => void;
@@ -18,12 +20,14 @@ interface Props {
   validation?: () => Promise<boolean>;
   type?: string;
   error?: boolean;
+	endIcon?: React.ReactNode
+	fullWidth?: boolean;
   errorMessage?: string;
   pattern?: string;
   required?: boolean;
 	label?: string;
 }
-const TextField: React.FC<Props> = (props) => {
+const TextField: React.FC<TextFieldProps> = (props) => {
   const [error, setError] = useState(props.error ? props.error : false);
   const [valid, setValid] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -48,13 +52,8 @@ const TextField: React.FC<Props> = (props) => {
               : "text"
             : "text"
         }
-        className={`w-full ${
-          props.variant === "outlined"
-            ? "focus:outline-0 border-b-2 pl-1 pr-4 border-secondary-500 placeholder:text-xs"
-            : `bg-grayscale-50 rounded-md px-3 h-[44px] sm:h-[48px] outline-0 sm:placeholder:text-base placeholder:text-xs text-xs sm:text-base ${
-                props.value ? "pb-3 pt-5" : ""
-              } transition-all ${error ? "border-[#DC2A2D] border" : ""}`
-        }`}
+        className={`${createTextFieldInputClassNames(props)} ${error ? "border-[#DC2A2D] border" : ""}`
+        }
         value={props.value}
         name={props.name ? props.name : "TextField"}
         placeholder={props.placeholder ? props.placeholder : ""}
@@ -147,6 +146,13 @@ const TextField: React.FC<Props> = (props) => {
       ) : (
         <></>
       )}
+			{props.endIcon ? (
+				<div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center">
+					{props.endIcon}
+				</div>
+			): (
+				<></>
+			)}
     </div>
   );
 };
