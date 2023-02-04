@@ -7,7 +7,7 @@ import Image from "next/image";
 import PeopleIcon from "@icons/people_icon.svg";
 import { PostDataInterface } from "src/models/Timeline";
 
-const Post: React.FC<PostDataInterface> = ({ User, postText }) => {
+const Post: React.FC<PostDataInterface> = ({ User, postText, createdAt, location }) => {
   const [showMore, setShowMore] = useState(false);
 
   return (
@@ -24,7 +24,7 @@ const Post: React.FC<PostDataInterface> = ({ User, postText }) => {
         <p className="">Moderator</p>
         <p>Lvl 6</p>
       </div>
-      <PostHeader />
+      <PostHeader full_name={User.full_name} createdAt={createdAt} location={location}/>
       <p className="font-bold text-secondary-500 text-xs my-1">
         @{User.user_name}
       </p>
