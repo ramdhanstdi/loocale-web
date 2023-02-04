@@ -6,7 +6,7 @@ import AddIcon from "@icons/plus_icon.svg";
 
 const AddPost = () => {
   return (
-    <div className="flex flex-col px-9 py-2 ml-[180px] mr-[381px] rounded-lg shadow-md">
+    <div className="flex flex-col px-9 py-2 left-[180px] right-[381px] rounded-lg shadow-md fixed top-0">
       <div className="">
         <Image
           src={"/NavbarLogo.svg"}
@@ -20,7 +20,7 @@ const AddPost = () => {
           <div className="rounded-full flex justify-center">
             <Image width={50} height={50} className="" src={PeopleIcon} />
           </div>
-          <p className="text-secondary-500 sm:text-xs">@fakhrdwi</p>
+          <p className="text-secondary-500 sm:text-xs font-bold">@fakhrdwi</p>
         </div>
         <TextField
           placeholder="Mulai post baru"

@@ -36,8 +36,8 @@ const Home: NextPage<HomeProps> = (props) => {
 
 export async function getStaticProps() {
   try {
-    const discover = await axios.get(BE_URL + "/loocale/discover");
-    const community = await axios.get(BE_URL + "/loocale/connect");
+    const discover = await axios.get(BE_URL + "/discover");
+    const community = await axios.get(BE_URL + "/connect");
     const discoverList = discover.data.data;
     const communityList = community.data.data;
     return {
