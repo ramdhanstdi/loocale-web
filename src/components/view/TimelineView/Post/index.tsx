@@ -5,42 +5,46 @@ import PostInteractions from "./components/PostInteractions";
 import PostPictureContainer from "./components/PostPictureContainer";
 import Image from "next/image";
 import PeopleIcon from "@icons/people_icon.svg";
+import { PostDataInterface } from "src/models/Timeline";
 
-const Post = () => {
+const Post: React.FC<PostDataInterface> = ({ User, postText }) => {
   const [showMore, setShowMore] = useState(false);
-  const text = useMemo(
-    () =>
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt assumenda delectus numquam suscipit porro atque nam doloremque facere maxime deleniti, nihil eius quibusdam repellat, vero iste debitis. Voluptatum, eius exercitationem. Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti eveniet quia exercitationem possimus explicabo perspiciatis at atque aut? Ullam ut id error non consequuntur reprehenderit eveniet adipisci qui? Natus, distinctio",
-    []
-  );
 
   return (
     <div className="w-full py-4 pr-[154px] pl-[131px] border-b-[0.5px] border-b-primary-100 relative">
       <div className="absolute text-center top-6 left-12 text-xs text-primary-200 font-light">
         <div className="rounded-full">
-          <Image width={50} height={50} className="" src={PeopleIcon} />
+          <Image
+            width={50}
+            height={50}
+            className=""
+            src={User.thumbnail || PeopleIcon}
+          />
         </div>
-				<p className="">Moderator</p>
-				<p>Lvl 6</p>
+        <p className="">Moderator</p>
+        <p>Lvl 6</p>
       </div>
       <PostHeader />
-      <p className="font-bold text-secondary-500 text-xs my-1">@ErikBoril</p>
+      <p className="font-bold text-secondary-500 text-xs my-1">
+        @{User.user_name}
+      </p>
       <p className="text-xs font-light text-justify whitespace-pre-wrap mb-2">
-        {showMore ? (
-					<>
-					{text}
-					{"  "}
+        {postText.length < 150 ? (
+          postText
+        ) : showMore ? (
+          <>
+            {postText}
+            {"  "}
             <span
               className="text-secondary-500 hover:underline hover:cursor-pointer font-light text-xs"
               onClick={() => setShowMore(false)}
             >
               See less
             </span>
-					</>
-          
+          </>
         ) : (
           <>
-            {text.substring(0, 150)}
+            {postText.substring(0, 150)}
             {"  "}
             <span
               className="text-secondary-500 hover:underline hover:cursor-pointer font-light text-xs"
@@ -50,6 +54,7 @@ const Post = () => {
             </span>
           </>
         )}
+        {}
       </p>
       <PostPictureContainer />
       <PostInteractions />
