@@ -5,7 +5,10 @@ export interface PostDataInterface {
 	liked: number;
 	location: string;
 	userId: number;
-	Comments: string[];
+	Comments: {
+		commentText: string;
+		User: UserDataInterface
+	}[];
 	User: UserDataInterface;
 	updatedAt: string;
 	medias: {
