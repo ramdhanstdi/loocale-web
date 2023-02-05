@@ -5,11 +5,13 @@ interface InteractionIconProps {
   icon: string;
   activeIcon: string;
   count: number | string;
+	onClick?: () => void;
 }
 const InteractionIcon: React.FC<InteractionIconProps> = ({
   icon,
   activeIcon,
   count = 0,
+	onClick
 }) => {
   const [isActive, setIsActive] = useState(false);
   return (
@@ -19,7 +21,12 @@ const InteractionIcon: React.FC<InteractionIconProps> = ({
         width={16}
         height={16}
         alt="interaction-button"
-				onClick={() => setIsActive(!isActive)}
+				onClick={() => {
+					if (onClick) {
+						onClick()
+					}
+					setIsActive(!isActive)
+				}}
       />
 			<p className="text-xs font-light text-primary-800">{count}</p>
     </div>

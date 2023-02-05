@@ -14,6 +14,8 @@ const Post: React.FC<PostDataInterface> = ({
   createdAt,
   location,
   Comments,
+	liked,
+	id
 }) => {
   const [showMore, setShowMore] = useState(false);
 	const [displayedComments, setDisplayedComments] = useState(Comments.slice(0,5));
@@ -32,7 +34,6 @@ const Post: React.FC<PostDataInterface> = ({
 			// Load all comments not loaded
 			newDisplayedComments.push(...Comments.slice(getLastCommentIndex + 1))
 		}
-		console.log(newDisplayedComments)
 		setDisplayedComments(newDisplayedComments)	
   }, [displayedComments, Comments]);
 
@@ -87,7 +88,7 @@ const Post: React.FC<PostDataInterface> = ({
         {}
       </p>
       <PostPictureContainer />
-      <PostInteractions />
+      <PostInteractions commentsCount={Comments.length} likesCount={liked} postId={String(id)} />
       {displayedComments.map((comment) => (
         <Comment
           key={comment.commentText}
