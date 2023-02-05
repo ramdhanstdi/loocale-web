@@ -52,7 +52,7 @@ const TextField: React.FC<TextFieldProps> = (props) => {
               : "text"
             : "text"
         }
-        className={`${createTextFieldInputClassNames(props)} ${error ? "border-[#DC2A2D] border" : ""}`
+        className={`${createTextFieldInputClassNames(props)} ${error ? "border-[#DC2A2D] border" : ""} mt-0`
         }
         value={props.value}
         name={props.name ? props.name : "TextField"}

@@ -25,7 +25,7 @@ const NewAccountForm: React.FC<Props> = (props) => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     axios
-      .post(BE_URL + "/loocale/user/signup/form", {
+      .post(BE_URL + "/user/signup/form", {
         email: props.email,
         full_name: fullname,
         user_name: username,

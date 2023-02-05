@@ -37,7 +37,7 @@ const SignUpOption: React.FC<Props> = ({ email, setEmail, ...props }) => {
             variant="contained"
             onClick={async () => {
               axios
-                .post(BE_URL + "/loocale/user/email", {
+                .post(BE_URL + "/user/email", {
                   email: email,
                 })
                 .then(() => {

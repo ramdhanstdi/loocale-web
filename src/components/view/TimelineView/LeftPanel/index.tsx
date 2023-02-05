@@ -4,6 +4,7 @@ import GlobeIcon from "@icons/globe_icon.svg";
 import PeopleIcon from "@icons/people_icon.svg";
 import AddIcon from "@icons/plus_icon.svg";
 import Image from "next/image";
+import Link from "next/link";
 
 const LEFT_PANEL_MENU = [
   {
@@ -12,8 +13,8 @@ const LEFT_PANEL_MENU = [
     icon: FeedIcon,
   },
   {
-    id: "globe",
-    href: "/globe",
+    id: "discover",
+    href: "/discover",
     icon: GlobeIcon,
   },
   {
@@ -33,7 +34,9 @@ const LeftPanel = () => {
     <div className="flex flex-col justify-between top-12 bottom-12 left-16 fixed">
       <div className="px-[30px] py-9 rounded-xl shadow-md flex flex-col gap-12">
         {LEFT_PANEL_MENU.map((menu) => (
-          <Image src={menu.icon} height={40} width={40} key={menu.id} />
+          <Link href={menu.href} key={menu.id} >
+            <Image src={menu.icon} height={40} width={40} />
+          </Link>
         ))}
       </div>
       <div className="py-3 px-5 shadow-md rounded-lg flex flex-col ">

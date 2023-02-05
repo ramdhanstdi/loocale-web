@@ -83,7 +83,7 @@ const InsertVerifCode: React.FC<Props> = (props) => {
         className="w-[240px] sm:w-[261px] py-2 rounded-xl font-bold text-[21px]"
         onClick={async () => {
           axios
-            .post(BE_URL + "/loocale/user/validate/otp", {
+            .post(BE_URL + "/user/validate/otp", {
               email: props.email,
               OTP: Number(letters.join("")),
             })
@@ -102,7 +102,7 @@ const InsertVerifCode: React.FC<Props> = (props) => {
         <span
           className="underline hover:cursor-pointer"
           onClick={async () => {
-            axios.post(BE_URL + "/loocale/user/resend/otp", {
+            axios.post(BE_URL + "/user/resend/otp", {
               email: props.email,
             });
           }}
