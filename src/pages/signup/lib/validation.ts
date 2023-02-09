@@ -13,7 +13,7 @@ export const usernameValidation = async (username: string) => {
   const isUsernameValid = username.length <= 16 && /^[\w\.]+$/.test(username);
   if (isUsernameValid) {
     try {
-      await axios.post(BE_URL + "/loocale/user/validate/username", {
+      await axios.post(BE_URL + "/user/validate/username", {
         user_name: username,
       });
       return true;

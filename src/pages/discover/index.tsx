@@ -1,7 +1,6 @@
 import React from "react";
 import LeftPanel from "@components/view/TimelineView/LeftPanel";
 import RightPanel from "@components/view/TimelineView/RightPanel";
-import TimelineContainer from "@components/view/TimelineView/TimelineContainer";
 import PostsContainer from "@components/view/TimelineView/PostsContainer";
 import Post from "@components/view/TimelineView/Post";
 import { useQuery } from "@tanstack/react-query";
@@ -9,6 +8,37 @@ import getPosts from "src/services/Timeline";
 import { PostDataInterface } from "src/models/Timeline";
 import Image from "next/image";
 import DiscoverHero from "@components/view/DiscoverView/DiscoverHero";
+import DiscoverContainer from "@components/view/DiscoverView/DiscoverContainer";
+import PopularTodayGrid from "@components/view/DiscoverView/PopularTodayGrid";
+import ImageCard from "@components/design/ImageCard";
+
+const POPULAR_TODAY = [
+  {
+    title: "Cimahi",
+    subtitle: "200 Unggahan",
+    backgroundUrl: "/cimahi-bg.png",
+  },
+  {
+    title: "Bandung",
+    subtitle: "200 Unggahan",
+    backgroundUrl: "/bandung-bg.png",
+  },
+  {
+    title: "Kab. Nusantara",
+    subtitle: "200 Unggahan",
+    backgroundUrl: "/nusantara-bg.png",
+  },
+  {
+    title: "Tegal",
+    subtitle: "200 Unggahan",
+    backgroundUrl: "/tegal-bg.png",
+  },
+  {
+    title: "Solok",
+    subtitle: "200 Unggahan",
+    backgroundUrl: "/solok-bg.png",
+  },
+];
 
 const DiscoverPage = () => {
   const {
@@ -32,9 +62,29 @@ const DiscoverPage = () => {
           alt="Loocale Logo"
         />
       </div>
-			<DiscoverHero />
-      <TimelineContainer>
-        <PostsContainer>
+      <DiscoverHero />
+      <DiscoverContainer>
+        <PostsContainer maxHeight="max-h-[calc(100vh-290px)]">
+          <p className="mt-[14px] font-light text-primary-800 text-center mb-2">
+            Populer hari ini
+          </p>
+          <PopularTodayGrid>
+            {POPULAR_TODAY.map((card) => (
+              <ImageCard
+                backgroundUrl={card.backgroundUrl}
+                key={card.title}
+                className="text-center py-3 text-white rounded-lg shadow-md"
+              >
+                <p className="font-bold">{card.title}</p>
+                <p className="font-light text-xs">{card.subtitle}</p>
+              </ImageCard>
+            ))}
+          </PopularTodayGrid>
+          <div className="w-full pr-[154px] pl-[131px]">
+            <p className="font-bold text-grayscale-400 text-xs max-w-[600px] mx-auto">
+              Terbaru dari sekitarmu
+            </p>
+          </div>
           {postData ? (
             postData.map((post: PostDataInterface) => (
               <Post key={post.id} {...post} />
@@ -43,7 +93,7 @@ const DiscoverPage = () => {
             <></>
           )}
         </PostsContainer>
-      </TimelineContainer>
+      </DiscoverContainer>
     </div>
   );
 };

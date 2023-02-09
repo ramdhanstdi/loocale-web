@@ -1,6 +1,6 @@
 import React from "react";
 import LocationAnchor from "./components/LocationAnchor";
-import ImageCard from "./components/ImageCard";
+import ImageCard from "@components/design/ImageCard";
 import HelpIcon from "@icons/help_icon.svg";
 import Image from "next/image";
 

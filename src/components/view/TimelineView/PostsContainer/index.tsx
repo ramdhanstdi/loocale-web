@@ -1,14 +1,22 @@
-import React from 'react'
+import React from "react";
 
 interface PostsContainerProps {
-	children?: React.ReactNode
+  children?: React.ReactNode;
+  maxHeight?: string;
 }
-const PostsContainer:React.FC<PostsContainerProps> = (props) => {
-	return (
-		<div className='w-full overflow-y-auto max-h-[calc(100vh-197px)] scrollbar-hide'>
-			{props.children}
-		</div>
-	)
-}
+const PostsContainer: React.FC<PostsContainerProps> = ({
+  children,
+  maxHeight,
+}) => {
+  return (
+    <div
+      className={`w-full overflow-y-auto ${
+        maxHeight ? maxHeight : "max-h-[calc(100vh-197px)]"
+      } scrollbar-hide px-auto`}
+    >
+      {children}
+    </div>
+  );
+};
 
-export default PostsContainer
+export default PostsContainer;

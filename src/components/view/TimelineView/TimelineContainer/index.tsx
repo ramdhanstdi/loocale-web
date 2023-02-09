@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import getPosts from 'src/services/Timeline';
 
 interface TimelineContainerProps {
 	children?: React.ReactNode;

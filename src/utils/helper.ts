@@ -1,20 +1,21 @@
 import { DurationObjectUnits } from "luxon";
 
 export const getTimeDifferenceString = (differenceObject: DurationObjectUnits) => {
-	if (differenceObject.years) {
-		return `${differenceObject.years} tahun lalu`
+	console.log(differenceObject)
+	if ((differenceObject.years)) {
+		return `${Math.floor(differenceObject.years)} tahun lalu`
 	}
 	if (differenceObject.months) {
-		return `${differenceObject.months} bulan lalu`
+		return `${Math.floor(differenceObject.months)} bulan lalu`
 	}
 	if (differenceObject.days) {
-		return `${differenceObject.days} hari lalu`
+		return `${Math.floor(differenceObject.days)} hari lalu`
 	}
 	if (differenceObject.hours) {
-		return `${differenceObject.hours} jam lalu`
+		return `${Math.floor(differenceObject.hours)} jam lalu`
 	}
 	if (differenceObject.minutes) {
-		return `${differenceObject.minutes} menit lalu`
+		return `${Math.floor(differenceObject.minutes)} menit lalu`
 	}
-	return ""
+	return "Baru saja"
 }
