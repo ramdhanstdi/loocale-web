@@ -1,7 +1,9 @@
+import SearchBar from "@components/design/SearchBar";
 import TextField from "@components/design/TextField";
-import React from "react";
+import React, { useState } from "react";
 
 const DiscoverHero = () => {
+	const [searchValue, setSearchValue] = useState("");
   return (
     <div
       className="fixed top-[83px] left-[180px] right-[381px] items-center justify-center flex flex-col bg-red-200 pt-[38px] pb-[30px] rounded-2xl"
@@ -16,7 +18,7 @@ const DiscoverHero = () => {
       <h1 className="mb-5 text-[28px] font-bold text-white leading-[36px]">
         Lagi rame apa disana
       </h1>
-      <TextField fullWidth className="rounded-full w-[420px]" />
+      <SearchBar value={searchValue} onChange={(e) => setSearchValue(e.target.value)}/>
     </div>
   );
 };

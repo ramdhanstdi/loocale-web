@@ -50,7 +50,7 @@ const LeftPanel = () => {
       </div>
       <div className="py-3 px-5 shadow-md rounded-lg flex flex-col ">
         <div className="rounded-full mb-3 flex justify-center">
-          <Image width={50} height={50} className="" src={PeopleIcon} />
+          <PeopleIcon />
         </div>
         <p className="text-secondary-500 text-[9px] text-center">@fakhrdwi</p>
       </div>

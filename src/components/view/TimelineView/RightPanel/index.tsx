@@ -70,8 +70,8 @@ const RightPanel = () => {
       <p className="text-primary-100 text-[9px] sm:w-[191px] mb-2">
         Frequently Asked Questions
       </p>
-      <div className="flex gap-1 sm:w-[191px]">
-        <Image width={16} height={16} src={HelpIcon} alt={"help"} />
+      <div className="flex gap-1 sm:w-[191px] items-center">
+        <HelpIcon />
 				<p>Help</p>
       </div>
     </div>
