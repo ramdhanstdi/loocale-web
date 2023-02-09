@@ -12,7 +12,7 @@ export interface TextFieldProps {
   variant?: string;
   placeholder?: string;
   name?: string;
-	size?: "sm" | "md";
+  size?: "sm" | "md";
   maxLength?: number;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   onBlur?: () => void;
@@ -20,12 +20,12 @@ export interface TextFieldProps {
   validation?: () => Promise<boolean>;
   type?: string;
   error?: boolean;
-	endIcon?: React.ReactNode
-	fullWidth?: boolean;
+  endIcon?: React.ReactNode;
+  fullWidth?: boolean;
   errorMessage?: string;
   pattern?: string;
   required?: boolean;
-	label?: string;
+  label?: string;
 }
 const TextField: React.FC<TextFieldProps> = (props) => {
   const [error, setError] = useState(props.error ? props.error : false);
@@ -39,11 +39,13 @@ const TextField: React.FC<TextFieldProps> = (props) => {
   }, [props.error]);
   return (
     <div className={`${props.className ? props.className : ""} relative`}>
-			{(props.label && props.variant == "outlined") ? (
-				<p className="text-xs font-bold px-1 text-primary-900 text-left">{props.label}</p>
-			) : (
-				<></>
-			)}
+      {props.label && props.variant == "outlined" ? (
+        <p className="text-xs font-bold px-1 text-primary-900 text-left">
+          {props.label}
+        </p>
+      ) : (
+        <></>
+      )}
       <input
         type={
           props.type
@@ -52,8 +54,9 @@ const TextField: React.FC<TextFieldProps> = (props) => {
               : "text"
             : "text"
         }
-        className={`${createTextFieldInputClassNames(props)} ${error ? "border-[#DC2A2D] border" : ""} mt-0`
-        }
+        className={`${createTextFieldInputClassNames(props)} ${
+          error ? "border-[#DC2A2D] border" : ""
+        } mt-0`}
         value={props.value}
         name={props.name ? props.name : "TextField"}
         placeholder={props.placeholder ? props.placeholder : ""}
@@ -94,12 +97,18 @@ const TextField: React.FC<TextFieldProps> = (props) => {
       ) : (
         <></>
       )}
-			{/* MAX CHARACTERS LEFT IN INPUT FIELD */}
-			{props.variant === "outlined" && props.maxLength ? (
-				<p className={`font-light text-[9px] absolute ${props.label ? "top-6" : "top-0"} right-0`}>{props.maxLength - props.value.toString().length}</p>
-			):(
-				<></>
-			)}
+      {/* MAX CHARACTERS LEFT IN INPUT FIELD */}
+      {props.variant === "outlined" && props.maxLength ? (
+        <p
+          className={`font-light text-[9px] absolute ${
+            props.label ? "top-6" : "top-0"
+          } right-0`}
+        >
+          {props.maxLength - props.value.toString().length}
+        </p>
+      ) : (
+        <></>
+      )}
       {/* TOGGLE PASSWORD VISIBILITY */}
       {props.type === "password" ? (
         <div
@@ -146,13 +155,7 @@ const TextField: React.FC<TextFieldProps> = (props) => {
       ) : (
         <></>
       )}
-			{props.endIcon ? (
-				<div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center">
-					{props.endIcon}
-				</div>
-			): (
-				<></>
-			)}
+      {props.endIcon ? <>{props.endIcon}</> : <></>}
     </div>
   );
 };

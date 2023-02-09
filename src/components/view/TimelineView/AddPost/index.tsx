@@ -18,16 +18,16 @@ const AddPost = () => {
       <div className="flex gap-6">
         <div className="flex flex-col">
           <div className="rounded-full flex justify-center">
-            <Image width={50} height={50} className="" src={PeopleIcon} />
+            <PeopleIcon />
           </div>
           <p className="text-secondary-500 sm:text-xs font-bold">@fakhrdwi</p>
         </div>
         <TextField
           placeholder="Mulai post baru"
-          className="mt-[6px] w-full h-9"
+          className="mt-[6px] w-full h-9 rounded-full"
           size="sm"
           fullWidth
-          endIcon={<Image src={AddIcon} width={20} height={20}/>}
+          endIcon={<div className="scale-50 absolute top-1 right-0"><AddIcon /></div>}
         />
       </div>
     </div>
