@@ -14,14 +14,14 @@ const SearchBar: React.FC<SearchBarProps> = ({
 	onClick,
 }) => {
   return (
-    <div className="rounded-full flex items-center bg-white sm:w-[420px] border border-primary-800">
+    <div className="rounded-full flex items-center bg-white sm:w-[420px] border border-primary-800 text-xs">
       <input
         type="text"
         value={value}
         onChange={onChange}
         placeholder={placeholder}
         className={
-          "py-2 px-7 border-r border-r-primary-500 rounded-tl-full rounded-bl-full outline-none w-full"
+          "py-2 px-7 border-r border-r-primary-500 rounded-tl-full rounded-bl-full outline-none w-full placeholder:italic"
         }
       />
       <div className="px-5" onClick={onClick}>

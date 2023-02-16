@@ -24,15 +24,15 @@ const PostInteractions: React.FC<PostInteractionsProps> = ({
     <div className="flex justify-between items-center mb-3">
       <div className="flex gap-4">
         <InteractionIcon
-          icon={CommentIcon}
-          activeIcon={CommentIcon}
+          icon={<CommentIcon />}
+          activeIcon={<CommentIcon />}
           count={commentsCount}
         />
         <InteractionIcon
-          icon={HeartIcon}
-          activeIcon={HeartIcon}
+          icon={<HeartIcon />}
+          activeIcon={<HeartIcon />}
           count={likesCount}
-					onClick={() => likesMutation.mutate()}
+          onClick={() => likesMutation.mutate()}
         />
       </div>
       <p className="text-[9px] text-secondary-500 font-light">

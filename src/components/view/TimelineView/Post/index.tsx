@@ -16,6 +16,7 @@ const Post: React.FC<PostDataInterface> = ({
   Comments,
   liked,
   id,
+	location_detail,
 }) => {
   const [showMore, setShowMore] = useState(false);
   const [displayedComments, setDisplayedComments] = useState(
@@ -54,6 +55,7 @@ const Post: React.FC<PostDataInterface> = ({
           full_name={User.full_name}
           createdAt={createdAt}
           location={location}
+					location_detail={location_detail}
         />
         <p className="font-bold text-secondary-500 text-xs my-1">
           @{User.user_name}

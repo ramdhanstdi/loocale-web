@@ -5,9 +5,10 @@ interface PostHeaderProps {
 	full_name: string;
 	location: string;
 	createdAt: string;
+	location_detail: string | null
 }
 
-const PostHeader:React.FC<PostHeaderProps> = ({ full_name, location, createdAt }) => {
+const PostHeader:React.FC<PostHeaderProps> = ({ full_name, location, createdAt, location_detail }) => {
 	const currentTime = DateTime.now()
 	const postTime = DateTime.fromISO(createdAt);
 	const timeDifference = currentTime.diff(postTime, ["years", "months", "days", "hours", "minutes"]).toObject();
@@ -18,7 +19,7 @@ const PostHeader:React.FC<PostHeaderProps> = ({ full_name, location, createdAt }
         <p className="font-bold text-primary-800">{full_name}</p>
         <div>
           <p className="text-primary-800 font-light text-[9px] inline">
-            - di Kawah Putih, <span className="font-bold">{location}</span>
+            - {location_detail ? `${location_detail},` : ""} <span className="font-bold">{location}</span>
           </p>
         </div>
       </div>

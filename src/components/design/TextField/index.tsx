@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import EyeIcon from "@icons/eye_icon.svg";
 import CrossedEyeIcon from "@icons/eye_crossed_icon.svg";
 import ValidIcon from "@icons/valid_icon.svg";
@@ -118,19 +117,9 @@ const TextField: React.FC<TextFieldProps> = (props) => {
           onClick={() => setPasswordVisible(!passwordVisible)}
         >
           {passwordVisible ? (
-            <Image
-              src={CrossedEyeIcon}
-              width={18}
-              height={13}
-              alt="set password invisible"
-            ></Image>
+            <CrossedEyeIcon />
           ) : (
-            <Image
-              src={EyeIcon}
-              width={18}
-              height={13}
-              alt="set password visible"
-            ></Image>
+            <EyeIcon />
           )}
         </div>
       ) : (
@@ -139,11 +128,11 @@ const TextField: React.FC<TextFieldProps> = (props) => {
       {/* VALID OR ERROR ICONS */}
       {valid ? (
         <div className={`absolute -right-7 top-1/2 -translate-y-1/3`}>
-          <Image src={ValidIcon} width={16} height={16} alt="valid" />
+          <ValidIcon></ValidIcon>
         </div>
       ) : error ? (
         <div className={`absolute -right-7 top-1/2 -translate-y-1/3 group`}>
-          <Image src={NotValidIcon} width={16} height={16} alt="not-valid" />
+          <NotValidIcon />
           {props.errorMessage ? (
             <p className="py-1 px-3 text-[9px] absolute -top-6 -left-6 rounded-lg hidden bg-white shadow-md whitespace-nowrap group-hover:block">
               {props.errorMessage}

@@ -23,7 +23,7 @@ const ForgotPasswordForm:React.FC<ForgotPasswordFormProps> = ({onSubmit, email, 
           value={email}
         />
         <div className="text-left font-bold text-xs text-grayscale-500 px-4 mt-4">
-          <Link href={"/forgot-password"} className="">
+          <Link href={"/signin"} className="">
             Kembali ke halaman sign in
           </Link>
         </div>

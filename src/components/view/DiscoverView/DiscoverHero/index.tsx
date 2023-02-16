@@ -33,6 +33,7 @@ const DiscoverHero: React.FC<DiscoverHeroProps> = ({
         value={searchValue}
         onChange={onChange}
 				onClick={onClick}
+				placeholder="Cari kota atau aktivitas yang ingin kamu kepo-in..."
       />
     </div>
   );

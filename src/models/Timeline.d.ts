@@ -15,6 +15,7 @@ export interface PostDataInterface {
 		PostMedia: PostMediaInterface;
 		media_url: string;
 	};
+	location_detail: string | null;
 }
 
 export interface UserDataInterface {
