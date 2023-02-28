@@ -1,7 +1,9 @@
+import Cookies from "js-cookie";
 import { DurationObjectUnits } from "luxon";
+import jwtDecode from "jwt-decode";
+import { UserDataInterface } from "src/models/Timeline";
 
 export const getTimeDifferenceString = (differenceObject: DurationObjectUnits) => {
-	console.log(differenceObject)
 	if ((differenceObject.years)) {
 		return `${Math.floor(differenceObject.years)} tahun lalu`
 	}
@@ -18,4 +20,13 @@ export const getTimeDifferenceString = (differenceObject: DurationObjectUnits) =
 		return `${Math.floor(differenceObject.minutes)} menit lalu`
 	}
 	return "Baru saja"
+}
+
+export const getCurrentUser = () => {
+	const token = Cookies.get("token");
+	if (!token) {
+		return null
+	}
+	const res = jwtDecode(token);
+	return res as UserDataInterface
 }

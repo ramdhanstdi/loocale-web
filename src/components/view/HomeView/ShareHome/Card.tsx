@@ -38,7 +38,7 @@ const Card: React.FC<Props> = (props) => {
           {props.data.story}
         </div>
         <div className="flex items-center gap-3 px-5 pt-10 text-primary-200">
-          <Image src={LocationIcon} width={13} height={18} alt="location" />
+          <LocationIcon />
           <p className="text-[12px]">{props.data.location}</p>
         </div>
       </div>

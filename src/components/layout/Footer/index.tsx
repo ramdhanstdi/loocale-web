@@ -66,9 +66,9 @@ const Footer = () => {
           className="mb-4"
         />
         <div className="flex justify-center items-center gap-3 ml-6 sm:ml-0">
-          <a href="https://www.instagram.com/loocale.id/" target={"_blank"} rel='noreferrer'><Image src={InstagramIcon} alt="Instagram" width={18} height={18}/></a>
-          <a href="mailto:loocale.id@gmail.com" target={"_blank"} rel='noreferrer'><Image src={WhatsAppIcon} alt="WhatsApp" width={20} height={20} /></a>
-          <a href="https://wa.me/628111722233?text=" target={"_blank"} rel='noreferrer'><Image src={MailIcon} alt="Email" width={24} height={16} /></a>
+          <a href="https://www.instagram.com/loocale.id/" target={"_blank"} rel='noreferrer'><InstagramIcon /></a>
+          <a href="mailto:loocale.id@gmail.com" target={"_blank"} rel='noreferrer'><WhatsAppIcon /></a>
+          <a href="https://wa.me/628111722233?text=" target={"_blank"} rel='noreferrer'><MailIcon /></a>
         </div>
       </div>
       <div className="sm:flex gap-8 hidden">

@@ -19,7 +19,8 @@ export interface PostDataInterface {
 }
 
 export interface UserDataInterface {
-	email: string;
+	id?: number;
+	email?: string;
 	full_name: string;
 	thumbnail: string | null;
 	user_name: string;

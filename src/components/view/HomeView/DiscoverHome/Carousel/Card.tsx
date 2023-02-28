@@ -25,7 +25,7 @@ const Card: React.FC<Props> = (props) => {
         className="rounded-t-2xl"
       />
       <div className="flex items-center gap-3 justify-center">
-        <Image src={LocationIcon} width={13} height={18} alt="location" />
+        <LocationIcon />
         <p className="py-3">{props.location}</p>
       </div>
     </a>

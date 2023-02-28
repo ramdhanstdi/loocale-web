@@ -17,17 +17,10 @@ const Hamburger: React.FC<Props> = (props) => {
   };
 
   return (
-    <div className={`absolute right-0 pr-5 ${props.className}`}>
-      <Image
-        src={HamburgerIcon}
-        width={27}
-        height={18}
-        onClick={handleClick}
-        className={`absolute right-0 ${props.className}`}
-        alt="menu"
-      />
+    <div className={`absolute right-0 pr-5 flex top-0 items-center h-[68px] ${props.className}`}>
+			<HamburgerIcon onClick={handleClick} className={`absolute right-0 ${props.className}`}/>
       {openMenu && (
-        <div className="absolute z-10 flex flex-col items-center text-center top-[45px] right-0 bg-white">
+        <div className="absolute z-10 flex flex-col items-center text-center top-[70px] right-0 bg-white">
           {props.menu.map((item) => (
             <a
               href={item.href}

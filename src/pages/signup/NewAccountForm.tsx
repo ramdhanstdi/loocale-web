@@ -4,11 +4,13 @@ import Button from "@components/design/Button";
 import axios from "axios";
 import { BE_URL } from "Config";
 import { fullnameValidation, usernameValidation } from "./lib/validation";
+import { useRouter } from "next/router";
 
 interface Props {
   email: string;
 }
 const NewAccountForm: React.FC<Props> = (props) => {
+	const router = useRouter();
   const [fullname, setFullname] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -32,6 +34,7 @@ const NewAccountForm: React.FC<Props> = (props) => {
         password: password,
       })
       .then(() => {
+				router.push("/feed");
         console.log("sign up success");
       })
       .catch((err) => {
