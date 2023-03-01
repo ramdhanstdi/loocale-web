@@ -71,7 +71,7 @@ const LeftPanel = () => {
             {!user ? (
               <PeopleIcon />
             ) : user.thumbnail ? (
-              <Image src={user.thumbnail} alt="left panel profile pic" />
+              <Image src={user.thumbnail} loader={() => user.thumbnail!} alt="left panel profile pic" />
             ) : (
               <PeopleIcon />
             )}

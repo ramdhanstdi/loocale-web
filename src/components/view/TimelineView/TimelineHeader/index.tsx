@@ -37,6 +37,7 @@ const AddPost = () => {
                 user.thumbnail ? (
                   <Image
                     src={user.thumbnail ? user.thumbnail : PeopleIcon}
+										loader={() => user.thumbnail || PeopleIcon}
                     alt="profile-pic"
                   />
                 ) : (

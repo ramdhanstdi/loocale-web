@@ -17,6 +17,7 @@ const Post: React.FC<PostDataInterface> = ({
   liked,
   id,
 	location_detail,
+	medias
 }) => {
   const [showMore, setShowMore] = useState(false);
   const [displayedComments, setDisplayedComments] = useState(
@@ -88,7 +89,7 @@ const Post: React.FC<PostDataInterface> = ({
           )}
           {}
         </p>
-        <PostPictureContainer />
+        <PostPictureContainer medias={medias}/>
         <PostInteractions
           commentsCount={Comments.length}
           likesCount={liked}
