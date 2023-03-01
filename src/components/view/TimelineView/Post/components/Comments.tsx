@@ -21,7 +21,7 @@ const Comment: React.FC<CommentProps> = ({ commentText, user, createdAt }) => {
         <Image
           src={user.thumbnail}
           loader={() => user.thumbnail!}
-          alt="left panel profile pic"
+          alt="comment profile pic"
         />
       ) : (
         <PeopleIcon />

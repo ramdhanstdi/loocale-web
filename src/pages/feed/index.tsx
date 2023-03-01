@@ -8,7 +8,7 @@ import Tabs from "@components/view/TimelineView/Tabs";
 import Post from "@components/view/TimelineView/Post";
 import PostsContainer from "@components/view/TimelineView/PostsContainer";
 import { useQuery } from "@tanstack/react-query";
-import getPosts, { getUser } from "src/services/Timeline";
+import getPosts, { getUser, useGetPosts } from "src/services/Timeline";
 import { PostDataInterface } from "src/models/Timeline";
 import { getCurrentUser } from "src/utils/helper";
 
@@ -20,11 +20,7 @@ const Feed: React.FC<FeedProps> = (props) => {
 	const user = getCurrentUser();
 	console.log(user)
 
-  const { data: postData } = useQuery({
-    queryKey: ["getPosts"],
-    queryFn: getPosts,
-    refetchInterval: 10000,
-  });
+  const { data: postData } = useGetPosts();
 
   return (
     <div className="relative">

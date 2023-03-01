@@ -14,7 +14,7 @@ const PostPictureContainer: React.FC<PostPictureContainerProps> = ({
   return (
     <div className="mb-2 w-full mx-auto flex gap-2">
       {medias.map((image) => (
-        <div key={image.PostMedia.postId}>
+        <div key={image.PostMedia.mediaId}>
           <Image
             src={image.media_url}
             loader={() => image.media_url}

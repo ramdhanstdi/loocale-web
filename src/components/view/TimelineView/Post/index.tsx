@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Comments from "./components/Comments";
 import PostHeader from "./components/PostHeader";
 import PostInteractions from "./components/PostInteractions";
@@ -7,6 +7,7 @@ import Image from "next/image";
 import PeopleIcon from "@icons/people_icon.svg";
 import { PostDataInterface } from "src/models/Timeline";
 import Comment from "./components/Comments";
+import AddComment from "./components/AddComment";
 
 const Post: React.FC<PostDataInterface> = ({
   User,
@@ -23,6 +24,10 @@ const Post: React.FC<PostDataInterface> = ({
   const [displayedComments, setDisplayedComments] = useState(
     Comments.slice(0, 5)
   );
+
+	useEffect(() => {
+		setDisplayedComments(Comments.slice(0, 5))
+	}, [Comments])
 
   const loadMoreComments = useCallback(() => {
     const newDisplayedComments = [...displayedComments];
@@ -113,6 +118,7 @@ const Post: React.FC<PostDataInterface> = ({
         ) : (
           <></>
         )}
+				<AddComment user={User} postId={id}/>
       </div>
     </div>
   );
