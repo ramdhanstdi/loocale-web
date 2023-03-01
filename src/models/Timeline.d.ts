@@ -7,7 +7,10 @@ export interface PostDataInterface {
 	userId: number;
 	Comments: {
 		commentText: string;
-		User: UserDataInterface
+		User: UserDataInterface;
+		createdAt: string;
+		id: number;
+		idUserComment: number;
 	}[];
 	User: UserDataInterface;
 	updatedAt: string;

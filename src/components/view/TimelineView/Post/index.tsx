@@ -97,9 +97,10 @@ const Post: React.FC<PostDataInterface> = ({
         />
         {displayedComments.map((comment) => (
           <Comment
-            key={comment.commentText}
+            key={comment.id}
             commentText={comment.commentText}
             user={comment.User}
+						createdAt={comment.createdAt}
           />
         ))}
         {Comments.length > 5 ? (
