@@ -9,6 +9,7 @@ import sampleUser from "src/utils/sample";
 import AddEmojiIcon from "@icons/add_emoji_icon.svg";
 import AddImageIcon from "@icons/add_image_icon.svg";
 import Button from "@components/design/Button";
+import EmojiPicker from "emoji-picker-react";
 
 interface CreatePostDialogProps {
   open: boolean;
@@ -19,15 +20,23 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({
   onClose,
 }) => {
   const [user, setUser] = useState<UserDataInterface>(sampleUser);
+  const [postText, setPostText] = useState("");
+  const [location, setLocation] = useState("");
+  const [showEmojis, setShowEmojis] = useState(false);
 
   useEffect(() => {
     setUser(getCurrentUser() as UserDataInterface);
   }, []);
-  const options = [{
-		title: "Hello"
-	}, {
-		title: "World"
-	}];
+  const options = [
+    {
+      title: "Hello",
+    },
+    {
+      title: "World",
+    },
+  ];
+
+	console.log("create post rerendered")
 
   return (
     <Dialog open={open} maxWidth="md" onClose={onClose}>
@@ -47,6 +56,8 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({
               type="text"
               className="outline-none"
               placeholder="Tambah kota"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
             />
           </div>
         </div>
@@ -54,6 +65,9 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({
       <div className="w-full box-border px-10">
         <div className="h-[240px] overflow-auto scrollbar-hide">
           <textarea
+            value={postText}
+            onChange={(e) => setPostText(e.target.value)}
+						onClick={() => setShowEmojis(false)}
             name="post-text"
             id="post-text"
             cols={30}
@@ -71,28 +85,45 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({
         <div className="border-b border-primary-500"></div>
         <div className="my-6">
           <Autocomplete
-						multiple
+            multiple
             options={options}
-						getOptionLabel={(option) => option.title}
-						defaultValue={[options[0]]}
-						isOptionEqualToValue={(option, value) => option.title === value.title}
+            getOptionLabel={(option) => option.title}
+            defaultValue={[options[0]]}
+            isOptionEqualToValue={(option, value) =>
+              option.title === value.title
+            }
             renderInput={(params) => (
-							<TextField
-								{...params}
-								className="w-[200px]"
-								color="primary"
-								label="Kategori"
-								variant="outlined"
-								size="small"
-								placeholder="Kategori"
-							/>
-						)}
+              <TextField
+                {...params}
+                className="w-[200px]"
+                color="primary"
+                label="Kategori"
+                variant="outlined"
+                size="small"
+                placeholder="Kategori"
+              />
+            )}
           />
         </div>
         <div className="flex justify-between mb-4 items-center">
-          <div className="gap-4 flex">
-            <AddEmojiIcon />
+          <div className="gap-4 flex relative">
+            <AddEmojiIcon onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+							e.stopPropagation()
+							setShowEmojis(!showEmojis)}} />
             <AddImageIcon />
+            {showEmojis && (
+              <div className="absolute -top-[300px] z-20">
+                <EmojiPicker
+                  skinTonesDisabled
+									lazyLoadEmojis
+                  previewConfig={{ showPreview: false }}
+                  height={300}
+                  onEmojiClick={(emoji, e) => {
+                    setPostText((prev) => prev + emoji.emoji);
+                  }}
+                />
+              </div>
+            )}
           </div>
           <Button
             variant="contained"

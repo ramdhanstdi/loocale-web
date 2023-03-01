@@ -7,6 +7,7 @@ interface DialogProps {
   children?: React.ReactNode;
   maxWidth?: "xs" | "sm" | "md" | "lg" | "xl";
 	className?: string
+	onClick?: VoidFunction;
 }
 
 const Dialog: React.FC<DialogProps> = (props) => {
@@ -26,6 +27,9 @@ const Dialog: React.FC<DialogProps> = (props) => {
 					maxHeight: props.maxWidth ? breakpoints[props.maxWidth] : "600px",
 				}}
 				onClick={(e) => {
+					if (props.onClick) {
+						props.onClick()
+					}
 					e.stopPropagation()
 				}}
       >
