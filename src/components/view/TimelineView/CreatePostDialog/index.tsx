@@ -1,8 +1,8 @@
 import Dialog from "@components/design/Dialog";
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import PeopleIcon from "@icons/people_icon.svg";
 import AddLocationIcon from "@icons/add_location_icon.svg";
-import { Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, TextField, TextareaAutosize } from "@mui/material";
 import { getCurrentUser } from "src/utils/helper";
 import { UserDataInterface } from "src/models/Timeline";
 import sampleUser from "src/utils/sample";
@@ -10,6 +10,7 @@ import AddEmojiIcon from "@icons/add_emoji_icon.svg";
 import AddImageIcon from "@icons/add_image_icon.svg";
 import Button from "@components/design/Button";
 import EmojiPicker from "emoji-picker-react";
+import Image from "next/image";
 
 interface CreatePostDialogProps {
   open: boolean;
@@ -23,6 +24,25 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({
   const [postText, setPostText] = useState("");
   const [location, setLocation] = useState("");
   const [showEmojis, setShowEmojis] = useState(false);
+  const [imageURL, setImageURL] = useState<string[]>([]);
+	const [imageFiles, setImageFiles] = useState<File[]>([]);
+
+  const onImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const imagesUploaded = [...imageURL];
+			const currentImageFiles = [...imageFiles];
+      for (let i = 0; i < event.target.files.length; i++) {
+        imagesUploaded.push(URL.createObjectURL(event.target.files[i]));
+				currentImageFiles.push(event.target.files[i]);
+      }
+      while (imagesUploaded.length > 4) {
+        imagesUploaded.shift();
+				currentImageFiles.shift();
+      }
+      setImageURL(imagesUploaded);
+			setImageFiles(currentImageFiles);
+    }
+  };
 
   useEffect(() => {
     setUser(getCurrentUser() as UserDataInterface);
@@ -35,8 +55,6 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({
       title: "World",
     },
   ];
-
-	console.log("create post rerendered")
 
   return (
     <Dialog open={open} maxWidth="md" onClose={onClose}>
@@ -64,23 +82,30 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({
       </div>
       <div className="w-full box-border px-10">
         <div className="h-[240px] overflow-auto scrollbar-hide">
-          <textarea
+          <TextareaAutosize
             value={postText}
             onChange={(e) => setPostText(e.target.value)}
-						onClick={() => setShowEmojis(false)}
+            onClick={() => setShowEmojis(false)}
             name="post-text"
             id="post-text"
-            cols={30}
-            rows={10}
+            cols={50}
             className={`w-[520px] outline-none text-justify whitespace-normal overflow-auto scrollbar-hide`}
             placeholder="Ceritakan perjalanan kamu"
           />
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum
-            omnis, autem, perferendis voluptates ut aut suscipit fugiat soluta
-            laboriosam, tempore quia labore esse mollitia. Id, hic molestias.
-            Error, aperiam officiis.
-          </p>
+          <div className="grid grid-cols-2 gap-2">
+            {imageURL.length &&
+              imageURL.map((url) => (
+                <div className="rounded-lg" key={url}>
+                  <Image
+                    src={url}
+										width={256}
+										height={200}
+                    alt="preview image"
+                    className="object-cover"
+                  />
+                </div>
+              ))}
+          </div>
         </div>
         <div className="border-b border-primary-500"></div>
         <div className="my-6">
@@ -107,15 +132,27 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({
         </div>
         <div className="flex justify-between mb-4 items-center">
           <div className="gap-4 flex relative">
-            <AddEmojiIcon onClick={(e: React.MouseEvent<HTMLDivElement>) => {
-							e.stopPropagation()
-							setShowEmojis(!showEmojis)}} />
-            <AddImageIcon />
+            <AddEmojiIcon
+              onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+                e.stopPropagation();
+                setShowEmojis(!showEmojis);
+              }}
+            />
+            <label>
+              <input
+                type="file"
+                onChange={onImageChange}
+                className="hidden"
+                accept="image/png,image/jpeg,video/mp4,video/x-m4v,video/*"
+                multiple
+              />
+              <AddImageIcon />
+            </label>
             {showEmojis && (
               <div className="absolute -top-[300px] z-20">
                 <EmojiPicker
                   skinTonesDisabled
-									lazyLoadEmojis
+                  lazyLoadEmojis
                   previewConfig={{ showPreview: false }}
                   height={300}
                   onEmojiClick={(emoji, e) => {
