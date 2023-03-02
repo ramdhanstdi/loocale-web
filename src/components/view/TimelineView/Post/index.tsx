@@ -15,7 +15,7 @@ const Post: React.FC<PostDataInterface> = ({
   createdAt,
   location,
   Comments,
-  liked,
+	Likes,
 	Categories,
   id,
 	location_detail,
@@ -97,8 +97,8 @@ const Post: React.FC<PostDataInterface> = ({
         </p>
         <PostPictureContainer medias={medias}/>
         <PostInteractions
+					likes={Likes}
           commentsCount={Comments.length}
-          likesCount={liked}
 					categories={Categories}
           postId={String(id)}
         />

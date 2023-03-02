@@ -6,14 +6,16 @@ interface InteractionIconProps {
   activeIcon: React.ReactNode;
   count: number | string;
 	onClick?: () => void;
+	isActive?: boolean;
 }
 const InteractionIcon: React.FC<InteractionIconProps> = ({
   icon,
   activeIcon,
+	isActive: activeProps,
   count = 0,
 	onClick
 }) => {
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(Boolean(activeProps));
   return (
     <div className={`flex gap-2 ${isActive ? "text-secondary-500" : "text-white"}`} onClick={() => {
 			if (onClick) {

@@ -2,26 +2,27 @@ import InteractionIcon from "./InteractionIcon";
 import CommentIcon from "@icons/comment_icon.svg";
 import HeartIcon from "@icons/heart_icon.svg";
 import { useMutation } from "@tanstack/react-query";
-import { likePost } from "src/services/Timeline";
-import { PostCategory } from "src/models/Timeline";
+import { likePost, useLikePost } from "src/services/Timeline";
+import { PostCategory, PostLikes } from "src/models/Timeline";
+import { getCurrentUser } from "src/utils/helper";
 
 interface PostInteractionsProps {
   commentsCount: number;
-  likesCount: number;
   postId: string;
   categories: PostCategory[];
+	likes: PostLikes[];
 }
 const PostInteractions: React.FC<PostInteractionsProps> = ({
   commentsCount,
-  likesCount,
   postId,
   categories,
+	likes
 }) => {
-  const likesMutation = useMutation({
-    mutationFn: () => {
-      return likePost({ postId });
-    },
-  });
+  const likesMutation = useLikePost();
+
+	const isPostLikedByUser = () => {
+		return likes.findIndex((postLike) => postLike.likedById === getCurrentUser()?.id) >= 0
+	}
 
   return (
     <div className="flex justify-between items-center mb-3">
@@ -33,9 +34,10 @@ const PostInteractions: React.FC<PostInteractionsProps> = ({
         />
         <InteractionIcon
           icon={<HeartIcon />}
+					isActive={isPostLikedByUser()}
           activeIcon={<HeartIcon />}
-          count={likesCount}
-          onClick={() => likesMutation.mutate()}
+          count={likes.length}
+          onClick={() => likesMutation.mutate({ postId })}
         />
       </div>
       <p className="text-[9px] text-secondary-500 font-light">

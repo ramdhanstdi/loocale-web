@@ -21,7 +21,14 @@ export interface PostDataInterface {
 		media_url: string;
 	}[];
 	location_detail: string | null;
-	Categories: PostCategory[]
+	Categories: PostCategory[];
+	Likes: PostLikes[]
+}
+
+export interface PostLikes {
+	id: number;
+	likedById: number;
+	postId: number;
 }
 
 export interface PostCategory extends CommunityListInterface {

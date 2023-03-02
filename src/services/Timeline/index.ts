@@ -57,6 +57,14 @@ export const useAddPost = (onSuccessHandler: VoidFunction) =>
 export const likePost = (params: { postId: string }) =>
   request.post("/like-post", params);
 
+export const useLikePost = () => useMutation({
+	mutationKey: ["likePost"],
+	mutationFn: likePost,
+	onSuccess: () => {
+		queryClient.invalidateQueries({ queryKey: ["getPosts"] })
+	},
+});
+
 export const getUser = () =>
   request
     .get("/users")
