@@ -16,6 +16,7 @@ const Post: React.FC<PostDataInterface> = ({
   location,
   Comments,
   liked,
+	Categories,
   id,
 	location_detail,
 	medias
@@ -98,6 +99,7 @@ const Post: React.FC<PostDataInterface> = ({
         <PostInteractions
           commentsCount={Comments.length}
           likesCount={liked}
+					categories={Categories}
           postId={String(id)}
         />
         {displayedComments.map((comment) => (

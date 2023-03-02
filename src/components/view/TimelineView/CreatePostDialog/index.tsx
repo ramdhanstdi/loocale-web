@@ -11,7 +11,7 @@ import AddImageIcon from "@icons/add_image_icon.svg";
 import Button from "@components/design/Button";
 import EmojiPicker from "emoji-picker-react";
 import Image from "next/image";
-import { useGetCategories } from "src/services/Timeline";
+import { useAddPost, useGetCategories } from "src/services/Timeline";
 import { CommunityListInterface } from "../../../../models/Home.d";
 
 interface CreatePostDialogProps {
@@ -28,8 +28,20 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({
   const [showEmojis, setShowEmojis] = useState(false);
   const [imageURL, setImageURL] = useState<string[]>([]);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
+	const [selectedCategories, setSelectedCategories] = useState<CommunityListInterface[]>([]);
 
   const { data: categories } = useGetCategories();
+
+	const onPostAdded = () => {
+		setPostText("");
+		setLocation("");
+		setImageURL([]);
+		setImageFiles([]);
+		setSelectedCategories([]);
+		onClose()
+	}
+
+	const addPostHandler = useAddPost(onPostAdded);
 
   const onImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -94,6 +106,8 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({
                 <div className="rounded-lg" key={url}>
                   <Image
                     src={url}
+										unoptimized
+										loader={() => url}
                     width={256}
                     height={200}
                     alt="preview image"
@@ -112,9 +126,8 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({
             multiple
             options={categories || []}
             getOptionLabel={(option) => option.title}
-            isOptionEqualToValue={(option, value) =>
-              option.title === value.title
-            }
+						value={selectedCategories}
+						onChange={(e, option) => setSelectedCategories(option)}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -163,7 +176,13 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({
           <Button
             variant="contained"
             className="rounded-lg py-3 w-[120px] text-xs font-bold"
-            onClick={() => {}}
+						disabled={!postText || !location || !selectedCategories.length }
+            onClick={() => addPostHandler.mutate({
+							postText,
+							location,
+							media_files: imageFiles,
+							categories: selectedCategories
+						})}
           >
             Post
           </Button>

@@ -1,3 +1,5 @@
+import { CommunityListInterface } from "./Home";
+
 export interface PostDataInterface {
 	id: number;
 	postText: string;
@@ -19,6 +21,16 @@ export interface PostDataInterface {
 		media_url: string;
 	}[];
 	location_detail: string | null;
+	Categories: PostCategory[]
+}
+
+export interface PostCategory extends CommunityListInterface {
+	PostCategories: {
+		connectId: number;
+		createdAt: string;
+		postId: number;
+		updatedAt: string;
+	}
 }
 
 export interface UserDataInterface {

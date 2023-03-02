@@ -13,23 +13,29 @@ export const useGetPosts = () =>
   useQuery({
     queryKey: ["getPosts"],
     queryFn: getPosts,
-    refetchInterval: 10000,
+    //refetchInterval: 10000,
   });
 
 const addPost = (data: {
   postText: string;
   location: string;
-  media_files: string[];
+  media_files: File[];
+	categories: CommunityListInterface[];
 }) => {
   let formData = new FormData();
   formData.append("postText", data.postText);
   formData.append("location", data.location);
   for (let i = 0; i < data.media_files.length; i++) {
-    formData.append("media_files", data.media_files[i]);
+    formData.append("media_files", data.media_files[i], data.media_files[i].name);
   }
 
+	for (let i = 0; i < data.categories.length; i++) {
+		formData.append(`categories[${i}]`, String(data.categories[i].id))
+	}
+
+	console.log(formData)
   const config = {
-    headers: { "content-type": "multipart/form-data" },
+    headers: { "Content-Type": "multipart/form-data" },
   };
 
   return request
@@ -38,11 +44,14 @@ const addPost = (data: {
     .catch((err) => console.error(err));
 };
 
-export const useAddPost = () =>
+export const useAddPost = (onSuccessHandler: VoidFunction) =>
   useMutation({
     mutationKey: ["addPost"],
     mutationFn: addPost,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["getPosts"] }),
+    onSuccess: () => {
+			onSuccessHandler()
+			queryClient.invalidateQueries({ queryKey: ["getPosts"] })
+		},
   });
 
 export const likePost = (params: { postId: string }) =>

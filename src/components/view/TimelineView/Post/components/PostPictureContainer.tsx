@@ -12,7 +12,7 @@ const PostPictureContainer: React.FC<PostPictureContainerProps> = ({
   medias,
 }) => {
   return (
-    <div className="mb-2 w-full mx-auto flex gap-2">
+    <div className="mb-2 w-full mx-auto grid grid-cols-2 gap-2">
       {medias.map((image) => (
         <div key={image.PostMedia.mediaId}>
           <Image
