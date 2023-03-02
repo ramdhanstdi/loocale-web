@@ -1,5 +1,6 @@
 import { queryClient } from "@pages/_app";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { CommunityListInterface } from "src/models/Home";
 import request from "../request";
 
 const getPosts = () =>
@@ -55,6 +56,14 @@ export const getUser = () =>
 
 export const useGetUser = () =>
   useQuery({ queryKey: ["getUser"], queryFn: getUser });
+
+export const getCategories = () =>
+  request
+    .get("/connect")
+    .then((res) => res.data as CommunityListInterface[])
+    .catch((err) => console.error(err));
+
+export const useGetCategories = () => useQuery({ queryKey: ["getCategories"], queryFn: getCategories });
 
 export const addComment = (data: { commentText: string; postId: number }) =>
   request

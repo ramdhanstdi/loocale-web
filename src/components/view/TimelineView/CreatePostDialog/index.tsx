@@ -11,6 +11,8 @@ import AddImageIcon from "@icons/add_image_icon.svg";
 import Button from "@components/design/Button";
 import EmojiPicker from "emoji-picker-react";
 import Image from "next/image";
+import { useGetCategories } from "src/services/Timeline";
+import { CommunityListInterface } from "../../../../models/Home.d";
 
 interface CreatePostDialogProps {
   open: boolean;
@@ -25,36 +27,30 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({
   const [location, setLocation] = useState("");
   const [showEmojis, setShowEmojis] = useState(false);
   const [imageURL, setImageURL] = useState<string[]>([]);
-	const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
+
+  const { data: categories } = useGetCategories();
 
   const onImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const imagesUploaded = [...imageURL];
-			const currentImageFiles = [...imageFiles];
+      const currentImageFiles = [...imageFiles];
       for (let i = 0; i < event.target.files.length; i++) {
         imagesUploaded.push(URL.createObjectURL(event.target.files[i]));
-				currentImageFiles.push(event.target.files[i]);
+        currentImageFiles.push(event.target.files[i]);
       }
       while (imagesUploaded.length > 4) {
         imagesUploaded.shift();
-				currentImageFiles.shift();
+        currentImageFiles.shift();
       }
       setImageURL(imagesUploaded);
-			setImageFiles(currentImageFiles);
+      setImageFiles(currentImageFiles);
     }
   };
 
   useEffect(() => {
     setUser(getCurrentUser() as UserDataInterface);
   }, []);
-  const options = [
-    {
-      title: "Hello",
-    },
-    {
-      title: "World",
-    },
-  ];
 
   return (
     <Dialog open={open} maxWidth="md" onClose={onClose}>
@@ -93,38 +89,40 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({
             placeholder="Ceritakan perjalanan kamu"
           />
           <div className="grid grid-cols-2 gap-2">
-            {imageURL.length &&
+            {imageURL.length ? (
               imageURL.map((url) => (
                 <div className="rounded-lg" key={url}>
                   <Image
                     src={url}
-										width={256}
-										height={200}
+                    width={256}
+                    height={200}
                     alt="preview image"
                     className="object-cover"
                   />
                 </div>
-              ))}
+              ))
+            ) : (
+              <></>
+            )}
           </div>
         </div>
         <div className="border-b border-primary-500"></div>
         <div className="my-6">
           <Autocomplete
             multiple
-            options={options}
+            options={categories || []}
             getOptionLabel={(option) => option.title}
-            defaultValue={[options[0]]}
             isOptionEqualToValue={(option, value) =>
               option.title === value.title
             }
             renderInput={(params) => (
               <TextField
                 {...params}
-                className="w-[200px]"
                 color="primary"
                 label="Kategori"
                 variant="outlined"
                 size="small"
+								fullWidth
                 placeholder="Kategori"
               />
             )}
