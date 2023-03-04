@@ -1,17 +1,19 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import SearchIcon from "@icons/search_icon.svg";
 import LeftPanel from "@components/view/TimelineView/LeftPanel";
 import RightPanel from "@components/view/TimelineView/RightPanel";
 import PostsContainer from "@components/view/TimelineView/PostsContainer";
 import Post from "@components/view/TimelineView/Post";
 import { useQuery } from "@tanstack/react-query";
-import getPosts from "src/services/Timeline";
-import { PostDataInterface } from "src/models/Timeline";
+import getPosts, { getAllCities } from "src/services/Timeline";
+import { CityDataInterface, PostDataInterface } from "src/models/Timeline";
 import Image from "next/image";
 import DiscoverHero from "@components/view/DiscoverView/DiscoverHero";
 import DiscoverContainer from "@components/view/DiscoverView/DiscoverContainer";
 import PopularTodayGrid from "@components/view/DiscoverView/PopularTodayGrid";
 import ImageCard from "@components/design/ImageCard";
-import SearchBar from "@components/design/SearchBar";
+import { Autocomplete } from "@mui/material";
+import ArrowBackIcon from "@icons/arrow_back_icon.svg";
 
 const POPULAR_TODAY = [
   {
@@ -49,36 +51,74 @@ const DiscoverPage = () => {
   } = useQuery({
     queryKey: ["getPosts"],
     queryFn: getPosts,
-    refetchInterval: 10000,
   });
 
   const [hasUserSearched, setHasUserSearched] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+  const [city, setCity] = useState<CityDataInterface | null>(null);
+  const [citiesOption, setCitiesOption] = useState<CityDataInterface[]>([]);
+  const [searchCity, setSearchCity] = useState("");
 
-  const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
-  };
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (searchCity) {
+        getAllCities(searchCity).then((res) => {
+          setCitiesOption(res);
+        });
+      }
+    }, 500);
+    return () => clearTimeout(timeout);
+  }, [searchCity]);
+
   return (
     <div className="relative">
       <LeftPanel />
       <RightPanel />
       <div className="fixed left-[240px] right-[381px]">
-        <Image
-          src={"/NavbarLogo.svg"}
-          width={140}
-          height={52}
-          alt="Loocale Logo"
-        />
+        <Image src={"/NavbarLogo.svg"} width={140} height={52} alt="Loocale Logo" />
       </div>
       {hasUserSearched ? (
-				<div className="fixed left-[240px] right-[381px] top-[100px]">
-					<SearchBar value={searchValue} onChange={searchHandler} />
-				</div>
+        <div className="fixed left-[240px] right-[381px] top-[100px]">
+          <div className="flex gap-5 items-center">
+            <ArrowBackIcon onClick={() => setHasUserSearched(false)}/>
+            <div className="flex gap-5 w-[420px] items-center h-9 bg-white px-5 rounded-full border border-primary-500">
+              <Autocomplete
+                options={citiesOption}
+                value={city}
+                onChange={(e, value) => {
+                  setHasUserSearched(true);
+                  setCity(value);
+                }}
+                inputValue={searchCity}
+                isOptionEqualToValue={(option, value) => option.name === value.name}
+                getOptionLabel={(option) => option && option.name}
+                onInputChange={(e, value) => setSearchCity(value)}
+                filterOptions={(x) => x}
+                className="w-full"
+                renderInput={(params) => (
+                  <div ref={params.InputProps.ref}>
+                    <input
+                      {...params.inputProps}
+                      placeholder="Cari kota atau aktivitas yang ingin kamu kepo-in..."
+                      className="outline-none w-full placeholder:text-xs placeholder:italic h-9 border-r border-t border-b border-primary-800"
+                    />
+                  </div>
+                )}
+              />
+              <SearchIcon />
+            </div>
+          </div>
+        </div>
       ) : (
         <DiscoverHero
-          onClick={() => setHasUserSearched(true)}
-          searchValue={searchValue}
-          onChange={searchHandler}
+          setSearchCity={setSearchCity}
+          onChange={(e, value) => {
+            setHasUserSearched(true);
+            setCity(value);
+          }}
+          citiesOption={citiesOption}
+          city={city}
+          searchCity={searchCity}
         />
       )}
       <DiscoverContainer hasUserSearched={hasUserSearched}>
@@ -112,9 +152,7 @@ const DiscoverPage = () => {
             </p>
           </div>
           {postData ? (
-            postData.map((post: PostDataInterface) => (
-              <Post key={post.id} {...post} />
-            ))
+            postData.map((post: PostDataInterface) => <Post key={post.id} {...post} />)
           ) : (
             <></>
           )}
