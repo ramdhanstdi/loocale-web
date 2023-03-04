@@ -15,9 +15,7 @@ interface FeedProps {}
 const Feed: React.FC<FeedProps> = (props) => {
   const [activeTab, setActiveTab] = useState(0);
 
-  const user = getCurrentUser();
   const { data: currentUser } = useGetUser();
-  console.log(currentUser);
 
   const { data: postData } = useGetPosts();
 

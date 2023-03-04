@@ -41,11 +41,21 @@ export interface PostCategory extends CommunityListInterface {
 }
 
 export interface UserDataInterface {
-	id?: number;
-	email?: string;
-	full_name: string;
-	thumbnail: string | null;
-	user_name: string;
+	users: {
+		id?: number;
+		email?: string;
+		full_name: string;
+		thumbnail: string | null;
+		user_name: string;
+		isFirstSignIn: boolean;
+		Profiles: {
+			id: number;
+			avatar: string;
+			city: string;
+			province: string;
+			userId: string;
+		}[]
+	}
 }
 
 export interface PostMediaInterface {

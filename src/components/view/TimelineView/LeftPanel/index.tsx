@@ -33,58 +33,57 @@ const LEFT_PANEL_MENU = [
 const LeftPanel = () => {
   const router = useRouter();
   const [openCreatePost, setOpenCreatePost] = useState(false);
-	const [user, setUser] = useState<UserDataInterface>(sampleUser);
+
+  const { data: currentUser } = useGetUser();
 
   const handleCloseDialog = () => {
     setOpenCreatePost(false);
   };
 
-  useEffect(() => {
-		setUser(getCurrentUser() as UserDataInterface)
-	}, [])
-
-  return (
-    <>
-      <div className="flex flex-col justify-between top-12 bottom-12 left-16 fixed">
-        <div className="px-[30px] py-9 rounded-xl shadow-md flex flex-col gap-12">
-          {LEFT_PANEL_MENU.map((menu) => (
-            <Link href={menu.href} key={menu.id}>
-              <div
-                className={`${
-                  menu.href === router.pathname
-                    ? "text-secondary-500"
-                    : "text-primary-800"
-                }`}
-              >
-                {<menu.icon />}
-              </div>
-            </Link>
-          ))}
-          <div
-            className="text-secondary-500"
-            onClick={() => setOpenCreatePost(true)}
-          >
-            <AddIcon />
+  if (!currentUser) {
+    return <></>;
+  } else {
+    return (
+      <>
+        <div className="flex flex-col justify-between top-12 bottom-12 left-16 fixed">
+          <div className="px-[30px] py-9 rounded-xl shadow-md flex flex-col gap-12">
+            {LEFT_PANEL_MENU.map((menu) => (
+              <Link href={menu.href} key={menu.id}>
+                <div
+                  className={`${
+                    menu.href === router.pathname ? "text-secondary-500" : "text-primary-800"
+                  }`}
+                >
+                  {<menu.icon />}
+                </div>
+              </Link>
+            ))}
+            <div className="text-secondary-500" onClick={() => setOpenCreatePost(true)}>
+              <AddIcon />
+            </div>
+          </div>
+          <div className="py-3 px-5 shadow-md rounded-lg flex flex-col ">
+            <div className="rounded-full mb-3 flex justify-center">
+              {!currentUser.users.Profiles[0].avatar ? (
+								<PeopleIcon></PeopleIcon>
+							): (
+								<Image
+								src={currentUser.users.Profiles[0].avatar}
+								loader={() => currentUser.users.Profiles[0].avatar}
+								width={40}
+								height={40}
+								className="rounded-full"
+								alt="profile pic"
+								/>
+							)}
+            </div>
+            <p className="text-secondary-500 text-[9px] text-center">{currentUser.users.user_name || ""}</p>
           </div>
         </div>
-        <div className="py-3 px-5 shadow-md rounded-lg flex flex-col ">
-          <div className="rounded-full mb-3 flex justify-center">
-            {!user ? (
-              <PeopleIcon />
-            ) : user.thumbnail ? (
-              <Image src={user.thumbnail} loader={() => user.thumbnail!} alt="left panel profile pic" />
-            ) : (
-              <PeopleIcon />
-            )}
-          </div>
-          <p className="text-secondary-500 text-[9px] text-center">
-            {user.user_name || ""}
-          </p>
-        </div>
-      </div>
-      <CreatePostDialog open={openCreatePost} onClose={handleCloseDialog} />
-    </>
-  );
+        <CreatePostDialog open={openCreatePost} onClose={handleCloseDialog} />
+      </>
+    );
+  }
 };
 
 export default LeftPanel;
