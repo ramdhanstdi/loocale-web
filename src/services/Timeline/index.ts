@@ -21,7 +21,7 @@ const addPost = (data: {
   postText: string;
   location: string;
   media_files: File[];
-	categories: CommunityListInterface[];
+  categories: CommunityListInterface[];
 }) => {
   let formData = new FormData();
   formData.append("postText", data.postText);
@@ -30,11 +30,11 @@ const addPost = (data: {
     formData.append("media_files", data.media_files[i], data.media_files[i].name);
   }
 
-	for (let i = 0; i < data.categories.length; i++) {
-		formData.append(`categories[${i}]`, String(data.categories[i].id))
-	}
+  for (let i = 0; i < data.categories.length; i++) {
+    formData.append(`categories[${i}]`, String(data.categories[i].id));
+  }
 
-	console.log(formData)
+  console.log(formData);
   const config = {
     headers: { "Content-Type": "multipart/form-data" },
   };
@@ -50,21 +50,21 @@ export const useAddPost = (onSuccessHandler: VoidFunction) =>
     mutationKey: ["addPost"],
     mutationFn: addPost,
     onSuccess: () => {
-			onSuccessHandler()
-			queryClient.invalidateQueries({ queryKey: ["getPosts"] })
-		},
+      onSuccessHandler();
+      queryClient.invalidateQueries({ queryKey: ["getPosts"] });
+    },
   });
 
-export const likePost = (params: { postId: string }) =>
-  request.post("/like-post", params);
+export const likePost = (params: { postId: string }) => request.post("/like-post", params);
 
-export const useLikePost = () => useMutation({
-	mutationKey: ["likePost"],
-	mutationFn: likePost,
-	onSuccess: () => {
-		queryClient.invalidateQueries({ queryKey: ["getPosts"] })
-	},
-});
+export const useLikePost = () =>
+  useMutation({
+    mutationKey: ["likePost"],
+    mutationFn: likePost,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getPosts"] });
+    },
+  });
 
 export const getUser = () =>
   request
@@ -72,8 +72,7 @@ export const getUser = () =>
     .then((res) => res.data)
     .catch((err) => console.error(err));
 
-export const useGetUser = () =>
-  useQuery({ queryKey: ["getUser"], queryFn: getUser });
+export const useGetUser = () => useQuery({ queryKey: ["getUser"], queryFn: getUser });
 
 export const getCategories = () =>
   request
@@ -81,7 +80,8 @@ export const getCategories = () =>
     .then((res) => res.data as CommunityListInterface[])
     .catch((err) => console.error(err));
 
-export const useGetCategories = () => useQuery({ queryKey: ["getCategories"], queryFn: getCategories });
+export const useGetCategories = () =>
+  useQuery({ queryKey: ["getCategories"], queryFn: getCategories });
 
 export const addComment = (data: { commentText: string; postId: number }) =>
   request
@@ -95,5 +95,14 @@ export const useAddComment = () =>
     mutationFn: addComment,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["getPosts"] }),
   });
+
+export const getAllCities = (cityName: string) => 
+  request
+    .get("/cities-name?name=" + cityName)
+    .then((res) => res.data)
+    .catch((err) => console.error(err));
+
+export const useGetAllCities = (cityName: string) =>
+  useQuery({ queryKey: ["getAllCities", cityName], queryFn: () => getAllCities(cityName) });
 
 export default getPosts;

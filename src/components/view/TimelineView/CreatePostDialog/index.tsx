@@ -4,14 +4,14 @@ import PeopleIcon from "@icons/people_icon.svg";
 import AddLocationIcon from "@icons/add_location_icon.svg";
 import { Autocomplete, TextField, TextareaAutosize } from "@mui/material";
 import { getCurrentUser } from "src/utils/helper";
-import { UserDataInterface } from "src/models/Timeline";
+import { CityDataInterface, UserDataInterface } from "src/models/Timeline";
 import sampleUser from "src/utils/sample";
 import AddEmojiIcon from "@icons/add_emoji_icon.svg";
 import AddImageIcon from "@icons/add_image_icon.svg";
 import Button from "@components/design/Button";
 import EmojiPicker from "emoji-picker-react";
 import Image from "next/image";
-import { useAddPost, useGetCategories, useGetUser } from "src/services/Timeline";
+import { getAllCities, useAddPost, useGetCategories, useGetUser } from "src/services/Timeline";
 import { CommunityListInterface } from "../../../../models/Home.d";
 import ClosePostDialog from "./ClosePostDialog";
 import AddCityIcon from "@icons/add_city_icon.svg";
@@ -24,10 +24,13 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
   const { data: currentUser } = useGetUser();
   const [postText, setPostText] = useState("");
   const [location, setLocation] = useState("");
+	const [city, setCity] = useState<CityDataInterface | null>(null);
+	const [citiesOption, setCitiesOption] = useState<CityDataInterface[]>([]);
   const [imageURL, setImageURL] = useState<string[]>([]);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<CommunityListInterface[]>([]);
   const [openClosePostDialog, setOpenClosePostDialog] = useState(false);
+	const [searchCity, setSearchCity] = useState("");
 
   const { data: categories } = useGetCategories();
 
@@ -39,6 +42,17 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
     setSelectedCategories([]);
     onClose();
   };
+
+	useEffect(() => {
+		const timeout = setTimeout(() => {
+			if (searchCity) {
+				getAllCities(searchCity).then((res) => {
+					setCitiesOption(res)
+				})
+			}
+		}, 500)
+		return () => clearTimeout(timeout)
+	}, [searchCity])
 
   const addPostHandler = useAddPost(onPostAdded);
 
@@ -85,7 +99,13 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
                 <div className="flex gap-2">
                   <AddCityIcon />
                   <Autocomplete
-                    options={["Hello", "World"]}
+                    options={citiesOption}
+										value={city}
+										onChange={(e, value) => setCity(value)}
+										inputValue={searchCity}
+										isOptionEqualToValue={(option, value) => option.name === value.name}
+										getOptionLabel={(option) => option && option.name}
+										onInputChange={(e, value) => setSearchCity(value)}
 										filterOptions={(x) => x}
                     renderInput={(params) => (
                       <div ref={params.InputProps.ref}>

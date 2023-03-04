@@ -25,6 +25,12 @@ export interface PostDataInterface {
 	Likes: PostLikes[]
 }
 
+export interface CityDataInterface {
+	name: string;
+	province: string;
+	region: string;
+}
+
 export interface PostLikes {
 	id: number;
 	likedById: number;
