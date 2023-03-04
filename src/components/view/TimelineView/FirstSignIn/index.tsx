@@ -28,7 +28,9 @@ const FirstSignIn = () => {
     if (step === 4) {
       const data = new FormData();
       //@ts-ignore
-      data.append("profileImage", profileImage);
+			if (profileImage) {
+				data.append("profileImage", profileImage);
+			}
       data.append("province", province[0]);
       data.append("city", city[0]);
       for (let i = 0; i < chosenInterest.length; i++) {
