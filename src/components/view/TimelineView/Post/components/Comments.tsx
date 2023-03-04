@@ -22,6 +22,9 @@ const Comment: React.FC<CommentProps> = ({ commentText, user, createdAt }) => {
           src={user.thumbnail}
           loader={() => user.thumbnail!}
           alt="comment profile pic"
+					width={40}
+					height={40}
+					className="rounded-full"
         />
       ) : (
         <PeopleIcon />

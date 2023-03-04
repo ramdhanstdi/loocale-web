@@ -65,8 +65,7 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
     }
   };
 
-  console.log("imageUrl", imageURL, "imageFiles", imageFiles);
-  const removeImageHandler = (url: string) => {
+	const removeImageHandler = (url: string) => {
     const getRemovedImageIndex = imageURL.findIndex((imageUrl) => imageUrl === url);
     setImageURL(
       imageURL.slice(0, getRemovedImageIndex).concat(imageURL.slice(getRemovedImageIndex + 1))
@@ -228,13 +227,14 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
               <Button
                 variant="contained"
                 className="rounded-lg py-3 w-[120px] text-xs font-bold"
-                disabled={!postText || !location || !selectedCategories.length}
+                disabled={!postText || !city || !selectedCategories.length}
                 onClick={() =>
                   addPostHandler.mutate({
                     postText,
-                    location,
+                    location_detail: location,
                     media_files: imageFiles,
                     categories: selectedCategories,
+										location: city ? city.name : "",
                   })
                 }
               >

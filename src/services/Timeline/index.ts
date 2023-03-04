@@ -22,10 +22,12 @@ const addPost = (data: {
   location: string;
   media_files: File[];
   categories: CommunityListInterface[];
+	location_detail: string;
 }) => {
   let formData = new FormData();
   formData.append("postText", data.postText);
   formData.append("location", data.location);
+	formData.append("location_detail", data.location_detail);
   for (let i = 0; i < data.media_files.length; i++) {
     formData.append("media_files", data.media_files[i], data.media_files[i].name);
   }

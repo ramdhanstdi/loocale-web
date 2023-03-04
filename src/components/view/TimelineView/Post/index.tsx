@@ -54,9 +54,20 @@ const Post: React.FC<PostDataInterface> = ({
         <div className="max-w-[600px] mx-auto relative">
           <div className="absolute text-center top-0 -left-20 text-xs text-primary-200 font-light">
             <div className="rounded-full flex justify-center">
-              <PeopleIcon />
+              {User.thumbnail ? (
+                <Image
+                  src={User.thumbnail}
+                  loader={() => User.thumbnail!}
+                  width={40}
+                  height={40}
+                  alt="profile-pic"
+									className="rounded-full"
+                />
+              ) : (
+                <PeopleIcon />
+              )}
             </div>
-            <p className="">Moderator</p>
+            <p className="mt-2">Moderator</p>
             <p>Lvl 6</p>
           </div>
           <PostHeader
