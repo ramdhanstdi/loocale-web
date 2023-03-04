@@ -48,7 +48,7 @@ const LeftPanel = () => {
         <div className="flex flex-col justify-between top-12 bottom-12 left-16 fixed">
           <div className="px-[30px] py-9 rounded-xl shadow-md flex flex-col gap-12">
             {LEFT_PANEL_MENU.map((menu) => (
-              <Link href={menu.href} key={menu.id}>
+              <a href={menu.href} key={menu.id}>
                 <div
                   className={`${
                     menu.href === router.pathname ? "text-secondary-500" : "text-primary-800"
@@ -56,7 +56,7 @@ const LeftPanel = () => {
                 >
                   {<menu.icon />}
                 </div>
-              </Link>
+              </a>
             ))}
             <div className="text-secondary-500" onClick={() => setOpenCreatePost(true)}>
               <AddIcon />

@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 
 interface LocationAnchorProps {
-	href: string;
 	iconColor: string;
 	className?: string;
 	location: string;
@@ -22,9 +21,9 @@ const LocationAnchor:React.FC<LocationAnchorProps> = (props) => {
           fill={props.iconColor}
         />
       </svg>
-      <a href={props.href} className="underline">
+      <p className="">
         {props.location}
-      </a>
+      </p>
     </div>
   );
 };
