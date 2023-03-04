@@ -7,6 +7,7 @@ import axios from "axios";
 import { BE_URL } from "Config";
 import Cookies from "js-cookie";
 import request from "src/services/request";
+import jwtDecode from "jwt-decode";
 
 interface Props {
   callback: (res?: any) => void;
@@ -21,8 +22,7 @@ const GoogleSignIn: React.FC<Props> = (props) => {
           clientID: googleUser.credential,
         })
         .then((res) => {
-          Cookies.set("token", res.data.user.token, { expires: 7});
-          Cookies.set("username", res.data.user.username, { expires: 7});
+          Cookies.set("token", res.data.token, { expires: 7});
           props.callback();
         })
         .catch((err) => {

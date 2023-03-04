@@ -5,6 +5,7 @@ import axios from "axios";
 import { BE_URL } from "Config";
 import { fullnameValidation, usernameValidation } from "./lib/validation";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 interface Props {
   email: string;
@@ -33,7 +34,8 @@ const NewAccountForm: React.FC<Props> = (props) => {
         user_name: username,
         password: password,
       })
-      .then(() => {
+      .then((res) => {
+				Cookies.set("token", res.data.data)
 				router.push("/feed");
         console.log("sign up success");
       })

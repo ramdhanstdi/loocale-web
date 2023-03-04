@@ -77,7 +77,7 @@ const LeftPanel = () => {
             )}
           </div>
           <p className="text-secondary-500 text-[9px] text-center">
-            {user.user_name}
+            {user.user_name || ""}
           </p>
         </div>
       </div>
