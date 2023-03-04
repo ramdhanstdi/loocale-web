@@ -16,10 +16,10 @@ const AddComment: React.FC<AddCommentProps> = ({ user, postId }) => {
 
   return (
     <div className="w-full gap-2 flex items-center">
-      {user.thumbnail ? (
+      {false ? (
         <Image
-          src={user.thumbnail}
-          loader={() => user.thumbnail!}
+          src={user.Profiles[0].avatar}
+          loader={() => user.Profiles[0].avatar}
           alt="comment profile pic"
         />
       ) : (
@@ -34,7 +34,10 @@ const AddComment: React.FC<AddCommentProps> = ({ user, postId }) => {
           className="text-xs outline-none bg-grayscale-50 px-6 py-2 rounded-full w-full"
         />
         <Button
-          onClick={() => addCommentHandler.mutate({ postId, commentText })}
+          onClick={() => {
+						addCommentHandler.mutate({ postId, commentText })
+						setCommentText("");
+					}}
           variant="contained"
           className="py-2 px-3 text-[9px] rounded-full"
         >

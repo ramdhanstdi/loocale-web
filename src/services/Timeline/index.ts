@@ -1,7 +1,7 @@
 import { queryClient } from "@pages/_app";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { CommunityListInterface } from "src/models/Home";
-import { UserDataInterface } from "src/models/Timeline";
+import { GetUserDataInterface, UserDataInterface } from "src/models/Timeline";
 import request from "../request";
 
 const getPosts = () =>
@@ -68,7 +68,7 @@ export const useLikePost = () => useMutation({
 
 export const getUser = () =>
   request
-    .get<UserDataInterface>("/user")
+    .get<GetUserDataInterface>("/user")
     .then((res) => res.data)
     .catch((err) => console.error(err));
 

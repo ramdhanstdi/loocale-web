@@ -14,6 +14,7 @@ import Image from "next/image";
 import { useAddPost, useGetCategories, useGetUser } from "src/services/Timeline";
 import { CommunityListInterface } from "../../../../models/Home.d";
 import ClosePostDialog from "./ClosePostDialog";
+import AddCityIcon from "@icons/add_city_icon.svg";
 
 interface CreatePostDialogProps {
   open: boolean;
@@ -23,7 +24,6 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
   const { data: currentUser } = useGetUser();
   const [postText, setPostText] = useState("");
   const [location, setLocation] = useState("");
-  const [showEmojis, setShowEmojis] = useState(false);
   const [imageURL, setImageURL] = useState<string[]>([]);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<CommunityListInterface[]>([]);
@@ -42,13 +42,13 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
 
   const addPostHandler = useAddPost(onPostAdded);
 
-	const closeDialogHandler = () => {
-		if (postText || location || imageURL.length || imageFiles.length || selectedCategories.length) {
-			setOpenClosePostDialog(true)
-		} else {
-			onClose()
-		}
-	}
+  const closeDialogHandler = () => {
+    if (postText || location || imageURL.length || imageFiles.length || selectedCategories.length) {
+      setOpenClosePostDialog(true);
+    } else {
+      onClose();
+    }
+  };
 
   const onImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -81,15 +81,29 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
             <PeopleIcon />
             <div className="flex flex-col">
               <p className="font-bold text-primary-800 mb-2">{currentUser.users.user_name}</p>
-              <div className="flex gap-2">
-                <AddLocationIcon />
-                <input
-                  type="text"
-                  className="outline-none"
-                  placeholder="Tambah kota"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                />
+              <div className="flex gap-4">
+                <div className="flex gap-2">
+                  <AddCityIcon />
+                  <Autocomplete
+                    options={["Hello", "World"]}
+										filterOptions={(x) => x}
+                    renderInput={(params) => (
+                      <div ref={params.InputProps.ref}>
+                        <input {...params.inputProps} placeholder="Tambah kota" className="outline-none"/>
+                      </div>
+                    )}
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <AddLocationIcon />
+                  <input
+                    type="text"
+                    className="outline-none"
+                    placeholder="Tambah lokasi"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -98,7 +112,6 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
               <TextareaAutosize
                 value={postText}
                 onChange={(e) => setPostText(e.target.value)}
-                onClick={() => setShowEmojis(false)}
                 name="post-text"
                 id="post-text"
                 cols={50}
@@ -148,12 +161,6 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
             </div>
             <div className="flex justify-between mb-4 items-center">
               <div className="gap-4 flex relative">
-                <AddEmojiIcon
-                  onClick={(e: React.MouseEvent<HTMLDivElement>) => {
-                    e.stopPropagation();
-                    setShowEmojis(!showEmojis);
-                  }}
-                />
                 <label>
                   <input
                     type="file"
@@ -164,19 +171,6 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
                   />
                   <AddImageIcon />
                 </label>
-                {showEmojis && (
-                  <div className="absolute -top-[300px] z-20">
-                    <EmojiPicker
-                      skinTonesDisabled
-                      lazyLoadEmojis
-                      previewConfig={{ showPreview: false }}
-                      height={300}
-                      onEmojiClick={(emoji, e) => {
-                        setPostText((prev) => prev + emoji.emoji);
-                      }}
-                    />
-                  </div>
-                )}
               </div>
               <Button
                 variant="contained"
@@ -199,13 +193,13 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
         <ClosePostDialog
           open={openClosePostDialog}
           onDiscard={() => {
-						onPostAdded()
-						setOpenClosePostDialog(false)
-					}}
+            onPostAdded();
+            setOpenClosePostDialog(false);
+          }}
           onSaveAsDraft={() => {
-						onClose()
-						setOpenClosePostDialog(false)
-					}}
+            onClose();
+            setOpenClosePostDialog(false);
+          }}
         />
       </>
     );

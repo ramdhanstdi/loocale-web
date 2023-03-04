@@ -40,9 +40,12 @@ export interface PostCategory extends CommunityListInterface {
 	}
 }
 
+export interface GetUserDataInterface {
+	users: UserDataInterface
+}
+
 export interface UserDataInterface {
-	users: {
-		id?: number;
+	id?: number;
 		email?: string;
 		full_name: string;
 		thumbnail: string | null;
@@ -55,7 +58,6 @@ export interface UserDataInterface {
 			province: string;
 			userId: string;
 		}[]
-	}
 }
 
 export interface PostMediaInterface {
