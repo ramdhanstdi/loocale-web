@@ -11,10 +11,8 @@ interface InterestProps {
   chosenInterest: CommunityListInterface[];
   setChosenInterest: (args: CommunityListInterface[]) => void;
 }
-const Interest: React.FC<InterestProps> = ({ chosenInterest, setChosenInterest, ...props}) => {
-  const [interestList, setInterestList] = useState<
-    CommunityListInterface[] | []
-  >([]);
+const Interest: React.FC<InterestProps> = ({ chosenInterest, setChosenInterest, ...props }) => {
+  const [interestList, setInterestList] = useState<CommunityListInterface[] | []>([]);
 
   const hasInterestBeenChosen = (
     interest: CommunityListInterface,
@@ -37,10 +35,21 @@ const Interest: React.FC<InterestProps> = ({ chosenInterest, setChosenInterest, 
     if (isInterestClicked) {
       arr.splice(index, 1);
     } else {
-      arr.push(interest);
+      if (arr.length < 5) {
+        arr.push(interest);
+      }
     }
     setChosenInterest(arr);
   };
+
+	const getCursorStyle = (interest: CommunityListInterface) => {
+		if (chosenInterest.length === 5) {
+			if (!chosenInterest.find((currentInterest) => currentInterest.id === interest.id)) {
+				return "hover:cursor-not-allowed"
+			}
+		}
+		return "hover:cursor-pointer"
+	}
 
   useEffect(() => {
     request.get(BE_URL + "/connect").then((res) => {
@@ -49,19 +58,14 @@ const Interest: React.FC<InterestProps> = ({ chosenInterest, setChosenInterest, 
   }, []);
   return (
     <div className="mt-[56px] text-center text-primary-900">
-      <h1 className="text-[28px] font-bold mb-2 leading-9">
-        Pilih hal yang kamu sukai
-      </h1>
-      <p className="text-sm font-light mb-6">
-        Silakan pilih hingga 5 kategori favorit
-      </p>
+      <h1 className="text-[28px] font-bold mb-2 leading-9">Pilih hal yang kamu sukai</h1>
+      <p className="text-sm font-light mb-6">Silakan pilih hingga 5 kategori favorit</p>
       <div className="flex gap-4 flex-wrap max-h-[200px] overflow-y-scroll scrollbar-hide justify-start">
         {interestList.length ? (
           interestList.map((interest) => (
             <div
-              className={`rounded-lg hover:cursor-pointer ${
-                hasInterestBeenChosen(interest, chosenInterest)
-                  .isInterestClicked
+              className={`rounded-lg ${getCursorStyle(interest)} ${
+                hasInterestBeenChosen(interest, chosenInterest).isInterestClicked
                   ? "border-2 border-secondary-500"
                   : ""
               }`}
@@ -72,10 +76,7 @@ const Interest: React.FC<InterestProps> = ({ chosenInterest, setChosenInterest, 
                 title={interest.title}
                 width={"116px"}
                 fontSize="16px"
-                active={
-                  hasInterestBeenChosen(interest, chosenInterest)
-                    .isInterestClicked
-                }
+                active={hasInterestBeenChosen(interest, chosenInterest).isInterestClicked}
                 height="78px"
                 borderRadius="8px"
                 className="border-2 border-white"
