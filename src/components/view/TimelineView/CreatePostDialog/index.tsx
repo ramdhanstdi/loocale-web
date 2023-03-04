@@ -24,44 +24,56 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
   const { data: currentUser } = useGetUser();
   const [postText, setPostText] = useState("");
   const [location, setLocation] = useState("");
-	const [city, setCity] = useState<CityDataInterface | null>(null);
-	const [citiesOption, setCitiesOption] = useState<CityDataInterface[]>([]);
+  const [city, setCity] = useState<CityDataInterface | null>(null);
+  const [citiesOption, setCitiesOption] = useState<CityDataInterface[]>([]);
   const [imageURL, setImageURL] = useState<string[]>([]);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<CommunityListInterface[]>([]);
   const [openClosePostDialog, setOpenClosePostDialog] = useState(false);
-	const [searchCity, setSearchCity] = useState("");
+  const [searchCity, setSearchCity] = useState("");
 
   const { data: categories } = useGetCategories();
 
   const onPostAdded = () => {
     setPostText("");
     setLocation("");
+    setCity(null);
     setImageURL([]);
     setImageFiles([]);
     setSelectedCategories([]);
     onClose();
   };
 
-	useEffect(() => {
-		const timeout = setTimeout(() => {
-			if (searchCity) {
-				getAllCities(searchCity).then((res) => {
-					setCitiesOption(res)
-				})
-			}
-		}, 500)
-		return () => clearTimeout(timeout)
-	}, [searchCity])
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (searchCity) {
+        getAllCities(searchCity).then((res) => {
+          setCitiesOption(res);
+        });
+      }
+    }, 500);
+    return () => clearTimeout(timeout);
+  }, [searchCity]);
 
   const addPostHandler = useAddPost(onPostAdded);
 
   const closeDialogHandler = () => {
-    if (postText || location || imageURL.length || imageFiles.length || selectedCategories.length) {
+    if (postText || location || imageURL.length || selectedCategories.length || city) {
       setOpenClosePostDialog(true);
     } else {
       onClose();
     }
+  };
+
+  console.log("imageUrl", imageURL, "imageFiles", imageFiles);
+  const removeImageHandler = (url: string) => {
+    const getRemovedImageIndex = imageURL.findIndex((imageUrl) => imageUrl === url);
+    setImageURL(
+      imageURL.slice(0, getRemovedImageIndex).concat(imageURL.slice(getRemovedImageIndex + 1))
+    );
+    setImageFiles(
+      imageFiles.slice(0, getRemovedImageIndex).concat(imageFiles.slice(getRemovedImageIndex + 1))
+    );
   };
 
   const onImageChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -100,16 +112,20 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
                   <AddCityIcon />
                   <Autocomplete
                     options={citiesOption}
-										value={city}
-										onChange={(e, value) => setCity(value)}
-										inputValue={searchCity}
-										isOptionEqualToValue={(option, value) => option.name === value.name}
-										getOptionLabel={(option) => option && option.name}
-										onInputChange={(e, value) => setSearchCity(value)}
-										filterOptions={(x) => x}
+                    value={city}
+                    onChange={(e, value) => setCity(value)}
+                    inputValue={searchCity}
+                    isOptionEqualToValue={(option, value) => option.name === value.name}
+                    getOptionLabel={(option) => option && option.name}
+                    onInputChange={(e, value) => setSearchCity(value)}
+                    filterOptions={(x) => x}
                     renderInput={(params) => (
                       <div ref={params.InputProps.ref}>
-                        <input {...params.inputProps} placeholder="Tambah kota" className="outline-none"/>
+                        <input
+                          {...params.inputProps}
+                          placeholder="Tambah kota"
+                          className="outline-none"
+                        />
                       </div>
                     )}
                   />
@@ -141,7 +157,13 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
               <div className="grid grid-cols-2 gap-2">
                 {imageURL.length ? (
                   imageURL.map((url) => (
-                    <div className="rounded-lg" key={url}>
+                    <div className="rounded-lg relative" key={url}>
+                      <div
+                        className="absolute top-2 right-2 z-20 w-6 h-6 hover:cursor-pointer hover:bg-grayscale-400 rounded-full flex items-center justify-center text-[6px] bg-grayscale-500 text-white font-bold"
+                        onClick={() => removeImageHandler(url)}
+                      >
+                        &#9587;
+                      </div>
                       <Image
                         src={url}
                         unoptimized
@@ -149,7 +171,7 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
                         width={256}
                         height={200}
                         alt="preview image"
-                        className="object-cover"
+                        className="object-cover rounded-xl"
                       />
                     </div>
                   ))
