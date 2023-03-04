@@ -10,6 +10,7 @@ import CreatePostDialog from "../CreatePostDialog";
 import { getCurrentUser } from "src/utils/helper";
 import { UserDataInterface } from "src/models/Timeline";
 import sampleUser from "src/utils/sample";
+import { useGetUser } from "src/services/Timeline";
 
 const LEFT_PANEL_MENU = [
   {

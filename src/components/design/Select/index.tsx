@@ -39,12 +39,7 @@ const Select: React.FC<SelectProps> = (props) => {
           readOnly
 					value={props.value}
         />
-        <Image
-          src={KeyboardArrowDownIcon}
-          alt="open select"
-          width={24}
-          height={24}
-        />
+        <KeyboardArrowDownIcon />
       </div>
       {openOptionList ? (
         <div className="py-2 absolute w-full bg-white rounded-lg text-left shadow-xl z-20 max-h-[256px] overflow-auto">

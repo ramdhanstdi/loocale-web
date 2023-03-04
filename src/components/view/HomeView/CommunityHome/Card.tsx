@@ -31,7 +31,7 @@ const Card: React.FC<Props> = (props) => {
       {props.title}
       {props.active ? (
         <div className="absolute top-2 right-2">
-          <Image src={CheckedIcon} width={16} height={16} alt="checked" />
+          <CheckedIcon />
         </div>
       ) : (
         <></>

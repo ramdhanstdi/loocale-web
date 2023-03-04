@@ -67,7 +67,7 @@ export const useLikePost = () => useMutation({
 
 export const getUser = () =>
   request
-    .get("/users")
+    .get("/user")
     .then((res) => res.data)
     .catch((err) => console.error(err));
 

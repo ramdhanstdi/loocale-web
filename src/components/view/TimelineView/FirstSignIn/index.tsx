@@ -9,6 +9,7 @@ import Image from "next/image";
 import axios from "axios";
 import { BE_URL } from "Config";
 import request from "src/services/request";
+import { queryClient } from "@pages/_app";
 
 const FirstSignIn = () => {
   const [step, setStep] = useState(1);
@@ -38,6 +39,7 @@ const FirstSignIn = () => {
         .post(BE_URL + "/userprofiles", data)
         .then(() => {
           setHasPostProfile(true);
+					queryClient.invalidateQueries(["getUser"])
         })
         .catch((err) => console.error(err));
     }

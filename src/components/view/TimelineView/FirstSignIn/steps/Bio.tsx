@@ -20,7 +20,7 @@ const Bio: React.FC<BioProps> = ({ bio, setBio, ...props }) => {
     }
   };
   return (
-    <div className="mt-[56px] text-center text-primary-900">
+    <div className="mt-[24px] text-center text-primary-900">
       <h1 className="font-bold text-[28px] mb-2 leading-9	">
         Lengkapi tampilan profil
       </h1>
@@ -34,12 +34,7 @@ const Bio: React.FC<BioProps> = ({ bio, setBio, ...props }) => {
               imageURL ? "invisible" : "visible"
             }`}
           >
-            <Image
-              src={CameraIcon}
-              width={36}
-              height={36}
-              alt="insert profile picture"
-            />
+            <CameraIcon />
           </div>
 
           <input
@@ -65,7 +60,7 @@ const Bio: React.FC<BioProps> = ({ bio, setBio, ...props }) => {
       <TextField
         variant="outlined"
         placeholder="Ceritakan tentang diri kamu"
-        className="mb-14"
+        className="mb-2 w-full"
         label="Bio"
         maxLength={140}
         value={bio}

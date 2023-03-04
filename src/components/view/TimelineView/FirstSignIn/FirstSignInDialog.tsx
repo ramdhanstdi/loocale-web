@@ -14,11 +14,7 @@ const FirstSignInDialog: React.FC<FirstSignInDialogProps> = (props) => {
   return (
     <Dialog open={true} maxWidth={width && width < 500 ? "xs" : "sm"} className="px-4 sm:px-11 pt-4 sm:pt-7 pb-8 relative">
       <div className="flex justify-between">
-        <Image
-          src={ArrowBackIcon}
-          alt="Back button"
-          width={16}
-          height={16}
+        <ArrowBackIcon
           className={`${props.step === 1 ? "invisible" : "visible"}`}
 					onClick={() => props.setStep(props.step-1)}
         />
