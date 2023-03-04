@@ -16,11 +16,12 @@ const AddComment: React.FC<AddCommentProps> = ({ user, postId }) => {
 
   return (
     <div className="w-full gap-2 flex items-center mb-6">
-      {false ? (
+      {user.thumbnail ? (
         <Image
-          src={user.Profiles[0].avatar}
-          loader={() => user.Profiles[0].avatar}
+          src={user.thumbnail}
+          loader={() => user.thumbnail!}
           alt="comment profile pic"
+					className="rounded-full"
 					width={40}
 					height={40}
         />

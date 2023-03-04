@@ -64,12 +64,12 @@ const LeftPanel = () => {
           </div>
           <div className="py-3 px-5 shadow-md rounded-lg flex flex-col ">
             <div className="rounded-full mb-3 flex justify-center">
-              {!currentUser.users.Profiles[0].avatar ? (
+              {!currentUser.users.thumbnail ? (
 								<PeopleIcon></PeopleIcon>
 							): (
 								<Image
-								src={currentUser.users.Profiles[0].avatar}
-								loader={() => currentUser.users.Profiles[0].avatar}
+								src={currentUser.users.thumbnail}
+								loader={() => currentUser.users.thumbnail!}
 								width={40}
 								height={40}
 								className="rounded-full"

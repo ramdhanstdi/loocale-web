@@ -103,8 +103,19 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
             <p>Buat post baru</p>
             <p onClick={closeDialogHandler}>&#9587;</p>
           </div>
-          <div className="my-4 flex ml-9 gap-2">
-            <PeopleIcon />
+          <div className="my-4 flex ml-9 gap-2 items-center">
+            {currentUser.users.thumbnail ? (
+              <Image
+                src={currentUser.users.thumbnail}
+                loader={() => currentUser.users.thumbnail!}
+                width={40}
+                height={40}
+								alt="profile-pic"
+								className="rounded-full"
+              />
+            ) : (
+              <PeopleIcon />
+            )}
             <div className="flex flex-col">
               <p className="font-bold text-primary-800 mb-2">{currentUser.users.user_name}</p>
               <div className="flex gap-4">

@@ -30,12 +30,12 @@ const AddPost = () => {
           <div className="flex gap-6">
             <div className="flex flex-col">
               <div className="rounded-full flex justify-center">
-                {!currentUser.users.Profiles[0].avatar ? (
+                {!currentUser.users.thumbnail ? (
 									<PeopleIcon />
 								): (
 									<Image
-										src={currentUser.users.Profiles[0].avatar}
-										loader={() => currentUser.users.Profiles[0].avatar}
+										src={currentUser.users.thumbnail}
+										loader={() => currentUser.users.thumbnail!}
 										alt="profile-pic"
 										width={40}
 										height={40}
