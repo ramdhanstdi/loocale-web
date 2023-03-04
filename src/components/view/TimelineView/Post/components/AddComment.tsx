@@ -15,23 +15,25 @@ const AddComment: React.FC<AddCommentProps> = ({ user, postId }) => {
   const [commentText, setCommentText] = useState("");
 
   return (
-    <div className="w-full gap-2 flex items-center">
+    <div className="w-full gap-2 flex items-center mb-6">
       {false ? (
         <Image
           src={user.Profiles[0].avatar}
           loader={() => user.Profiles[0].avatar}
           alt="comment profile pic"
+					width={40}
+					height={40}
         />
       ) : (
         <PeopleIcon />
       )}
-      <div className="flex gap-5 w-full">
+      <div className="flex gap-4 w-full items-center">
         <input
           type="text"
           value={commentText}
           onChange={(e) => setCommentText(e.target.value)}
           placeholder="Tulis komentarmu disini"
-          className="text-xs outline-none bg-grayscale-50 px-6 py-2 rounded-full w-full"
+          className="text-xs outline-none px-4 py-3 rounded-lg w-full border border-primary-500"
         />
         <Button
           onClick={() => {
@@ -39,9 +41,9 @@ const AddComment: React.FC<AddCommentProps> = ({ user, postId }) => {
 						setCommentText("");
 					}}
           variant="contained"
-          className="py-2 px-3 text-[9px] rounded-full"
+          className="h-[30px] px-4 text-[9px] rounded-full font-bold leading-3"
         >
-          Comment
+          Kirim
         </Button>
       </div>
     </div>

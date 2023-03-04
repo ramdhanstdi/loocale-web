@@ -11,12 +11,14 @@ interface PostInteractionsProps {
   postId: string;
   categories: PostCategory[];
 	likes: PostLikes[];
+	setShowAddComment: (args: boolean) => void;
 }
 const PostInteractions: React.FC<PostInteractionsProps> = ({
   commentsCount,
   postId,
   categories,
-	likes
+	likes,
+	setShowAddComment
 }) => {
   const likesMutation = useLikePost();
 
@@ -30,13 +32,14 @@ const PostInteractions: React.FC<PostInteractionsProps> = ({
         <InteractionIcon
           icon={<CommentIcon />}
           activeIcon={<CommentIcon />}
-          count={commentsCount}
+          count={`Tambah komentar (${commentsCount})`}
+					onClick={() => setShowAddComment(true)}
         />
         <InteractionIcon
           icon={<HeartIcon />}
 					isActive={isPostLikedByUser()}
           activeIcon={<HeartIcon />}
-          count={likes.length}
+          count={`Like (${likes.length})`}
           onClick={() => likesMutation.mutate({ postId })}
         />
       </div>

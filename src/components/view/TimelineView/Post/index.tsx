@@ -15,32 +15,27 @@ const Post: React.FC<PostDataInterface> = ({
   createdAt,
   location,
   Comments,
-	Likes,
-	Categories,
+  Likes,
+  Categories,
   id,
-	location_detail,
-	medias
+  location_detail,
+  medias,
 }) => {
   const [showMore, setShowMore] = useState(false);
-  const [displayedComments, setDisplayedComments] = useState(
-    Comments.slice(0, 5)
-  );
+  const [showAddComment, setShowAddComment] = useState(false);
+  const [displayedComments, setDisplayedComments] = useState(Comments.slice(0, 1));
 
-	useEffect(() => {
-		setDisplayedComments(Comments.slice(0, 5))
-	}, [Comments])
+  useEffect(() => {
+    setDisplayedComments(Comments.slice(0, 1));
+  }, [Comments]);
 
   const loadMoreComments = useCallback(() => {
     const newDisplayedComments = [...displayedComments];
-    const getLastCommentIndex = Comments.indexOf(
-      displayedComments[displayedComments.length - 1]
-    );
+    const getLastCommentIndex = Comments.indexOf(displayedComments[displayedComments.length - 1]);
     // If there are more than 5 comments not loaded
     if (Comments.length > getLastCommentIndex + 5) {
       // Load 5 comments
-      newDisplayedComments.push(
-        ...Comments.slice(getLastCommentIndex, getLastCommentIndex + 5)
-      );
+      newDisplayedComments.push(...Comments.slice(getLastCommentIndex, getLastCommentIndex + 5));
     } else {
       // Load all comments not loaded
       newDisplayedComments.push(...Comments.slice(getLastCommentIndex + 1));
@@ -62,11 +57,9 @@ const Post: React.FC<PostDataInterface> = ({
           full_name={User.full_name}
           createdAt={createdAt}
           location={location}
-					location_detail={location_detail}
+          location_detail={location_detail}
         />
-        <p className="font-bold text-secondary-500 text-xs my-1">
-          @{User.user_name}
-        </p>
+        <p className="font-bold text-secondary-500 text-xs my-1">@{User.user_name}</p>
         <p className="text-xs font-light text-justify whitespace-pre-wrap mb-2">
           {postText.length < 150 ? (
             postText
@@ -95,22 +88,24 @@ const Post: React.FC<PostDataInterface> = ({
           )}
           {}
         </p>
-        <PostPictureContainer medias={medias}/>
+        <PostPictureContainer medias={medias} />
         <PostInteractions
-					likes={Likes}
+          likes={Likes}
           commentsCount={Comments.length}
-					categories={Categories}
+					setShowAddComment={setShowAddComment}
+          categories={Categories}
           postId={String(id)}
         />
+        {showAddComment && <AddComment user={User} postId={id} />}
         {displayedComments.map((comment) => (
           <Comment
             key={comment.id}
             commentText={comment.commentText}
             user={comment.User}
-						createdAt={comment.createdAt}
+            createdAt={comment.createdAt}
           />
         ))}
-        {Comments.length > 5 ? (
+        {Comments.length > 1 ? (
           <p
             className="mt-3 text-xs font-light hover:underline hover:cursor-pointer"
             onClick={loadMoreComments}
@@ -120,7 +115,6 @@ const Post: React.FC<PostDataInterface> = ({
         ) : (
           <></>
         )}
-				<AddComment user={User} postId={id}/>
       </div>
     </div>
   );
