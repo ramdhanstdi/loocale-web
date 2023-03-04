@@ -4,18 +4,16 @@ import React, { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { CityDataInterface } from "src/models/Timeline";
 
 interface DiscoverHeroProps {
-  city: CityDataInterface | null;
-  citiesOption: CityDataInterface[];
-  searchCity: string;
-  setSearchCity: (args: string) => void;
+	setSearchValue: (args: string) => void;
+  searchValue: string;
+  searchOptions: string[];
   onChange: (event: React.SyntheticEvent<Element, Event>, value: any) => void;
 }
 const DiscoverHero: React.FC<DiscoverHeroProps> = ({
   onChange,
-  city,
-  citiesOption,
-  searchCity,
-  setSearchCity,
+  searchValue,
+	setSearchValue,
+  searchOptions,
 }) => {
   return (
     <div
@@ -31,13 +29,10 @@ const DiscoverHero: React.FC<DiscoverHeroProps> = ({
       <h1 className="mb-5 text-[28px] font-bold text-white leading-[36px]">Lagi rame apa disana</h1>
       <div className="flex gap-5 w-[420px] items-center h-9 bg-white px-5 rounded-full">
         <Autocomplete
-          options={citiesOption}
-          value={city}
+          options={searchOptions}
           onChange={onChange}
-          inputValue={searchCity}
-          isOptionEqualToValue={(option, value) => option.name === value.name}
-          getOptionLabel={(option) => option && option.name}
-          onInputChange={(e, value) => setSearchCity(value)}
+          inputValue={searchValue}
+          onInputChange={(e, value) => setSearchValue(value)}
           filterOptions={(x) => x}
 					className="w-full"
           renderInput={(params) => (

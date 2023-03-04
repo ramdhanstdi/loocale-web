@@ -20,6 +20,7 @@ const PostPictureContainer: React.FC<PostPictureContainerProps> = ({
             loader={() => image.media_url}
             width={216}
             height={144}
+						unoptimized
             alt="post-image"
             className="rounded-md"
           />

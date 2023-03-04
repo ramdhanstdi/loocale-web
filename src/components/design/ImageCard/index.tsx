@@ -4,6 +4,7 @@ interface ImageCardProps {
   className?: string;
   backgroundUrl?: string;
   children?: React.ReactNode;
+	onClick?: () => void;
 }
 const ImageCard: React.FC<ImageCardProps> = (props) => {
   return (
@@ -12,6 +13,7 @@ const ImageCard: React.FC<ImageCardProps> = (props) => {
       style={{
         backgroundImage: `url(${props.backgroundUrl})`,
       }}
+			onClick={props.onClick}
     >
       {props.children}
     </div>

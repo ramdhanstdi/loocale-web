@@ -2,6 +2,11 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+	images: {
+		domains: [
+			"http:localhost:5000"
+		]
+	},
 	webpack: (config) => {
 		config.module.rules.push({
       test: /\.svg$/i,

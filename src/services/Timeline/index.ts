@@ -4,16 +4,16 @@ import { CommunityListInterface } from "src/models/Home";
 import { GetUserDataInterface, UserDataInterface } from "src/models/Timeline";
 import request from "../request";
 
-const getPosts = () =>
+const getPosts = (searchValue: string = "") =>
   request
-    .get("/posts")
+    .get(`/posts?searchValue=${searchValue}`)
     .then((res) => res.data)
     .catch((err) => console.error(err));
 
-export const useGetPosts = () =>
+export const useGetPosts = (searchValue: string = "") =>
   useQuery({
-    queryKey: ["getPosts"],
-    queryFn: getPosts,
+    queryKey: ["getPosts", searchValue],
+    queryFn: () => getPosts(searchValue),
     //refetchInterval: 10000,
   });
 
@@ -22,12 +22,12 @@ const addPost = (data: {
   location: string;
   media_files: File[];
   categories: CommunityListInterface[];
-	location_detail: string;
+  location_detail: string;
 }) => {
   let formData = new FormData();
   formData.append("postText", data.postText);
   formData.append("location", data.location);
-	formData.append("location_detail", data.location_detail);
+  formData.append("location_detail", data.location_detail);
   for (let i = 0; i < data.media_files.length; i++) {
     formData.append("media_files", data.media_files[i], data.media_files[i].name);
   }
@@ -80,7 +80,9 @@ export const getCategories = () =>
   request
     .get("/connect")
     .then((res) => res.data as CommunityListInterface[])
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      console.error(err);
+    });
 
 export const useGetCategories = () =>
   useQuery({ queryKey: ["getCategories"], queryFn: getCategories });
@@ -98,7 +100,7 @@ export const useAddComment = () =>
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["getPosts"] }),
   });
 
-export const getAllCities = (cityName: string) => 
+export const getAllCities = (cityName: string) =>
   request
     .get("/cities-name?name=" + cityName)
     .then((res) => res.data)
@@ -106,5 +108,11 @@ export const getAllCities = (cityName: string) =>
 
 export const useGetAllCities = (cityName: string) =>
   useQuery({ queryKey: ["getAllCities", cityName], queryFn: () => getAllCities(cityName) });
+
+export const getDiscoverPageOptions = (searchValue: string = "") =>
+  request
+    .get("/discover-page/options?searchValue=" + searchValue)
+    .then((res) => res.data)
+    .catch((err) => console.error(err));
 
 export default getPosts;

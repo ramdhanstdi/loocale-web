@@ -1,11 +1,16 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import SearchIcon from "@icons/search_icon.svg";
 import LeftPanel from "@components/view/TimelineView/LeftPanel";
 import RightPanel from "@components/view/TimelineView/RightPanel";
 import PostsContainer from "@components/view/TimelineView/PostsContainer";
 import Post from "@components/view/TimelineView/Post";
 import { useQuery } from "@tanstack/react-query";
-import getPosts, { getAllCities } from "src/services/Timeline";
+import getPosts, {
+  getAllCities,
+  getDiscoverPageOptions,
+  useGetCategories,
+  useGetPosts,
+} from "src/services/Timeline";
 import { CityDataInterface, PostDataInterface } from "src/models/Timeline";
 import Image from "next/image";
 import DiscoverHero from "@components/view/DiscoverView/DiscoverHero";
@@ -14,6 +19,8 @@ import PopularTodayGrid from "@components/view/DiscoverView/PopularTodayGrid";
 import ImageCard from "@components/design/ImageCard";
 import { Autocomplete } from "@mui/material";
 import ArrowBackIcon from "@icons/arrow_back_icon.svg";
+import { useRouter } from "next/router";
+import { GetServerSideProps, GetStaticProps } from "next";
 
 const POPULAR_TODAY = [
   {
@@ -43,123 +50,146 @@ const POPULAR_TODAY = [
   },
 ];
 
-const DiscoverPage = () => {
-  const {
-    data: postData,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["getPosts"],
-    queryFn: getPosts,
-  });
+const DiscoverPage = (props: any) => {
+  const router = useRouter();
 
-  const [hasUserSearched, setHasUserSearched] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
-  const [city, setCity] = useState<CityDataInterface | null>(null);
-  const [citiesOption, setCitiesOption] = useState<CityDataInterface[]>([]);
-  const [searchCity, setSearchCity] = useState("");
+  const [hasUserSearched, setHasUserSearched] = useState(props.searchValue);
+  const [searchOptions, setSearchOptions] = useState<string[]>([]);
+  const [searchValue, setSearchValue] = useState<string | null>(props.searchValue);
+
+  const { data: postData } = useGetPosts(props.searchValue);
+
+  const { data: categories } = useGetCategories();
+
+  const getPopularTodayGrid = useCallback(() => {
+    if (!categories) return [];
+    return categories.slice(0, 6).map((community) => ({
+      title: community.title,
+      backgroundUrl: community.background,
+      subtitle: "200 Unggahan",
+      id: community.id,
+    }));
+  }, [categories]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      if (searchCity) {
-        getAllCities(searchCity).then((res) => {
-          setCitiesOption(res);
+      if (searchValue) {
+        getDiscoverPageOptions(searchValue).then((res) => {
+          setSearchOptions(res);
         });
       }
     }, 500);
     return () => clearTimeout(timeout);
-  }, [searchCity]);
+  }, [searchValue]);
 
-  return (
-    <div className="relative">
-      <LeftPanel />
-      <RightPanel />
-      <div className="fixed left-[240px] right-[381px]">
-        <Image src={"/NavbarLogo.svg"} width={140} height={52} alt="Loocale Logo" />
-      </div>
-      {hasUserSearched ? (
-        <div className="fixed left-[240px] right-[381px] top-[100px]">
-          <div className="flex gap-5 items-center">
-            <ArrowBackIcon onClick={() => setHasUserSearched(false)}/>
-            <div className="flex gap-5 w-[420px] items-center h-9 bg-white px-5 rounded-full border border-primary-500">
-              <Autocomplete
-                options={citiesOption}
-                value={city}
-                onChange={(e, value) => {
-                  setHasUserSearched(true);
-                  setCity(value);
+  if (!router.isReady) {
+    return <></>;
+  } else {
+    return (
+      <div className="relative">
+        <LeftPanel />
+        <RightPanel />
+        <div className="fixed left-[240px] right-[381px]">
+          <Image src={"/NavbarLogo.svg"} width={140} height={52} alt="Loocale Logo" />
+        </div>
+        {hasUserSearched ? (
+          <div className="fixed left-[240px] right-[381px] top-[100px]">
+            <div className="flex gap-5 items-center">
+              <ArrowBackIcon
+                onClick={() => {
+                  router.push("/discover");
+                  setHasUserSearched(false);
                 }}
-                inputValue={searchCity}
-                isOptionEqualToValue={(option, value) => option.name === value.name}
-                getOptionLabel={(option) => option && option.name}
-                onInputChange={(e, value) => setSearchCity(value)}
-                filterOptions={(x) => x}
-                className="w-full"
-                renderInput={(params) => (
-                  <div ref={params.InputProps.ref}>
-                    <input
-                      {...params.inputProps}
-                      placeholder="Cari kota atau aktivitas yang ingin kamu kepo-in..."
-                      className="outline-none w-full placeholder:text-xs placeholder:italic h-9 border-r border-t border-b border-primary-800"
-                    />
-                  </div>
-                )}
               />
-              <SearchIcon />
+              <div className="flex gap-5 w-[420px] items-center h-9 bg-white px-5 rounded-full border border-primary-500">
+                <Autocomplete
+                  options={searchOptions}
+                  onChange={(e, value) => {
+                    console.log("onchange triggered");
+                    setHasUserSearched(true);
+                    router.push("/discover?searchValue=" + value);
+                  }}
+                  inputValue={searchValue!}
+                  onInputChange={(e, value) => setSearchValue(value)}
+                  filterOptions={(x) => x}
+                  className="w-full"
+                  renderInput={(params) => (
+                    <div ref={params.InputProps.ref}>
+                      <input
+                        {...params.inputProps}
+                        placeholder="Cari kota atau aktivitas yang ingin kamu kepo-in..."
+                        className="outline-none w-full placeholder:text-xs placeholder:italic h-9 border-r border-t border-b border-primary-800"
+                      />
+                    </div>
+                  )}
+                />
+                <SearchIcon />
+              </div>
             </div>
           </div>
-        </div>
-      ) : (
-        <DiscoverHero
-          setSearchCity={setSearchCity}
-          onChange={(e, value) => {
-            setHasUserSearched(true);
-            setCity(value);
-          }}
-          citiesOption={citiesOption}
-          city={city}
-          searchCity={searchCity}
-        />
-      )}
-      <DiscoverContainer hasUserSearched={hasUserSearched}>
-        <PostsContainer maxHeight="max-h-[calc(100vh-290px)]">
-          {hasUserSearched ? (
-            <></>
-          ) : (
-            <>
-              <p className="mt-[14px] font-light text-primary-800 text-center mb-2">
-                Populer hari ini
+        ) : (
+          <DiscoverHero
+            onChange={(e, value) => {
+              console.log("onchange triggered");
+              setHasUserSearched(true);
+              router.replace("/discover?searchValue=" + value);
+            }}
+            searchOptions={searchOptions}
+            searchValue={searchValue!}
+            setSearchValue={setSearchValue}
+          />
+        )}
+        <DiscoverContainer hasUserSearched={hasUserSearched}>
+          <PostsContainer
+            maxHeight={hasUserSearched ? "max-h-[calc(100vh-225px)]" : "max-h-[calc(100vh-290px)]"}
+          >
+            {hasUserSearched ? (
+              <></>
+            ) : (
+              <>
+                <p className="mt-[14px] font-light text-primary-800 text-center mb-2">
+                  Populer hari ini
+                </p>
+                <PopularTodayGrid>
+                  {getPopularTodayGrid().map((card) => (
+                    <ImageCard
+                      backgroundUrl={card.backgroundUrl}
+                      key={card.title}
+                      className="text-center py-3 text-white rounded-lg shadow-md"
+                      onClick={() => {
+												setHasUserSearched(true);
+												router.replace("/discover?searchValue=" + card.title)
+											}}
+                    >
+                      <p className="font-bold">{card.title}</p>
+                      <p className="font-light text-xs">{card.subtitle}</p>
+                    </ImageCard>
+                  ))}
+                </PopularTodayGrid>
+              </>
+            )}
+            <div className="w-full pr-[154px] pl-[131px]">
+              <p className="font-bold text-grayscale-400 text-xs max-w-[600px] mx-auto">
+                {hasUserSearched
+                  ? `Menampilkan hasil pencarian untuk ${props.searchValue}`
+                  : "Terbaru dari sekitarmu"}
               </p>
-              <PopularTodayGrid>
-                {POPULAR_TODAY.map((card) => (
-                  <ImageCard
-                    backgroundUrl={card.backgroundUrl}
-                    key={card.title}
-                    className="text-center py-3 text-white rounded-lg shadow-md"
-                  >
-                    <p className="font-bold">{card.title}</p>
-                    <p className="font-light text-xs">{card.subtitle}</p>
-                  </ImageCard>
-                ))}
-              </PopularTodayGrid>
-            </>
-          )}
-          <div className="w-full pr-[154px] pl-[131px]">
-            <p className="font-bold text-grayscale-400 text-xs max-w-[600px] mx-auto">
-              {hasUserSearched
-                ? "Menampilkan hasil pencarian untuk Bandung"
-                : "Terbaru dari sekitarmu"}
-            </p>
-          </div>
-          {postData ? (
-            postData.map((post: PostDataInterface) => <Post key={post.id} {...post} />)
-          ) : (
-            <></>
-          )}
-        </PostsContainer>
-      </DiscoverContainer>
-    </div>
-  );
+            </div>
+            {postData ? (
+              postData.map((post: PostDataInterface) => <Post key={post.id} {...post} />)
+            ) : (
+              <></>
+            )}
+          </PostsContainer>
+        </DiscoverContainer>
+      </div>
+    );
+  }
+};
+
+DiscoverPage.getInitialProps = async (route: any) => {
+  const { searchValue } = route.query;
+  return { searchValue: searchValue || "" };
 };
 
 export default DiscoverPage;
