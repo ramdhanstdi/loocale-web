@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Navbar from "@components/layout/Navbar";
 import Image from "next/image";
 import Head from "next/head";
