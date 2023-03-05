@@ -66,20 +66,19 @@ const SignUpOption: React.FC<Props> = ({ email, setEmail, ...props }) => {
           />
           <p className="text-[9px] sm:text-xs text-[#678190] text-left mt-7 mb-8">
             Dengan mendaftar, kamu menyetujui{" "}
-            <Link href="/terms-and-conditions" className="underline">
-              Syarat dan Ketentuan
+            <Link href="/terms-and-conditions">
+              <span className="underline hover:cursor-pointer">Syarat dan Ketentuan</span>
             </Link>
             , dan{" "}
-            <Link href="/privacy-policy" className="underline">
-              Kebijakan Privasi
+            <Link href="/privacy-policy">
+              <span className="underline hover:cursor-pointer">Kebijakan Privasi</span>
             </Link>
           </p>
         </div>
         <Link href="/signin">
           <div className="text-xs font-bold text-primary-900 underline sm:no-underline ">
             <p>
-              Sudah punya akun Loocale?{" "}
-              <span className="sm:underline cursor-pointer">Sign In</span>
+              Sudah punya akun Loocale? <span className="sm:underline cursor-pointer">Sign In</span>
             </p>
           </div>
         </Link>
