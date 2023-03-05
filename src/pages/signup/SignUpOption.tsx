@@ -66,16 +66,12 @@ const SignUpOption: React.FC<Props> = ({ email, setEmail, ...props }) => {
           />
           <p className="text-[9px] sm:text-xs text-[#678190] text-left mt-7 mb-8">
             Dengan mendaftar, kamu menyetujui{" "}
-            <a href="#" className="underline">
+            <a href="/terms-and-conditions" className="underline">
               Syarat dan Ketentuan
             </a>
-            ,{" "}
-            <a href="#" className="underline">
-              Kebijakan Privasi
-            </a>
             , dan{" "}
-            <a href="#" className="underline">
-              Penggunaan Cookies
+            <a href="/privacy-policy" className="underline">
+              Kebijakan Privasi
             </a>
           </p>
         </div>
