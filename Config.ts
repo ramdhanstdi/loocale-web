@@ -1,1 +1,1 @@
-export const BE_URL = 'http://194.59.165.97/api'
+export const BE_URL = 'http://194.59.165.97/api/loocale'
