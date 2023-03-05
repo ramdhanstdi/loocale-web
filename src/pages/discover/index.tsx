@@ -20,7 +20,6 @@ import ImageCard from "@components/design/ImageCard";
 import { Autocomplete } from "@mui/material";
 import ArrowBackIcon from "@icons/arrow_back_icon.svg";
 import { useRouter } from "next/router";
-import { GetServerSideProps, GetStaticProps } from "next";
 
 const POPULAR_TODAY = [
   {

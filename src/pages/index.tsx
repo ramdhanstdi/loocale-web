@@ -35,7 +35,7 @@ const Home: NextPage<HomeProps> = (props) => {
   );
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   try {
     const discover = await axios.get(BE_URL + "/discover");
     const community = await axios.get(BE_URL + "/connect");

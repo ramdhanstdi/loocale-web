@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import Navbar from "@components/layout/Navbar";
 import Image from "next/image";
 import Head from "next/head";
-import SignUpOption from "./SignUpOption";
-import InsertVerifCode from "./InsertVerifCode";
-import NewAccountForm from "./NewAccountForm";
+import SignUpOption from "@components/view/SignUpView/SignUpOption";
+import InsertVerifCode from "../../components/view/SignUpView/InsertVerifCode";
+import NewAccountForm from "@components/view/SignUpView/NewAccountForm";
 
 const SignUpPage = () => {
   const [hasEmailBeenInputted, setHasEmailBeenInputted] = useState(false);

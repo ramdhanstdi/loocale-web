@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Navbar from "@components/layout/Navbar";
 import Image from "next/image";
 import Head from "next/head";
-import Form from "./Form";
+import Form from "../../components/view/SignInView/Form";
 import GoogleSignIn from "@components/design/GoogleSignIn";
 import { useRouter } from "next/router";
 
