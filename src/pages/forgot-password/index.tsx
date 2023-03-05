@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import Navbar from "@components/layout/Navbar";
 import Image from "next/image";
 import Head from "next/head";
-import Form from "./Form";
-import EmailSent from "./EmailSent";
+import Form from "../../components/view/ForgotPassView/Form";
+import EmailSent from "../../components/view/ForgotPassView/EmailSent";
 import axios from "axios";
 import { BE_URL } from "Config";
 
