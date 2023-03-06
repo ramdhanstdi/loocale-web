@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import TextField from "@components/design/TextField";
 import Button from "@components/design/Button";
-import GoogleSignIn from "@components/design/GoogleSignIn";
 import axios from "axios";
 import { BE_URL } from "Config";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import GoogleSSO from "@components/GoogleSSO";
 
 interface Props {
   setHasEmailBeenInputted: (args: boolean) => void;
@@ -58,7 +58,7 @@ const SignUpOption: React.FC<Props> = ({ email, setEmail, ...props }) => {
             <p className="text-[14px] text-[#678190]">atau</p>
             <hr className="w-full" color="#678190" />
           </div>
-          <GoogleSignIn
+          <GoogleSSO
             variant="signup"
             callback={() => {
               router.push("/feed");
