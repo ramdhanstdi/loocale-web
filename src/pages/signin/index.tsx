@@ -3,8 +3,8 @@ import Navbar from "@components/layout/Navbar";
 import Image from "next/image";
 import Head from "next/head";
 import Form from "../../components/view/SignInView/Form";
-import GoogleSignIn from "@components/design/GoogleSignIn";
 import { useRouter } from "next/router";
+import GoogleSSO from "@components/GoogleSSO";
 
 const SignInPage = () => {
   const router = useRouter();
@@ -51,10 +51,9 @@ const SignInPage = () => {
             <p className="text-[14px] text-[#678190]">atau</p>
             <hr className="w-full" color="#678190" />
           </div>
-          <GoogleSignIn
+          <GoogleSSO
             variant="login"
-            callback={(res) => {
-							console.log(res)
+            callback={() => {
               router.push("/feed");
             }}
           />
