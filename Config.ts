@@ -1,1 +1,1 @@
-export const BE_URL = process.env.NODE_ENV === "development" ? 'http://localhost:5000/api/loocale' : "http://http://194.59.165.97/api/loocale"
+export const BE_URL = process.env.NODE_ENV === "development" ? 'http://localhost:5000/api/loocale' : "http://194.59.165.97/api/loocale"
