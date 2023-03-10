@@ -84,16 +84,16 @@ const Footer = () => {
         ))}
       </div>
       <div className="flex flex-col gap-1 max-w-[210px] mb-[95px] sm:mb-0">
-        <p className="font-bold">Loocale Indonesia</p>
+        <p className="font-bold">PT. KARYA WARGA LOKAL</p>
         <p>
-          Jl. H. Sidin 1 No. 23 Duren Sawit, Jakarta Timur 
+				Jalan Mampang Prapatan Raya no.73 A, LT.3
         </p>
 				<p>+62 811 1722 233 (Adel)</p>
       </div>
-			<div className="sm:flex flex-col gap-1 max-w-[210px] hidden">
+			{/*<div className="sm:flex flex-col gap-1 max-w-[210px] hidden">
 				<p className="font-bold">Download Loocale</p>
 				<Image src='/google-download.svg' alt='Download from google play store' width={163} height={48}></Image>
-			</div>
+			</div>*/}
     </div>
   );
 };
