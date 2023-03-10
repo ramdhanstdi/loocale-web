@@ -9,7 +9,7 @@ const HeroDescription = () => {
         traveler yang ingin menemukan pengalaman wisata baru yang menarik dan
         berinteraksi dengan Warga Lokal
       </p>
-      <div className="text-center mx-auto sm:text-start sm:mx-0">
+      {/*<div className="text-center mx-auto sm:text-start sm:mx-0">
         <p className="mb-2">
           Download <span className="font-bold">Loocale</span> di
         </p>
@@ -19,7 +19,7 @@ const HeroDescription = () => {
           width={163}
           height={48}
         ></Image>
-      </div>
+      </div>*/}
     </div>
   );
 };
