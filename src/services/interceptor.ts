@@ -1,7 +1,9 @@
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
+import https from "https";
 
 const addAuthHeader = () => (config: AxiosRequestConfig<any>) => {
+	config.httpsAgent = new https.Agent({ rejectUnauthorized: false })
   const token = Cookies.get("token");
   if (!token) {
     return config;
