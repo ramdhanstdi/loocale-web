@@ -20,6 +20,7 @@ import ImageCard from "@components/design/ImageCard";
 import { Autocomplete } from "@mui/material";
 import ArrowBackIcon from "@icons/arrow_back_icon.svg";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 const POPULAR_TODAY = [
   {
@@ -83,6 +84,9 @@ const DiscoverPage = (props: any) => {
 
   return (
     <div className="relative">
+      <Head>
+        <title>Discover</title>
+      </Head>
       <LeftPanel />
       <RightPanel />
       <div className="fixed left-[240px] right-[381px]">

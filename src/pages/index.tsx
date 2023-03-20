@@ -18,7 +18,6 @@ interface HomeProps {
   communityList: CommunityListInterface[];
 }
 const Home: NextPage<HomeProps> = (props) => {
-	console.log(props.discoverList)
   return (
     <div>
       <Head>

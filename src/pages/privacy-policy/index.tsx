@@ -1,8 +1,12 @@
 import React from "react";
+import Head from "next/head";
 
 const PrivacyPolicy = () => {
   return (
     <div className="max-w-[1280px] p-8">
+      <Head>
+        <title>Privacy Policy</title>
+      </Head>
       <h1 className="font-bold text-[32px] mb-4">Kebijakan Privasi</h1>
       <p className="mb-2">
         Kebijakan Privasi ini menjelaskan terkait jenis data pribadi yang dikumpulkan oleh PT Karya
