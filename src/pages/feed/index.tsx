@@ -10,8 +10,9 @@ import PostsContainer from "@components/view/TimelineView/PostsContainer";
 import { useGetPosts, useGetUser } from "src/services/Timeline";
 import { PostDataInterface } from "src/models/Timeline";
 import { getCurrentUser } from "src/utils/helper";
+import Head from "next/head";
 
-interface FeedProps {}
+interface FeedProps { }
 const Feed: React.FC<FeedProps> = (props) => {
   const [activeTab, setActiveTab] = useState(0);
 
@@ -24,6 +25,9 @@ const Feed: React.FC<FeedProps> = (props) => {
   } else {
     return (
       <>
+        <Head>
+          <title>Feed</title>
+        </Head>
         {currentUser.users.isFirstSignIn ? (
           <FirstSignIn></FirstSignIn>
         ) : (

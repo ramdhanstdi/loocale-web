@@ -1,8 +1,12 @@
 import React from "react";
+import Head from "next/head";
 
 const TermsAndConditions = () => {
   return (
     <div className="max-w-[1280px] p-8">
+      <Head>
+        <title>Terms & Conditions</title>
+      </Head>
       <h1 className="font-bold text-[32px] my-4">Syarat dan Ketentuan</h1>
       <p className="mb-4">
         Syarat dan ketentuan (&quot;S&amp;K&quot;) dari situs{" "}
