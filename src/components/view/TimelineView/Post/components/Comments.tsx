@@ -16,7 +16,7 @@ const Comment: React.FC<CommentProps> = ({ commentText, user, createdAt }) => {
 	const timeDifference = currentTime.diff(commentTime, ["years", "months", "days", "hours", "minutes"]).toObject();
 
   return (
-    <div className="flex gap-2 mb-2">
+    <div className="flex gap-2 mb-2 items-start">
       {user.thumbnail ? (
         <Image
           src={user.thumbnail}
