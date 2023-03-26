@@ -67,8 +67,6 @@ const Post: React.FC<PostDataInterface> = ({
                 <PeopleIcon />
               )}
             </div>
-            <p className="mt-2">Moderator</p>
-            <p>Lvl 6</p>
           </div>
           <PostHeader
             full_name={User.full_name}

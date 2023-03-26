@@ -19,8 +19,8 @@ const DiscoverHero: React.FC<DiscoverHeroProps> = ({
     <div
       className="fixed top-[83px] left-[180px] right-[381px] items-center justify-center flex flex-col bg-red-200 pt-[38px] pb-[30px] rounded-2xl"
       style={{
-        backgroundColor: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))",
-        backgroundImage: "url('/gunung-bromo.jpg')",
+        backgroundColor: "linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6))",
+        backgroundImage: "url('/hero-bg-1.jpg')",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",

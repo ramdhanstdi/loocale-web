@@ -88,7 +88,7 @@ const Footer = () => {
         <p>
 				Jalan Mampang Prapatan Raya no.73 A, LT.3
         </p>
-				<p>+62 811 1722 233 (Adel)</p>
+				<p>+62 811 1722 233</p>
       </div>
 			{/*<div className="sm:flex flex-col gap-1 max-w-[210px] hidden">
 				<p className="font-bold">Download Loocale</p>
