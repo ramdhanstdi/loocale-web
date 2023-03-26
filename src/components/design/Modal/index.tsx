@@ -1,16 +1,21 @@
-import React from 'react'
+import React from "react";
 
 interface ModalProps {
-	open: boolean;
-	onClose?: VoidFunction
-	children?: React.ReactNode
+  open: boolean;
+  onClose?: VoidFunction;
+  children?: React.ReactNode;
 }
-const Modal:React.FC<ModalProps> = (props) => {
-	return (
-		<div className={`fixed z-40 top-0 left-0 w-screen h-screen ${props.open ? 'block' : 'hidden'} bg-[rgba(0,0,0,0.3)]`} onClick={props.onClose}>
-			{props.children}
-		</div>
-	)
-}
+const Modal: React.FC<ModalProps> = (props) => {
+  return (
+    <div
+      className={`fixed z-40 top-0 left-0 w-screen h-screen ${
+        props.open ? "block" : "hidden"
+      } bg-[rgba(0,0,0,0.4)]`}
+      onClick={props.onClose}
+    >
+      {props.children}
+    </div>
+  );
+};
 
-export default Modal
+export default Modal;
