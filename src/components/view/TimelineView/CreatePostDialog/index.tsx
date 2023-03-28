@@ -3,13 +3,9 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import PeopleIcon from "@icons/people_icon.svg";
 import AddLocationIcon from "@icons/add_location_icon.svg";
 import { Autocomplete, TextField, TextareaAutosize } from "@mui/material";
-import { getCurrentUser } from "src/utils/helper";
-import { CityDataInterface, UserDataInterface } from "src/models/Timeline";
-import sampleUser from "src/utils/sample";
-import AddEmojiIcon from "@icons/add_emoji_icon.svg";
+import { CityDataInterface } from "src/models/Timeline";
 import AddImageIcon from "@icons/add_image_icon.svg";
 import Button from "@components/design/Button";
-import EmojiPicker from "emoji-picker-react";
 import Image from "next/image";
 import { getAllCities, useAddPost, useGetCategories, useGetUser } from "src/services/Timeline";
 import { CommunityListInterface } from "../../../../models/Home.d";
@@ -161,7 +157,7 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
                 name="post-text"
                 id="post-text"
                 cols={50}
-                className={`w-[520px] outline-none text-justify whitespace-normal overflow-auto scrollbar-hide`}
+                className={`w-[520px] outline-none`}
                 placeholder="Ceritakan perjalanan kamu"
               />
               <div className="grid grid-cols-2 gap-2">

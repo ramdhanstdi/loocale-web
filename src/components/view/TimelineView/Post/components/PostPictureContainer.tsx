@@ -25,9 +25,8 @@ const PostPictureContainer: React.FC<PostPictureContainerProps> = ({ medias }) =
     <>
       <div className="mb-2 w-full mx-auto grid grid-cols-2 gap-2">
         {medias.map((image) => (
-          <>
+          <div key={image.PostMedia.mediaId}>
             <div
-              key={image.PostMedia.mediaId}
               className="hover:cursor-pointer hover:opacity-90"
               onClick={() => pictureClickHandler(image)}
             >
@@ -36,6 +35,7 @@ const PostPictureContainer: React.FC<PostPictureContainerProps> = ({ medias }) =
                 loader={() => image.media_url}
                 width={216}
                 height={144}
+								unoptimized
                 alt="post-image"
                 className="rounded-md object-cover"
               />
@@ -46,7 +46,7 @@ const PostPictureContainer: React.FC<PostPictureContainerProps> = ({ medias }) =
                 <img src={fullsizePictureUrl} alt="" className="max-w-screen max-h-screen mx-auto p-10" />
               </div>
             </Modal>
-          </>
+          </div>
         ))}
       </div>
     </>
