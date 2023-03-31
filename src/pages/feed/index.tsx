@@ -33,7 +33,7 @@ const Feed: React.FC<FeedProps> = (props) => {
         {currentUser.users.isFirstSignIn ? (
           <FirstSignIn></FirstSignIn>
         ) : (
-          <div className="max-h-screen max-w-screen flex justify-between overflow-hidden">
+          <div className="max-h-screen max-w-screen flex justify-between box-border">
             <LeftPanel />
             <div className="flex flex-col w-full mx-6">
               <TimelineHeader />
