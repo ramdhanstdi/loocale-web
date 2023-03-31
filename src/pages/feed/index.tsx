@@ -11,10 +11,12 @@ import { useGetPosts, useGetUser } from "src/services/Timeline";
 import { PostDataInterface } from "src/models/Timeline";
 import { getCurrentUser } from "src/utils/helper";
 import Head from "next/head";
+import useWindowDimensions from "src/utils/hooks";
 
-interface FeedProps { }
+interface FeedProps {}
 const Feed: React.FC<FeedProps> = (props) => {
   const [activeTab, setActiveTab] = useState(0);
+  const { width, height } = useWindowDimensions();
 
   const { data: currentUser } = useGetUser();
 
@@ -31,20 +33,22 @@ const Feed: React.FC<FeedProps> = (props) => {
         {currentUser.users.isFirstSignIn ? (
           <FirstSignIn></FirstSignIn>
         ) : (
-          <div className="relative">
+          <div className="max-h-screen max-w-screen flex justify-between overflow-hidden">
             <LeftPanel />
-            <RightPanel />
-            <TimelineHeader />
-            <TimelineContainer>
-              <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
-              <PostsContainer>
-                {postData ? (
-                  postData.map((post: PostDataInterface) => <Post key={post.id} {...post} />)
-                ) : (
-                  <></>
-                )}
-              </PostsContainer>
-            </TimelineContainer>
+            <div className="flex flex-col w-full mx-6">
+              <TimelineHeader />
+              <TimelineContainer>
+                <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
+                <PostsContainer>
+                  {postData ? (
+                    postData.map((post: PostDataInterface) => <Post key={post.id} {...post} />)
+                  ) : (
+                    <></>
+                  )}
+                </PostsContainer>
+              </TimelineContainer>
+            </div>
+            {width && width >= 1000 && <RightPanel />}
           </div>
         )}
       </>

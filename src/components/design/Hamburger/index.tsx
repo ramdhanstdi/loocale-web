@@ -1,6 +1,9 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import HamburgerIcon from "@icons/hamburger.svg";
+import Button from "../Button";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 interface Props {
   menu: {
@@ -10,6 +13,7 @@ interface Props {
   className?: string;
 }
 const Hamburger: React.FC<Props> = (props) => {
+  const router = useRouter();
   const [openMenu, setOpenMenu] = useState(false);
 
   const handleClick = () => {
@@ -18,7 +22,7 @@ const Hamburger: React.FC<Props> = (props) => {
 
   return (
     <div className={`absolute right-0 pr-5 flex top-0 items-center h-[68px] ${props.className}`}>
-			<HamburgerIcon onClick={handleClick} className={`absolute right-0 ${props.className}`}/>
+      <HamburgerIcon onClick={handleClick} className={`absolute right-0 ${props.className}`} />
       {openMenu && (
         <div className="absolute z-10 flex flex-col items-center text-center top-[70px] right-0 bg-white">
           {props.menu.map((item) => (
@@ -30,6 +34,9 @@ const Hamburger: React.FC<Props> = (props) => {
               {item.title}
             </a>
           ))}
+          <Link href="/signup">
+            <p className="font-bold py-3 w-[240px] text-secondary-500 border border-gray-100">SIGN UP</p>
+          </Link>
         </div>
       )}
     </div>

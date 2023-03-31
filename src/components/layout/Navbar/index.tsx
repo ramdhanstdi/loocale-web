@@ -51,7 +51,7 @@ const Navbar = () => {
             SIGN UP
           </Button>
         </div>
-        <Hamburger menu={NAVBAR_MENU} className="sm:hidden"></Hamburger>
+        <Hamburger menu={NAVBAR_MENU} className="sm:hidden mr-2"></Hamburger>
       </div>
     </nav>
   );

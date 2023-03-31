@@ -23,7 +23,7 @@ const AddPost = () => {
   } else {
     return (
       <>
-        <div className="flex flex-col px-9 py-2 left-[180px] right-[381px] rounded-lg shadow-md fixed top-0">
+        <div className="flex flex-col px-9 py-2 rounded-lg shadow-md">
           <div className="">
             <Image src={"/NavbarLogo.svg"} width={140} height={52} alt="Loocale Logo" />
           </div>

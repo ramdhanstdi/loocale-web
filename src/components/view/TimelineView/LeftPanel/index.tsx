@@ -20,12 +20,12 @@ const LEFT_PANEL_MENU = [
   },
   {
     id: "discover",
-    href: "/discover",
+    href: "#",
     icon: GlobeIcon,
   },
   {
     id: "people",
-    href: "/people",
+    href: "#",
     icon: PeopleIcon,
   },
 ];
@@ -45,14 +45,14 @@ const LeftPanel = () => {
   } else {
     return (
       <>
-        <div className="flex flex-col justify-between top-12 bottom-12 left-16 fixed">
+        <div className="flex flex-col justify-between my-10 ml-10">
           <div className="px-[30px] py-9 rounded-xl shadow-md flex flex-col gap-12">
             {LEFT_PANEL_MENU.map((menu) => (
               <a href={menu.href} key={menu.id}>
                 <div
                   className={`${
                     menu.href === router.pathname ? "text-secondary-500" : "text-primary-800"
-                  }`}
+                  } ${menu.href === "#" ? "cursor-not-allowed" : "cursor-pointer" } `}
                 >
                   {<menu.icon />}
                 </div>
