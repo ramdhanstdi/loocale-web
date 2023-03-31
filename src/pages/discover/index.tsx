@@ -87,102 +87,109 @@ const DiscoverPage = (props: any) => {
       <Head>
         <title>Discover</title>
       </Head>
-      <LeftPanel />
-      <RightPanel />
-      <div className="fixed left-[240px] right-[381px]">
-        <Image src={"/NavbarLogo.svg"} width={140} height={52} alt="Loocale Logo" />
-      </div>
-      {hasUserSearched ? (
-        <div className="fixed left-[240px] right-[381px] top-[100px]">
-          <div className="flex gap-5 items-center">
-            <ArrowBackIcon
-              onClick={() => {
-                router.push("/discover");
-                setHasUserSearched(false);
-              }}
-            />
-            <div className="flex gap-5 w-[420px] items-center h-9 bg-white px-5 rounded-full border border-primary-500">
-              <Autocomplete
-                options={searchOptions}
-                onChange={(e, value) => {
-                  setHasUserSearched(true);
-									if (!value) {
-										router.push("/discover?searchValue=");
-									} else router.push("/discover?searchValue=" + value)
-                }}
-                inputValue={searchValue!}
-                onInputChange={(e, value) => {
-									setSearchValue(value)}}
-                filterOptions={(x) => x}
-                className="w-full"
-                renderInput={(params) => (
-                  <div ref={params.InputProps.ref}>
-                    <input
-                      {...params.inputProps}
-                      placeholder="Cari kota atau aktivitas yang ingin kamu kepo-in..."
-                      className="outline-none w-full placeholder:text-xs placeholder:italic h-9 border-r border-t border-b border-primary-800"
-                    />
-                  </div>
-                )}
-              />
-              <SearchIcon />
-            </div>
+      <div className="flex w-screen h-screen">
+        <LeftPanel />
+        <div className="flex flex-col w-full gap-6 mx-8">
+          <div className="mt-2 ml-2">
+            <Image src={"/NavbarLogo.svg"} width={140} height={52} alt="Loocale Logo" />
           </div>
-        </div>
-      ) : (
-        <DiscoverHero
-          onChange={(e, value) => {
-            setHasUserSearched(true);
-            router.push("/discover?searchValue=" + value);
-          }}
-          searchOptions={searchOptions}
-          searchValue={searchValue!}
-          setSearchValue={setSearchValue}
-        />
-      )}
-      <DiscoverContainer hasUserSearched={hasUserSearched}>
-        <PostsContainer
-          maxHeight={hasUserSearched ? "max-h-[calc(100vh-225px)]" : "max-h-[calc(100vh-290px)]"}
-        >
           {hasUserSearched ? (
-            <></>
-          ) : (
-            <>
-              <p className="mt-[14px] font-light text-primary-800 text-center mb-2">
-                Populer hari ini
-              </p>
-              <PopularTodayGrid>
-                {getPopularTodayGrid().map((card) => (
-                  <ImageCard
-                    backgroundUrl={card.backgroundUrl}
-                    key={card.title}
-                    className="text-center py-3 text-white rounded-lg shadow-md"
-                    onClick={() => {
+            <div className="ml-6">
+              <div className="flex gap-5 items-center">
+                <ArrowBackIcon
+                  onClick={() => {
+                    router.push("/discover");
+                    setHasUserSearched(false);
+                  }}
+                />
+                <div className="flex gap-5 w-[420px] items-center h-9 bg-white px-5 rounded-full border border-primary-500">
+                  <Autocomplete
+                    options={searchOptions}
+                    onChange={(e, value) => {
                       setHasUserSearched(true);
-                      router.replace("/discover?searchValue=" + card.title);
+                      if (!value) {
+                        router.push("/discover?searchValue=");
+                      } else router.push("/discover?searchValue=" + value);
                     }}
-                  >
-                    <p className="font-bold">{card.title}</p>
-                    <p className="font-light text-xs">{card.subtitle}</p>
-                  </ImageCard>
-                ))}
-              </PopularTodayGrid>
-            </>
-          )}
-          <div className="w-full pr-[154px] pl-[131px]">
-            <p className="font-bold text-grayscale-400 text-xs max-w-[600px] mx-auto">
-              {hasUserSearched
-                ? `Menampilkan hasil pencarian untuk ${props.searchValue}`
-                : "Terbaru dari sekitarmu"}
-            </p>
-          </div>
-          {postData ? (
-            postData.map((post: PostDataInterface) => <Post key={post.id} {...post} />)
+                    inputValue={searchValue!}
+                    onInputChange={(e, value) => {
+                      setSearchValue(value);
+                    }}
+                    filterOptions={(x) => x}
+                    className="w-full"
+                    renderInput={(params) => (
+                      <div ref={params.InputProps.ref}>
+                        <input
+                          {...params.inputProps}
+                          placeholder="Cari kota atau aktivitas yang ingin kamu kepo-in..."
+                          className="outline-none w-full placeholder:text-xs placeholder:italic h-9 border-r border-t border-b border-primary-800"
+                        />
+                      </div>
+                    )}
+                  />
+                  <SearchIcon />
+                </div>
+              </div>
+            </div>
           ) : (
-            <></>
+            <DiscoverHero
+              onChange={(e, value) => {
+                setHasUserSearched(true);
+                router.push("/discover?searchValue=" + value);
+              }}
+              searchOptions={searchOptions}
+              searchValue={searchValue!}
+              setSearchValue={setSearchValue}
+            />
           )}
-        </PostsContainer>
-      </DiscoverContainer>
+          <DiscoverContainer hasUserSearched={hasUserSearched}>
+            <PostsContainer
+              maxHeight={
+                hasUserSearched ? "max-h-[calc(100vh-225px)]" : "max-h-[calc(100vh-290px)]"
+              }
+            >
+              {hasUserSearched ? (
+                <></>
+              ) : (
+                <>
+                  <p className="mt-[14px] font-light text-primary-800 text-center mb-2">
+                    Populer hari ini
+                  </p>
+                  <PopularTodayGrid>
+                    {getPopularTodayGrid().map((card) => (
+                      <ImageCard
+                        backgroundUrl={card.backgroundUrl}
+                        key={card.title}
+                        className="text-center py-3 text-white rounded-lg shadow-md"
+                        onClick={() => {
+                          setHasUserSearched(true);
+                          router.replace("/discover?searchValue=" + card.title);
+                        }}
+                      >
+                        <p className="font-bold">{card.title}</p>
+                        <p className="font-light text-xs">{card.subtitle}</p>
+                      </ImageCard>
+                    ))}
+                  </PopularTodayGrid>
+                </>
+              )}
+              <div className="w-full pr-[154px] pl-[131px]">
+                <p className="font-bold text-grayscale-400 text-xs max-w-[600px] mx-auto">
+                  {hasUserSearched
+                    ? `Menampilkan hasil pencarian untuk ${props.searchValue}`
+                    : "Terbaru dari sekitarmu"}
+                </p>
+              </div>
+              {postData ? (
+                postData.map((post: PostDataInterface) => <Post key={post.id} {...post} />)
+              ) : (
+                <></>
+              )}
+            </PostsContainer>
+          </DiscoverContainer>
+        </div>
+        <RightPanel />
+      </div>
     </div>
   );
 };

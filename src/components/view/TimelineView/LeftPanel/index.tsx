@@ -20,7 +20,7 @@ const LEFT_PANEL_MENU = [
   },
   {
     id: "discover",
-    href: "#",
+    href: "/discover",
     icon: GlobeIcon,
   },
   {

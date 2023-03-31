@@ -7,9 +7,9 @@ interface DiscoverContainerProps {
 const DiscoverContainer: React.FC<DiscoverContainerProps> = (props) => {
   return (
     <div
-      className={`left-[180px] right-[381px] ${
+      className={`${
         props.hasUserSearched ? "top-[200px]" : "top-[290px]"
-      }  shadow-md rounded-lg fixed overflow-y-auto`}
+      }  shadow-md rounded-lg  overflow-y-auto`}
     >
       {props.children}
     </div>
