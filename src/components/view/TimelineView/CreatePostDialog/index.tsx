@@ -11,6 +11,7 @@ import { getAllCities, useAddPost, useGetCategories, useGetUser } from "src/serv
 import { CommunityListInterface } from "../../../../models/Home.d";
 import ClosePostDialog from "./ClosePostDialog";
 import AddCityIcon from "@icons/add_city_icon.svg";
+import useWindowDimensions from "src/utils/hooks";
 
 interface CreatePostDialogProps {
   open: boolean;
@@ -27,6 +28,8 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
   const [selectedCategories, setSelectedCategories] = useState<CommunityListInterface[]>([]);
   const [openClosePostDialog, setOpenClosePostDialog] = useState(false);
   const [searchCity, setSearchCity] = useState("");
+
+	const { height } = useWindowDimensions();
 
   const { data: categories } = useGetCategories();
 
@@ -150,7 +153,7 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
             </div>
           </div>
           <div className="w-full box-border px-10">
-            <div className="h-[240px] overflow-auto scrollbar-hide">
+            <div className={`${height! > 500 ? "h-[240px]" : "max-h-[240px]" } overflow-auto scrollbar-hide`}>
               <TextareaAutosize
                 value={postText}
                 onChange={(e) => setPostText(e.target.value)}
