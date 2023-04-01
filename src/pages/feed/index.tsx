@@ -26,9 +26,12 @@ const Feed: React.FC<FeedProps> = (props) => {
 
   const { data: postData } = useGetPosts();
 
-	if (!Cookies.get("token")) {
-		router.push("/signin")
-	}
+	useEffect(() => {
+		if (!Cookies.get("token")) {
+			router.push("/signin")
+		}
+	}, [router])
+	
   if (!currentUser) {
     return <></>;
   } else {
