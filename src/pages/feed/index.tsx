@@ -12,16 +12,23 @@ import { PostDataInterface } from "src/models/Timeline";
 import { getCurrentUser } from "src/utils/helper";
 import Head from "next/head";
 import useWindowDimensions from "src/utils/hooks";
+import BottomNavbar from "@components/view/TimelineView/BottomNavbar";
+import { Router, useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 interface FeedProps {}
 const Feed: React.FC<FeedProps> = (props) => {
   const [activeTab, setActiveTab] = useState(0);
   const { width, height } = useWindowDimensions();
+	const router = useRouter();
 
   const { data: currentUser } = useGetUser();
 
   const { data: postData } = useGetPosts();
 
+	if (!Cookies.get("token")) {
+		router.push("/signin")
+	}
   if (!currentUser) {
     return <></>;
   } else {
@@ -34,8 +41,8 @@ const Feed: React.FC<FeedProps> = (props) => {
           <FirstSignIn></FirstSignIn>
         ) : (
           <div className="max-h-screen max-w-screen flex justify-between box-border">
-            <LeftPanel />
-            <div className="flex flex-col w-full mx-6">
+            {width && width >= 1000 && <LeftPanel />}
+            <div className="flex flex-col w-full lg:mx-6">
               <TimelineHeader />
               <TimelineContainer>
                 <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -48,6 +55,7 @@ const Feed: React.FC<FeedProps> = (props) => {
                 </PostsContainer>
               </TimelineContainer>
             </div>
+						{width && width < 1000 && <BottomNavbar/>}
             {width && width >= 1000 && <RightPanel />}
           </div>
         )}

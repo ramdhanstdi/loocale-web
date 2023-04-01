@@ -3,6 +3,7 @@ import Image from "next/image";
 import Button from "../../design/Button";
 import Hamburger from "@components/design/Hamburger";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const NAVBAR_MENU = [
   {
@@ -51,7 +52,15 @@ const Navbar = () => {
             SIGN UP
           </Button>
         </div>
-        <Hamburger menu={NAVBAR_MENU} className="sm:hidden mr-2"></Hamburger>
+        <Hamburger
+          menu={NAVBAR_MENU}
+          className="sm:hidden mr-2"
+          extraChild={
+            <Link href="/signup">
+              <p className="font-bold py-3 w-[240px] text-white bg-secondary-500">SIGN UP</p>
+            </Link>
+          }
+        ></Hamburger>
       </div>
     </nav>
   );

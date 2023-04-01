@@ -6,7 +6,7 @@ interface TimelineContainerProps {
 const TimelineContainer:React.FC<TimelineContainerProps> = (props) => {
 
 	return (
-		<div className='shadow-md rounded-lg mt-6'>
+		<div className='shadow-md rounded-lg lg:mt-6 mt-2'>
 			{props.children}
 		</div>
 	)

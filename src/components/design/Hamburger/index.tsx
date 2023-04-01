@@ -11,6 +11,7 @@ interface Props {
     href: string;
   }[];
   className?: string;
+	extraChild?: React.ReactNode
 }
 const Hamburger: React.FC<Props> = (props) => {
   const router = useRouter();
@@ -28,15 +29,13 @@ const Hamburger: React.FC<Props> = (props) => {
           {props.menu.map((item) => (
             <a
               href={item.href}
-              className="font-bold py-3 w-[240px] border border-gray-100"
+              className="font-bold py-3 w-[240px] border-b border-gray-100"
               key={item.title}
             >
               {item.title}
             </a>
           ))}
-          <Link href="/signup">
-            <p className="font-bold py-3 w-[240px] text-secondary-500 border border-gray-100">SIGN UP</p>
-          </Link>
+					{props.extraChild}
         </div>
       )}
     </div>

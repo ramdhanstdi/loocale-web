@@ -50,9 +50,9 @@ const Post: React.FC<PostDataInterface> = ({
     return <></>;
   } else {
     return (
-      <div className="w-full py-4 pr-[154px] pl-[131px] border-b-[0.5px] border-b-primary-100 relative">
+      <div className="w-full py-4 sm:pr-[154px] sm:pl-[131px] pr-4 pl-16 border-b-[0.5px] border-b-primary-100 relative">
         <div className="max-w-[600px] mx-auto relative">
-          <div className="absolute text-center top-0 -left-20 text-xs text-primary-200 font-light">
+          <div className="absolute text-center top-0 sm:-left-20 -left-12 text-xs text-primary-200 font-light">
             <div className="rounded-full flex justify-center">
               {User.thumbnail ? (
                 <Image
