@@ -6,35 +6,33 @@ interface DialogProps {
   onClose?: VoidFunction;
   children?: React.ReactNode;
   maxWidth?: "xs" | "sm" | "md" | "lg" | "xl";
-	className?: string
-	onClick?: VoidFunction;
+  className?: string;
+  onClick?: VoidFunction;
 }
 
 const Dialog: React.FC<DialogProps> = (props) => {
-  const breakpoints = {
-		xs: "320px",
-    sm: "480px",
-    md: "600px",
-    lg: "900px",
-    xl: "1100px",
+  const widthBreakpoints = {
+    xs: "w-[320px]",
+    sm: "w-[480px]",
+    md: "w-[600px]",
+    lg: "w-[900px]",
+    xl: "w-[1100px]",
   };
   return (
     <Modal open={props.open} onClose={props.onClose}>
       <div
-        className={`fixed z-50 bg-white top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 rounded-xl ${props.className}`}
-				style={{
-					width: props.maxWidth ? breakpoints[props.maxWidth] : "600px",
-					maxHeight: props.maxWidth ? breakpoints[props.maxWidth] : "600px",
-				}}
-				onClick={(e) => {
-					if (props.onClick) {
-						props.onClick()
-					}
-					e.stopPropagation()
-				}}
+        className={`fixed z-50 bg-white top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 sm:rounded-xl ${
+          props.maxWidth ? widthBreakpoints[props.maxWidth] : "sm:w-[600px]"
+        } ${props.className}`}
+        onClick={(e) => {
+          if (props.onClick) {
+            props.onClick();
+          }
+          e.stopPropagation();
+        }}
       >
-				{props.children}
-			</div>
+        {props.children}
+      </div>
     </Modal>
   );
 };

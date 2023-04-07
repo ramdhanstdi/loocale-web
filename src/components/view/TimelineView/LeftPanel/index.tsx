@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import CreatePostDialog from "../CreatePostDialog";
 import { useGetUser } from "src/services/Timeline";
 import MoreIcon from "@icons/more_vert_icon.svg";
+import Cookies from "js-cookie";
 
 const LEFT_PANEL_MENU = [
   {
@@ -37,6 +38,10 @@ const LeftPanel = () => {
 
   const handleCloseDialog = () => {
     setOpenCreatePost(false);
+  };
+
+  const handleSignout = () => {
+    Cookies.remove("token");
   };
 
   if (!currentUser) {
@@ -75,13 +80,20 @@ const LeftPanel = () => {
               }}
             />
             {/* Profile Menu */}
-            <div className={`absolute z-10 bg-white bottom-20 left-20 text-xs items-center h-[180px] justify-between rounded-lg border border-primary-100 w-[140px] ${openProfileMenu ? "flex" : "hidden"} flex-col`}>
+            <div
+              className={`absolute z-10 bg-white bottom-20 left-20 text-xs items-center h-[180px] justify-between rounded-lg border border-primary-100 w-[140px] ${
+                openProfileMenu ? "flex" : "hidden"
+              } flex-col`}
+            >
               <div className="w-full text-center cursor-not-allowed">
                 <p className="font-bold py-2 border-b border-primary-100">Profil Saya</p>
                 <p className="font-bold py-2 border-b border-primary-100 ">Pengaturan</p>
               </div>
               <Link href={"/signin"}>
-                <p className="font-bold py-2 text-white bg-secondary-500 w-full text-center rounded-b-lg cursor-pointer">
+                <p
+                  className="font-bold py-2 text-white bg-secondary-500 w-full text-center rounded-b-lg cursor-pointer"
+                  onClick={handleSignout}
+                >
                   SIGN OUT
                 </p>
               </Link>

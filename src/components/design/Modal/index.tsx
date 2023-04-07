@@ -10,7 +10,7 @@ const Modal: React.FC<ModalProps> = (props) => {
     <div
       className={`fixed z-40 top-0 left-0 w-screen h-screen ${
         props.open ? "block" : "hidden"
-      } bg-[rgba(0,0,0,0.4)]`}
+      } sm:bg-[rgba(0,0,0,0.4)]`}
       onClick={props.onClose}
     >
       {props.children}

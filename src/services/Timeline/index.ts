@@ -1,5 +1,5 @@
 import { queryClient } from "@pages/_app";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { UseQueryOptions, useMutation, useQuery } from "@tanstack/react-query";
 import { CommunityListInterface } from "src/models/Home";
 import { GetUserDataInterface, UserDataInterface } from "src/models/Timeline";
 import request from "../request";
@@ -74,7 +74,7 @@ export const getUser = () =>
     .then((res) => res.data)
     .catch((err) => console.error(err));
 
-export const useGetUser = () => useQuery({ queryKey: ["getUser"], queryFn: getUser });
+export const useGetUser = (options?: UseQueryOptions) => useQuery({ queryKey: ["getUser"], queryFn: getUser});
 
 export const getCategories = () =>
   request

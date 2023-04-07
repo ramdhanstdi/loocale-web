@@ -22,7 +22,7 @@ const Feed: React.FC<FeedProps> = (props) => {
   const { width, height } = useWindowDimensions();
 	const router = useRouter();
 
-  const { data: currentUser } = useGetUser();
+  const { data: currentUser } = useGetUser({ refetchOnMount: true });
 
   const { data: postData } = useGetPosts();
 

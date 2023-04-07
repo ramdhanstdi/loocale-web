@@ -29,7 +29,7 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
   const [openClosePostDialog, setOpenClosePostDialog] = useState(false);
   const [searchCity, setSearchCity] = useState("");
 
-	const { height } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
 
   const { data: categories } = useGetCategories();
 
@@ -64,7 +64,7 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
     }
   };
 
-	const removeImageHandler = (url: string) => {
+  const removeImageHandler = (url: string) => {
     const getRemovedImageIndex = imageURL.findIndex((imageUrl) => imageUrl === url);
     setImageURL(
       imageURL.slice(0, getRemovedImageIndex).concat(imageURL.slice(getRemovedImageIndex + 1))
@@ -90,33 +90,39 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
       setImageFiles(currentImageFiles);
     }
   };
-
   if (!currentUser) {
     return <></>;
   } else {
     return (
       <>
-        <Dialog open={open} maxWidth="md" onClose={closeDialogHandler}>
-          <div className="flex justify-between items-center w-full px-10 py-3 border-b border-primary-500">
+        <Dialog
+          open={open}
+          maxWidth="md"
+          onClose={closeDialogHandler}
+          className={`${
+            width && width < 600 ? "!w-screen" : ""
+          } sm:h-min h-[calc(100vh-128px)] border rounded-none`}
+        >
+          <div className="flex justify-between items-center w-full sm:px-10 px-6 py-3 border-b border-primary-100">
             <p>Buat post baru</p>
             <p onClick={closeDialogHandler}>&#9587;</p>
           </div>
-          <div className="my-4 flex ml-9 gap-2 items-center">
+          <div className="my-4 flex sm:ml-9 ml-6 gap-2 items-center">
             {currentUser.users.thumbnail ? (
               <Image
                 src={currentUser.users.thumbnail}
                 loader={() => currentUser.users.thumbnail!}
                 width={40}
                 height={40}
-								alt="profile-pic"
-								className="rounded-full"
+                alt="profile-pic"
+                className="rounded-full"
               />
             ) : (
               <PeopleIcon />
             )}
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full sm:w-min">
               <p className="font-bold text-primary-800 mb-2">{currentUser.users.user_name}</p>
-              <div className="flex gap-4">
+              <div className="flex gap-4 w-full">
                 <div className="flex gap-2">
                   <AddCityIcon />
                   <Autocomplete
@@ -133,7 +139,7 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
                         <input
                           {...params.inputProps}
                           placeholder="Tambah kota"
-                          className="outline-none"
+                          className="outline-none w-24 sm:w-40 placeholder:text-xs sm:placeholder:text-base"
                         />
                       </div>
                     )}
@@ -143,7 +149,7 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
                   <AddLocationIcon />
                   <input
                     type="text"
-                    className="outline-none"
+                    className="outline-none w-24 sm:w-40 placeholder:text-xs sm:placeholder:text-base"
                     placeholder="Tambah lokasi"
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
@@ -152,18 +158,22 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
               </div>
             </div>
           </div>
-          <div className="w-full box-border px-10">
-            <div className={`${height! > 500 ? "h-[240px]" : "max-h-[240px]" } overflow-auto scrollbar-hide`}>
+          <div className="w-full box-border px-6 sm:px-10 h-full">
+            <div
+              className={`${
+                height! > 500 ? "h-[calc(100vh-500px)]" : "max-h-[240px]"
+              } overflow-auto scrollbar-hide`}
+            >
               <TextareaAutosize
                 value={postText}
                 onChange={(e) => setPostText(e.target.value)}
                 name="post-text"
                 id="post-text"
                 cols={50}
-                className={`w-[520px] outline-none`}
+                className={`sm:w-[520px] outline-none text-xs sm:text-base`}
                 placeholder="Ceritakan perjalanan kamu"
               />
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid sm:grid-cols-2 gap-2 grid-cols-4 overflow-auto w-max">
                 {imageURL.length ? (
                   imageURL.map((url) => (
                     <div className="rounded-lg relative" key={url}>
@@ -233,7 +243,7 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
                     location_detail: location,
                     media_files: imageFiles,
                     categories: selectedCategories,
-										location: city ? city.name : "",
+                    location: city ? city.name : "",
                   })
                 }
               >
