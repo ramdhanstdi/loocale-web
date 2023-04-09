@@ -3,56 +3,9 @@ import React from 'react';
 import useWindowDimensions from 'src/utils/hooks';
 import Card from './Card'
 
-const COMMUNITY_LIST = [
-	{
-		background: '/bike_touring.png',
-		title: 'Bike Touring'
-	},
-	{
-		background: '/hiking.png',
-		title: 'Hiking'
-	},
-	{
-		background: '/camping.png',
-		title: 'Camping'
-	},
-	{
-		background: '/temple.png',
-		title: 'Temple Admirer'
-	},
-	{
-		background: '/architecture.png',
-		title: 'Architecture'
-	},
-	{
-		background: '/spicy.png',
-		title: 'Spicy Culinary'
-	},
-	{
-		background: '/traditional.png',
-		title: 'Traditional Culinary'
-	},
-	{
-		background: '/vegan.png',
-		title: 'Vegan On Look'
-	},
-	{
-		background: '/chicken.png',
-		title: 'Chicken Lovers'
-	},
-	{
-		background: '/meat.png',
-		title: 'Meat No. 1'
-	},
-	{
-		background: '/coffee.png',
-		title: 'Coffee Experts'
-	},
-]
-
 const CommunityHome = (props: { communityList: CommunityListInterface[]}) => {
 	const { height, width } = useWindowDimensions();
-	const shownCommunity = width && (width < 702) ? props.communityList.slice(0, 3) : props.communityList;
+	const shownCommunity = width && (width < 702) ? props.communityList.slice(0, 3) : props.communityList.slice(0, 11);
 	return (
 		<section id='community' className='max-w-[1280px] mx-auto flex flex-col pt-6 sm:pt-[70px] px-8 sm:px-16 text-center pb-[48px]'>
 			<h1 className='font-bold text-primary-800 text-[38px] sm:text-[68px] mb-3'>Connect</h1>
