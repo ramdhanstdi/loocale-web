@@ -60,9 +60,9 @@ const Post: React.FC<PostDataInterface> = ({
                   loader={() => User.thumbnail!}
                   width={40}
                   height={40}
-									unoptimized
+                  unoptimized
                   alt="profile-pic"
-									className="rounded-full"
+                  className="rounded-full"
                 />
               ) : (
                 <PeopleIcon />
@@ -76,7 +76,7 @@ const Post: React.FC<PostDataInterface> = ({
             location_detail={location_detail}
           />
           <p className="font-bold text-secondary-500 text-xs my-1">@{User.user_name}</p>
-          <p className="text-xs font-light text-justify whitespace-pre-wrap mb-2">
+          <p className="text-xs font-light text-justify break-words whitespace-pre-wrap mb-2">
             {postText.length < 150 ? (
               postText
             ) : showMore ? (

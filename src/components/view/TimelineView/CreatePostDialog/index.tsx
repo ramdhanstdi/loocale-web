@@ -2,7 +2,7 @@ import Dialog from "@components/design/Dialog";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import PeopleIcon from "@icons/people_icon.svg";
 import AddLocationIcon from "@icons/add_location_icon.svg";
-import { Autocomplete, TextField, TextareaAutosize } from "@mui/material";
+import { Autocomplete, CircularProgress, TextField, TextareaAutosize } from "@mui/material";
 import { CityDataInterface } from "src/models/Timeline";
 import AddImageIcon from "@icons/add_image_icon.svg";
 import Button from "@components/design/Button";
@@ -54,7 +54,7 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
     return () => clearTimeout(timeout);
   }, [searchCity]);
 
-  const addPostHandler = useAddPost(onPostAdded);
+  const { mutate, isLoading: isPosting } = useAddPost(onPostAdded);
 
   const closeDialogHandler = () => {
     if (postText || location || imageURL.length || selectedCategories.length || city) {
@@ -236,9 +236,9 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
               <Button
                 variant="contained"
                 className="rounded-lg py-3 w-[120px] text-xs font-bold"
-                disabled={!postText || !city || !selectedCategories.length}
+                disabled={!postText || !city || !selectedCategories.length || isPosting}
                 onClick={() =>
-                  addPostHandler.mutate({
+                  mutate({
                     postText,
                     location_detail: location,
                     media_files: imageFiles,
@@ -247,7 +247,7 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
                   })
                 }
               >
-                Post
+                {isPosting ?  <CircularProgress color="inherit" size={14}/> : "Post"}
               </Button>
             </div>
           </div>
