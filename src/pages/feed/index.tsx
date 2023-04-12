@@ -45,7 +45,7 @@ const Feed: React.FC<FeedProps> = (props) => {
         ) : (
           <div className="max-h-screen max-w-screen flex justify-between box-border">
             {width && width >= 1000 && <LeftPanel />}
-            <div className="flex flex-col w-full lg:mx-6">
+            <div className="flex flex-col w-full lg:mx-6 shrink">
               <TimelineHeader />
               <TimelineContainer>
                 <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
