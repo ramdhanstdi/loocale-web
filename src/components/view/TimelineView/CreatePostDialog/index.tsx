@@ -185,7 +185,6 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
                       </div>
                       <Image
                         src={url}
-                        unoptimized
                         loader={() => url}
                         width={256}
                         height={200}

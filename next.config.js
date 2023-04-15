@@ -4,7 +4,9 @@ const nextConfig = {
   swcMinify: true,
 	images: {
 		domains: [
-			"http:localhost:5000"
+			"http://localhost:5000",
+			"localhost",
+			"https://loocale.id"
 		]
 	},
 	webpack: (config) => {

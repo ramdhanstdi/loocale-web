@@ -23,7 +23,6 @@ const AddComment: React.FC<AddCommentProps> = ({ user, postId }) => {
           alt="comment profile pic"
 					className="rounded-full"
 					width={40}
-					unoptimized
 					height={40}
         />
       ) : (

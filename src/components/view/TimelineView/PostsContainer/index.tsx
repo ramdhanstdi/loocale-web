@@ -11,7 +11,7 @@ const PostsContainer: React.FC<PostsContainerProps> = ({
   return (
     <div
       className={`w-full overflow-y-auto ${
-        maxHeight ? maxHeight : "lg:max-h-[calc(100vh-210px)] max-h-[calc(100vh-180px)]"
+        maxHeight ? maxHeight : "lg:max-h-[calc(100vh-145px)] max-h-[calc(100vh-180px)]"
       } scrollbar-hide px-auto box-border`}
     >
       {children}

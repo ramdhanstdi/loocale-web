@@ -64,7 +64,6 @@ const Post: React.FC<PostDataInterface> = ({
                 loader={() => User.thumbnail!}
                 width={40}
                 height={40}
-                unoptimized
                 alt="profile-pic"
                 className="rounded-full"
               />
