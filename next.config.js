@@ -6,7 +6,8 @@ const nextConfig = {
 		domains: [
 			"http://localhost:5000",
 			"localhost",
-			"https://loocale.id"
+			"https://loocale.id",
+			"https://api.loocale.id"
 		]
 	},
 	webpack: (config) => {
