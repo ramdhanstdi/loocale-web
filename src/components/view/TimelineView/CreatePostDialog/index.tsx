@@ -111,7 +111,6 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
             {currentUser.users.thumbnail ? (
               <Image
                 src={currentUser.users.thumbnail}
-                loader={() => currentUser.users.thumbnail!}
                 width={40}
                 height={40}
                 alt="profile-pic"
@@ -185,7 +184,6 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onClose }) =>
                       </div>
                       <Image
                         src={url}
-                        loader={() => url}
                         width={256}
                         height={200}
                         alt="preview image"

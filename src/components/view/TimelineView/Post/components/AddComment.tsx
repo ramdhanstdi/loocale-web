@@ -19,7 +19,6 @@ const AddComment: React.FC<AddCommentProps> = ({ user, postId }) => {
       {user.thumbnail ? (
         <Image
           src={user.thumbnail}
-          loader={() => user.thumbnail!}
           alt="comment profile pic"
 					className="rounded-full"
 					width={40}

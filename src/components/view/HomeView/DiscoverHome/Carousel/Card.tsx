@@ -17,7 +17,6 @@ const Card: React.FC<Props> = (props) => {
       className={`rounded-2xl border border-[#EDEFF1] flex flex-col shrink shadow-md text-primary-800 ${props.className}`}
     >
       <Image
-        loader={() => props.image}
         src={props.image}
         width={360}
         height={192}

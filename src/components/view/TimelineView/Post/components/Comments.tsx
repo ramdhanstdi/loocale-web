@@ -20,7 +20,6 @@ const Comment: React.FC<CommentProps> = ({ commentText, user, createdAt }) => {
       {user.thumbnail ? (
         <Image
           src={user.thumbnail}
-          loader={() => user.thumbnail!}
           alt="comment profile pic"
 					width={40}
 					height={40}

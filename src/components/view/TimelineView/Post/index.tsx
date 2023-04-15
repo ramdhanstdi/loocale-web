@@ -61,7 +61,6 @@ const Post: React.FC<PostDataInterface> = ({
             {User.thumbnail ? (
               <Image
                 src={User.thumbnail}
-                loader={() => User.thumbnail!}
                 width={40}
                 height={40}
                 alt="profile-pic"

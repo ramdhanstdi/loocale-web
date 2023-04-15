@@ -107,7 +107,6 @@ const LeftPanel = () => {
               ) : (
                 <Image
                   src={currentUser.users.thumbnail}
-                  loader={() => currentUser.users.thumbnail!}
                   width={40}
                   height={40}
                   className="rounded-full"

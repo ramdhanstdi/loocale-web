@@ -47,7 +47,6 @@ const AddPost = () => {
                     ) : (
                       <Image
                         src={currentUser.users.thumbnail}
-                        loader={() => currentUser.users.thumbnail!}
                         alt="profile-pic"
                         width={40}
                         height={40}

@@ -8,6 +8,16 @@ const nextConfig = {
 			"localhost",
 			"https://loocale.id",
 			"https://api.loocale.id"
+		],
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "api.loocale.id"
+			},
+			{
+				protocol: "https",
+				hostname: "loocale.id"
+			},
 		]
 	},
 	webpack: (config) => {
