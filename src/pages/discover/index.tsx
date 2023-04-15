@@ -166,8 +166,8 @@ const DiscoverPage = (props: any) => {
                           router.replace("/discover?searchValue=" + card.title);
                         }}
                       >
-                        <p className="font-bold">{card.title}</p>
-                        <p className="font-light text-xs">{card.subtitle}</p>
+                        <p className="font-bold relative z-50">{card.title}</p>
+                        <p className="font-light text-xs relative z-50">{card.subtitle}</p>
                       </ImageCard>
                     ))}
                   </PopularTodayGrid>

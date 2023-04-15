@@ -66,8 +66,8 @@ const RightPanel = () => {
               window.location.assign("/discover?searchValue=" + trend.title);
             }}
           >
-            <p className="font-bold ">{trend.title}</p>
-            <p className="font-light text-xs">{trend.subtitle}</p>
+            <p className="font-bold relative z-50">{trend.title}</p>
+            <p className="font-light text-xs z-50">{trend.subtitle}</p>
           </ImageCard>
         </div>
       ))}

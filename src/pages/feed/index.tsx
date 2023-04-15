@@ -51,7 +51,7 @@ const Feed: React.FC<FeedProps> = (props) => {
                 <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
                 <PostsContainer>
                   {postData ? (
-                    postData.slice(0,20).map((post: PostDataInterface) => <Post key={post.id} {...post} />)
+                    postData.map((post: PostDataInterface) => <Post key={post.id} {...post} />)
                   ) : (
                     <></>
                   )}
