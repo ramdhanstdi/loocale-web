@@ -26,21 +26,21 @@ const Feed: React.FC<FeedProps> = (props) => {
 
   const { data: postData } = useGetPosts();
 
-	useEffect(() => {
-		if (!Cookies.get("token")) {
-			router.push("/signin")
-		}
-	}, [router])
+	//useEffect(() => {
+	//	if (!Cookies.get("token")) {
+	//		router.push("/signin")
+	//	}
+	//}, [router])
 	
-  if (!currentUser) {
-    return <></>;
-  } else {
+  //if (!currentUser) {
+  //  return <></>;
+  //} else {
     return (
       <>
         <Head>
           <title>Feed</title>
         </Head>
-        {currentUser.users.isFirstSignIn ? (
+        {currentUser?.users.isFirstSignIn ? (
           <FirstSignIn></FirstSignIn>
         ) : (
           <div className="max-h-screen max-w-screen flex justify-between box-border">
@@ -64,7 +64,7 @@ const Feed: React.FC<FeedProps> = (props) => {
         )}
       </>
     );
-  }
+  //}
 };
 
 export default Feed;

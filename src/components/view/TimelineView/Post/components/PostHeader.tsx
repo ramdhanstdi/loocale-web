@@ -3,13 +3,13 @@ import { getTimeDifferenceString } from "src/utils/helper";
 import MoreHorizIcon from "@icons/more_horiz_icon.svg";
 import { EventHandler, useState } from "react";
 import { GetUserDataInterface, UserDataInterface } from "src/models/Timeline";
+import { useGetUser } from "src/services/Timeline";
 
 interface PostHeaderProps {
   full_name: string;
   location: string;
   createdAt: string;
   location_detail: string | null;
-  currentUser: GetUserDataInterface;
   postingUser: UserDataInterface;
 	openPostMenu: boolean;
 	setOpenPostMenu: (args: boolean) => void;
@@ -20,7 +20,6 @@ const PostHeader: React.FC<PostHeaderProps> = ({
   location,
   createdAt,
   location_detail,
-  currentUser,
   postingUser,
 	openPostMenu,
 	setOpenPostMenu
@@ -30,24 +29,26 @@ const PostHeader: React.FC<PostHeaderProps> = ({
   const timeDifference = currentTime
     .diff(postTime, ["years", "months", "days", "hours", "minutes"])
     .toObject();
+	
+	const { data: currentUser } = useGetUser();
 
   const OTHER_USER_POST_MENU = [
-    {
-      onClick: function(){},
-      content: <span>Buka Profil</span>,
-    },
-    {
-      onClick: function(){},
-      content: (
-        <span>
-          Follow <span className="text-secondary-500">@{postingUser.user_name}</span>
-        </span>
-      ),
-    },
-    {
-      onClick: function(){},
-      content: <span>Laporkan</span>,
-    },
+    //{
+    //  onClick: function(){},
+    //  content: <span>Buka Profil</span>,
+    //},
+    //{
+    //  onClick: function(){},
+    //  content: (
+    //    <span>
+    //      Follow <span className="text-secondary-500">@{postingUser.user_name}</span>
+    //    </span>
+    //  ),
+    //},
+    //{
+    //  onClick: function(){},
+    //  content: <span>Laporkan</span>,
+    //},
     {
       onClick: function(){},
       content: <span>Share Post</span>,
@@ -55,10 +56,10 @@ const PostHeader: React.FC<PostHeaderProps> = ({
   ];
 
   const CURRENT_USER_POST_MENU = [
-    {
-      onClick: function(){},
-      content: <span>Profil Saya</span>,
-    },
+    //{
+    //  onClick: function(){},
+    //  content: <span>Profil Saya</span>,
+    //},
     {
       onClick: function(){},
       content: <span>Share Post</span>,
@@ -70,7 +71,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({
   ];
 
   const postMenu =
-    currentUser.users.id === postingUser.id ? CURRENT_USER_POST_MENU : OTHER_USER_POST_MENU;
+    currentUser && currentUser.users.id === postingUser.id ? CURRENT_USER_POST_MENU : OTHER_USER_POST_MENU;
 
   return (
     <div className="flex justify-between items-center" onClick={() => setOpenPostMenu(false)}>
@@ -85,7 +86,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({
           <p className="text-[9px] font-light sm:pb-1">{getTimeDifferenceString(timeDifference)}</p>
         </div>
       </div>
-      <div className="relative">
+      {/*<div className="relative">
         <MoreHorizIcon
           width={36}
           height={24}
@@ -102,7 +103,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({
             ))}
           </div>
         )}
-      </div>
+      </div>*/}
     </div>
   );
 };

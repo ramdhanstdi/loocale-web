@@ -27,17 +27,18 @@ const AddPost = () => {
     Cookies.remove("token");
   };
 
-  if (!currentUser) {
-    return <></>;
-  } else {
-    return (
-      <>
-        {width && width > 1000 ? (
-          <>
-            <div className="flex flex-col px-9 py-2 rounded-lg shadow-md">
-              <div className="">
-                <Image src={"/NavbarLogo.svg"} width={140} height={52} alt="Loocale Logo" />
-              </div>
+  //if (!currentUser) {
+  //  return <></>;
+  //} else {
+  return (
+    <>
+      {width && width > 1000 ? (
+        <>
+          <div className="flex flex-col px-9 py-2 rounded-lg shadow-md">
+            <div className="">
+              <Image src={"/NavbarLogo.svg"} width={140} height={52} alt="Loocale Logo" />
+            </div>
+            {currentUser && (
               <div className="flex gap-6">
                 <div className="flex flex-col">
                   <div className="rounded-full flex justify-center">
@@ -72,26 +73,32 @@ const AddPost = () => {
                   />
                 </div>
               </div>
-            </div>
-            <CreatePostDialog open={openCreatePost} onClose={handleCloseDialog} />
-          </>
-        ) : (
-          <div className="flex items-center justify-center py-2 shadow-md">
-            <Image src={"/NavbarLogo.svg"} width={140} height={52} alt="Loocale Logo" />
-            <Hamburger
-              menu={[]}
-							className="mr-2"
-              extraChild={
-                <Link href={"/signin"}>
-                  <p className="font-bold py-3 w-[240px] text-white bg-secondary-500" onClick={handleSignout}>SIGN OUT</p>
-                </Link>
-              }
-            />
+            )}
           </div>
-        )}
-      </>
-    );
-  }
+          <CreatePostDialog open={openCreatePost} onClose={handleCloseDialog} />
+        </>
+      ) : (
+        <div className="flex items-center justify-center py-2 shadow-md">
+          <Image src={"/NavbarLogo.svg"} width={140} height={52} alt="Loocale Logo" />
+          <Hamburger
+            menu={[]}
+            className="mr-2"
+            extraChild={
+              <Link href={"/signin"}>
+                <p
+                  className="font-bold py-3 w-[240px] text-white bg-secondary-500 hover:cursor-pointer"
+                  onClick={handleSignout}
+                >
+                  SIGN OUT
+                </p>
+              </Link>
+            }
+          />
+        </div>
+      )}
+    </>
+  );
+  //}
 };
 
 export default AddPost;

@@ -72,9 +72,13 @@ export const getUser = () =>
   request
     .get<GetUserDataInterface>("/user")
     .then((res) => res.data)
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      console.error(err);
+			throw new Error(err)
+    });
 
-export const useGetUser = (options?: UseQueryOptions) => useQuery({ queryKey: ["getUser"], queryFn: getUser});
+export const useGetUser = (options?: UseQueryOptions) =>
+  useQuery({ queryKey: ["getUser"], queryFn: getUser });
 
 export const getCategories = () =>
   request

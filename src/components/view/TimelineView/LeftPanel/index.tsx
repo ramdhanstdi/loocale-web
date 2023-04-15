@@ -44,31 +44,34 @@ const LeftPanel = () => {
     Cookies.remove("token");
   };
 
-  if (!currentUser) {
-    return <></>;
-  } else {
-    return (
-      <>
-        <div
-          className="flex flex-col justify-between my-10 ml-10"
-          onClick={() => setOpenProfileMenu(false)}
-        >
-          <div className="px-[30px] py-9 rounded-xl shadow-md flex flex-col gap-12">
-            {LEFT_PANEL_MENU.map((menu) => (
-              <a href={menu.href} key={menu.id}>
-                <div
-                  className={`${
-                    menu.href === router.pathname ? "text-secondary-500" : "text-primary-800"
-                  } ${menu.href === "#" ? "cursor-not-allowed" : "cursor-pointer"} `}
-                >
-                  {<menu.icon />}
-                </div>
-              </a>
-            ))}
+  //if (!currentUser) {
+  //  return <></>;
+  //} else {
+  return (
+    <>
+      <div
+        className="flex flex-col justify-between my-10 ml-10"
+        onClick={() => setOpenProfileMenu(false)}
+      >
+        <div className="px-[30px] py-9 rounded-xl shadow-md flex flex-col gap-12">
+          {LEFT_PANEL_MENU.map((menu) => (
+            <a href={menu.href} key={menu.id}>
+              <div
+                className={`${
+                  menu.href === router.pathname ? "text-secondary-500" : "text-primary-800"
+                } ${menu.href === "#" ? "cursor-not-allowed" : "cursor-pointer"} `}
+              >
+                {<menu.icon />}
+              </div>
+            </a>
+          ))}
+          {currentUser && (
             <div className="text-secondary-500" onClick={() => setOpenCreatePost(true)}>
               <AddIcon />
             </div>
-          </div>
+          )}
+        </div>
+        {currentUser && (
           <div className="py-3 px-5 shadow-md rounded-lg flex flex-col relative">
             <MoreIcon
               className="absolute top-3 right-2 bg-gray-100 rounded-full hover:bg-gray-200 hover:cursor-pointer"
@@ -116,11 +119,12 @@ const LeftPanel = () => {
               {currentUser.users.user_name || ""}
             </p>
           </div>
-        </div>
-        <CreatePostDialog open={openCreatePost} onClose={handleCloseDialog} />
-      </>
-    );
-  }
+        )}
+      </div>
+      <CreatePostDialog open={openCreatePost} onClose={handleCloseDialog} />
+    </>
+  );
+  //}
 };
 
 export default LeftPanel;
