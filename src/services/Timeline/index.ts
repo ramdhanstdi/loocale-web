@@ -1,14 +1,19 @@
-import { queryClient } from "@pages/_app";
-import { UseQueryOptions, useMutation, useQuery } from "@tanstack/react-query";
+//import { queryClient } from "@pages/_app";
+import { UseQueryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CommunityListInterface } from "src/models/Home";
 import { GetUserDataInterface, UserDataInterface } from "src/models/Timeline";
 import request from "../request";
 
-const getPosts = (searchValue: string = "") =>
+export const getPosts = (searchValue?: string) =>
   request
-    .get(`/posts?searchValue=${searchValue}`)
-    .then((res) => res.data)
-    .catch((err) => console.error(err));
+    .get(`/posts?searchValue=${searchValue || ""}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.error(err);
+      return null;
+    });
 
 export const useGetPosts = (searchValue: string = "") =>
   useQuery({
@@ -47,8 +52,9 @@ const addPost = (data: {
     .catch((err) => console.error(err));
 };
 
-export const useAddPost = (onSuccessHandler: VoidFunction) =>
-  useMutation({
+export const useAddPost = (onSuccessHandler: VoidFunction) => {
+  const queryClient = useQueryClient();
+  return useMutation({
     mutationKey: ["addPost"],
     mutationFn: addPost,
     onSuccess: () => {
@@ -56,25 +62,29 @@ export const useAddPost = (onSuccessHandler: VoidFunction) =>
       queryClient.invalidateQueries({ queryKey: ["getPosts"] });
     },
   });
-
+};
 export const likePost = (params: { postId: string }) => request.post("/like-post", params);
 
-export const useLikePost = () =>
-  useMutation({
+export const useLikePost = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
     mutationKey: ["likePost"],
     mutationFn: likePost,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["getPosts"] });
     },
   });
-
+};
 export const getUser = () =>
   request
     .get<GetUserDataInterface>("/user")
-    .then((res) => res.data)
+    .then((res) => {
+      return res.data || null;
+    })
     .catch((err) => {
       console.error(err);
-			throw new Error(err)
+      return null;
     });
 
 export const useGetUser = (options?: UseQueryOptions) =>
@@ -97,13 +107,15 @@ export const addComment = (data: { commentText: string; postId: number }) =>
     .then((res) => res.data)
     .catch((err) => console.error(err));
 
-export const useAddComment = () =>
-  useMutation({
+export const useAddComment = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
     mutationKey: ["addComment"],
     mutationFn: addComment,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["getPosts"] }),
   });
-
+};
 export const getAllCities = (cityName: string) =>
   request
     .get("/cities-name?name=" + cityName)

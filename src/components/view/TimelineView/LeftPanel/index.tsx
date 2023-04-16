@@ -34,7 +34,7 @@ const LeftPanel = () => {
   const [openCreatePost, setOpenCreatePost] = useState(false);
   const [openProfileMenu, setOpenProfileMenu] = useState(false);
 
-  const { data: currentUser } = useGetUser();
+  const { data: currentUser, fetchStatus } = useGetUser();
 
   const handleCloseDialog = () => {
     setOpenCreatePost(false);
@@ -44,9 +44,9 @@ const LeftPanel = () => {
     Cookies.remove("token");
   };
 
-  //if (!currentUser) {
-  //  return <></>;
-  //} else {
+  if (currentUser === undefined) {
+    return <></>;
+  } else {
   return (
     <>
       <div
@@ -71,7 +71,7 @@ const LeftPanel = () => {
             </div>
           )}
         </div>
-        {currentUser && (
+        {currentUser !== null && currentUser !== undefined ? (
           <div className="py-3 px-5 shadow-md rounded-lg flex flex-col relative">
             <MoreIcon
               className="absolute top-3 right-2 bg-gray-100 rounded-full hover:bg-gray-200 hover:cursor-pointer"
@@ -118,12 +118,13 @@ const LeftPanel = () => {
               {currentUser.users.user_name || ""}
             </p>
           </div>
-        )}
+        ): <></>
+				}
       </div>
       <CreatePostDialog open={openCreatePost} onClose={handleCloseDialog} />
     </>
   );
-  //}
+  }
 };
 
 export default LeftPanel;

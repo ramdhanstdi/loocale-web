@@ -7,7 +7,7 @@ import TimelineContainer from "@components/view/TimelineView/TimelineContainer";
 import Tabs from "@components/view/TimelineView/Tabs";
 import Post from "@components/view/TimelineView/Post";
 import PostsContainer from "@components/view/TimelineView/PostsContainer";
-import { useGetPosts, useGetUser } from "src/services/Timeline";
+import getPosts, { getUser, useGetPosts, useGetUser } from "src/services/Timeline";
 import { PostDataInterface } from "src/models/Timeline";
 import { getCurrentUser } from "src/utils/helper";
 import Head from "next/head";
@@ -15,6 +15,8 @@ import useWindowDimensions from "src/utils/hooks";
 import BottomNavbar from "@components/view/TimelineView/BottomNavbar";
 import { Router, useRouter } from "next/router";
 import Cookies from "js-cookie";
+import { QueryClient, dehydrate } from "@tanstack/react-query";
+import { CircularProgress } from "@mui/material";
 
 interface FeedProps {}
 const Feed: React.FC<FeedProps> = (props) => {
@@ -26,21 +28,12 @@ const Feed: React.FC<FeedProps> = (props) => {
 
   const { data: postData } = useGetPosts();
 
-	//useEffect(() => {
-	//	if (!Cookies.get("token")) {
-	//		router.push("/signin")
-	//	}
-	//}, [router])
-	
-  //if (!currentUser) {
-  //  return <></>;
-  //} else {
     return (
       <>
         <Head>
           <title>Feed</title>
         </Head>
-        {currentUser?.users.isFirstSignIn ? (
+        {currentUser && currentUser.users.isFirstSignIn ? (
           <FirstSignIn></FirstSignIn>
         ) : (
           <div className="max-h-screen max-w-screen flex justify-between box-border">
@@ -66,5 +59,38 @@ const Feed: React.FC<FeedProps> = (props) => {
     );
   //}
 };
+
+export async function getServerSideProps() {
+  const queryClient = new QueryClient({
+		defaultOptions: {
+			queries: {
+				retry: 0,
+				refetchOnMount: false,
+				refetchOnReconnect: false,
+				refetchOnWindowFocus: false,
+			}
+		}
+	})
+
+  await queryClient.prefetchQuery({
+		queryKey: ["getPosts"],
+		queryFn: async() => {
+			const data = await getPosts()
+			return data
+		}
+	})
+
+	//await queryClient.prefetchQuery({
+	//	queryKey: ["getUser"],
+	//	queryFn: getUser,
+	//})
+
+
+	return {
+    props: {
+      dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
+    },
+  }
+}
 
 export default Feed;

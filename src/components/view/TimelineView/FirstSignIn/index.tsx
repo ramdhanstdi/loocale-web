@@ -9,9 +9,10 @@ import Image from "next/image";
 import axios from "axios";
 import { BE_URL } from "Config";
 import request from "src/services/request";
-import { queryClient } from "@pages/_app";
+import { useQueryClient } from "@tanstack/react-query";
 
 const FirstSignIn = () => {
+	const queryClient = useQueryClient();
   const [step, setStep] = useState(1);
   const province = useState("");
   const city = useState("");
@@ -21,8 +22,6 @@ const FirstSignIn = () => {
   const [bio, setBio] = useState("");
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [hasPostProfile, setHasPostProfile] = useState(false);
-
-  console.log(step === 4 && !hasPostProfile);
 
   useEffect(() => {
     if (step === 4) {
