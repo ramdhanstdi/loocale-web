@@ -23,7 +23,7 @@ const Comment: React.FC<CommentProps> = ({ commentText, user, createdAt }) => {
           alt="comment profile pic"
 					width={40}
 					height={40}
-					className="rounded-full"
+					className="rounded-full object-cover"
         />
       ) : (
         <PeopleIcon />

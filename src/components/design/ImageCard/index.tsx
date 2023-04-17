@@ -14,7 +14,7 @@ const ImageCard: React.FC<ImageCardProps> = (props) => {
 			onClick={props.onClick}
     >
 
-			<Image src={props.backgroundUrl} layout="fill" alt="image-card-background" className="rounded-lg filter brightness-75"/>
+			<Image src={props.backgroundUrl} layout="fill" alt="image-card-background" className="rounded-lg filter brightness-75 object-cover"/>
       {props.children}
     </div>
   );

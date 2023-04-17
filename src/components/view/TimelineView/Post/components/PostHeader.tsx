@@ -1,9 +1,10 @@
 import { DateTime } from "luxon";
 import { getTimeDifferenceString } from "src/utils/helper";
 import MoreHorizIcon from "@icons/more_horiz_icon.svg";
-import { EventHandler, useState } from "react";
+import { EventHandler, MouseEventHandler, useState } from "react";
 import { GetUserDataInterface, UserDataInterface } from "src/models/Timeline";
 import { useGetUser } from "src/services/Timeline";
+import toast from "react-hot-toast";
 
 interface PostHeaderProps {
   full_name: string;
@@ -11,8 +12,9 @@ interface PostHeaderProps {
   createdAt: string;
   location_detail: string | null;
   postingUser: UserDataInterface;
-	openPostMenu: boolean;
-	setOpenPostMenu: (args: boolean) => void;
+  openPostMenu: boolean;
+  postId: number;
+  setOpenPostMenu: (args: boolean) => void;
 }
 
 const PostHeader: React.FC<PostHeaderProps> = ({
@@ -21,16 +23,22 @@ const PostHeader: React.FC<PostHeaderProps> = ({
   createdAt,
   location_detail,
   postingUser,
-	openPostMenu,
-	setOpenPostMenu
+  postId,
+  openPostMenu,
+  setOpenPostMenu,
 }) => {
   const currentTime = DateTime.now();
   const postTime = DateTime.fromISO(createdAt);
   const timeDifference = currentTime
     .diff(postTime, ["years", "months", "days", "hours", "minutes"])
     .toObject();
-	
-	const { data: currentUser } = useGetUser();
+
+  const postLink =
+    process.env.NODE_ENV === "development"
+      ? `http://localhost:3000/posts/${postId}`
+      : `https://loocale.id/posts/${postId}`;
+
+  const { data: currentUser } = useGetUser();
 
   const OTHER_USER_POST_MENU = [
     //{
@@ -50,7 +58,11 @@ const PostHeader: React.FC<PostHeaderProps> = ({
     //  content: <span>Laporkan</span>,
     //},
     {
-      onClick: function(){},
+      onClick: function (e: React.MouseEvent) {
+        e.stopPropagation();
+				toast("Copied to clipboard")
+        navigator.clipboard.writeText(postLink);
+      },
       content: <span>Share Post</span>,
     },
   ];
@@ -61,17 +73,23 @@ const PostHeader: React.FC<PostHeaderProps> = ({
     //  content: <span>Profil Saya</span>,
     //},
     {
-      onClick: function(){},
+      onClick: function (e: React.MouseEvent) {
+        e.stopPropagation();
+				toast("Copied to clipboard")
+        navigator.clipboard.writeText(postLink);
+      },
       content: <span>Share Post</span>,
     },
-    {
-      onClick: function(){},
-      content: <span className="text-secondary-500">Hapus Post</span>,
-    },
+    //{
+    //  onClick: function(){},
+    //  content: <span className="text-secondary-500">Hapus Post</span>,
+    //},
   ];
 
   const postMenu =
-    currentUser && currentUser.users.id === postingUser.id ? CURRENT_USER_POST_MENU : OTHER_USER_POST_MENU;
+    currentUser && currentUser.users.id === postingUser.id
+      ? CURRENT_USER_POST_MENU
+      : OTHER_USER_POST_MENU;
 
   return (
     <div className="flex justify-between items-center" onClick={() => setOpenPostMenu(false)}>
@@ -86,7 +104,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({
           <p className="text-[9px] font-light sm:pb-1">{getTimeDifferenceString(timeDifference)}</p>
         </div>
       </div>
-      {/*<div className="relative">
+      <div className="relative">
         <MoreHorizIcon
           width={36}
           height={24}
@@ -99,17 +117,25 @@ const PostHeader: React.FC<PostHeaderProps> = ({
         {openPostMenu && (
           <div className="rounded-lg border-primary-100 border top-0 z-20 bg-white right-0 flex flex-col text-xs absolute font-bold">
             {postMenu.map((menuItem, i) => (
-              <PostMenuItem key={"postMenu" + createdAt + i} onClick={menuItem.onClick}>{menuItem.content}</PostMenuItem>
+              <PostMenuItem key={"postMenu" + createdAt + i} onClick={menuItem.onClick}>
+                {menuItem.content}
+              </PostMenuItem>
             ))}
           </div>
         )}
-      </div>*/}
+      </div>
     </div>
   );
 };
 
-const PostMenuItem: React.FC<{ children: React.ReactNode, onClick: VoidFunction }> = ({ children, onClick }) => (
-  <p className="py-2 border-b border-primary-100 w-full text-center whitespace-nowrap min-w-[140px] px-2 hover:cursor-pointer hover:bg-slate-50 first:rounded-t-lg last:rounded-b-lg" onClick={onClick}>
+const PostMenuItem: React.FC<{
+  children: React.ReactNode;
+  onClick: MouseEventHandler<HTMLParagraphElement>;
+}> = ({ children, onClick }) => (
+  <p
+    className="py-2 border-b border-primary-100 w-full text-center whitespace-nowrap min-w-[140px] px-2 hover:cursor-pointer hover:bg-slate-50 first:rounded-t-lg last:rounded-b-lg"
+    onClick={onClick}
+  >
     {children}
   </p>
 );

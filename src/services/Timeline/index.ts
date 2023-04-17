@@ -1,12 +1,12 @@
 //import { queryClient } from "@pages/_app";
 import { UseQueryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CommunityListInterface } from "src/models/Home";
-import { GetUserDataInterface, UserDataInterface } from "src/models/Timeline";
+import { GetUserDataInterface, PostDataInterface, UserDataInterface } from "src/models/Timeline";
 import request from "../request";
 
 export const getPosts = (searchValue?: string) =>
   request
-    .get(`/posts?searchValue=${searchValue || ""}`)
+    .get<PostDataInterface[]>(`/posts?searchValue=${searchValue || ""}`)
     .then((res) => {
       return res.data;
     })

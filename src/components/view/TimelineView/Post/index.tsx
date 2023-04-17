@@ -9,6 +9,7 @@ import { PostDataInterface } from "src/models/Timeline";
 import Comment from "./components/Comments";
 import AddComment from "./components/AddComment";
 import { useGetUser } from "src/services/Timeline";
+import { useRouter } from "next/router";
 
 const Post: React.FC<PostDataInterface> = ({
   User,
@@ -53,7 +54,9 @@ const Post: React.FC<PostDataInterface> = ({
   return (
     <div
       className="w-full py-4 sm:pl-[131px] pr-4 pl-16 border-b-[0.5px] border-b-primary-100 relative"
-      onClick={() => setOpenPostMenu(false)}
+      onClick={() => {
+				setOpenPostMenu(false)
+			}}
     >
       <div className="max-w-[600px] mx-auto relative">
         <div className="absolute text-center top-0 sm:-left-20 -left-12 text-xs text-primary-200 font-light">
@@ -64,7 +67,7 @@ const Post: React.FC<PostDataInterface> = ({
                 width={40}
                 height={40}
                 alt="profile-pic"
-                className="rounded-full"
+                className="rounded-full object-cover"
               />
             ) : (
               <PeopleIcon />
@@ -75,6 +78,7 @@ const Post: React.FC<PostDataInterface> = ({
           full_name={User.full_name}
           createdAt={createdAt}
           location={location}
+					postId={id}
           location_detail={location_detail}
           postingUser={User}
           openPostMenu={openPostMenu}
