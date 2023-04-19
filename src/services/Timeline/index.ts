@@ -15,6 +15,18 @@ export const getPosts = (searchValue?: string) =>
       return null;
     });
 
+export const getPostById = (id: string) =>
+  request
+    .get<PostDataInterface>(`/posts/${id}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.error(err);
+      return null;
+    });
+
+
 export const useGetPosts = (searchValue: string = "") =>
   useQuery({
     queryKey: ["getPosts", searchValue],

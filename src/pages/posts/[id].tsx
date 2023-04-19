@@ -1,30 +1,22 @@
 import LeftPanel from "@components/view/TimelineView/LeftPanel";
-import React, { useMemo } from "react";
+import React from "react";
 import useWindowDimensions from "src/utils/hooks";
-import TimelineHeader from "@components/view/TimelineView/TimelineHeader";
-import TimelineContainer from "@components/view/TimelineView/TimelineContainer";
 import BottomNavbar from "@components/view/TimelineView/BottomNavbar";
 import RightPanel from "@components/view/TimelineView/RightPanel";
-import getPosts, { useGetPosts } from "src/services/Timeline";
+import  { getPostById } from "src/services/Timeline";
 import Image from "next/image";
 import Post from "@components/view/TimelineView/Post";
 import { GetServerSideProps } from "next";
-import { QueryClient } from "@tanstack/react-query";
+import { PostDataInterface } from "src/models/Timeline";
 
 interface SinglePostProps {
-	postId: string
+	postData: PostDataInterface
 }
-const SinglePost:React.FC<SinglePostProps> = ({ postId }) => {
+const SinglePost:React.FC<SinglePostProps> = ({ postData }) => {
   const { width } = useWindowDimensions();
-  const { data: postData } = useGetPosts();
 
-	const currentPostData = useMemo(() => {
-		if (postData) {
-			return postData.find((post) => String(post.id) === postId)
-		}
-	}, [postData])
 
-  if (!currentPostData || !postData) {
+  if (!postData) {
     return <></>;
   } else {
     return (
@@ -34,7 +26,7 @@ const SinglePost:React.FC<SinglePostProps> = ({ postId }) => {
           <div className="mt-2 ml-2">
             <Image src={"/NavbarLogo.svg"} width={140} height={52} alt="Loocale Logo" />
           </div>
-          <Post {...currentPostData } />
+          <Post {...postData } />
         </div>
         {width && width < 1000 && <BottomNavbar />}
         {width && width >= 1000 && <RightPanel />}
@@ -45,11 +37,13 @@ const SinglePost:React.FC<SinglePostProps> = ({ postId }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const pageParams = context.params;
-	const postId = pageParams?.id;
+	const postId = pageParams?.id as string;
+
+	const postData = await getPostById(postId);
 
 	return {
 		props: {
-			postId
+			postData
 		}
 	}
 }
