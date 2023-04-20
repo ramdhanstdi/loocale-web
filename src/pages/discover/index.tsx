@@ -160,7 +160,7 @@ const DiscoverPage = (props: any) => {
                       <ImageCard
                         backgroundUrl={card.backgroundUrl}
                         key={card.title}
-                        className="text-center py-3 text-white rounded-lg shadow-md"
+                        className="text-center py-3 whitespace-nowrap text-white rounded-lg shadow-md"
                         onClick={() => {
                           setHasUserSearched(true);
                           router.replace("/discover?searchValue=" + card.title);

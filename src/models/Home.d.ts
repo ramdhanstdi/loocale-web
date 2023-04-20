@@ -18,4 +18,5 @@ export interface CommunityListInterface {
 	id: number
 	background: string
 	title: string
+	count?: number
 }

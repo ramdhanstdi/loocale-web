@@ -14,7 +14,7 @@ const RightPanel = () => {
     return categories.slice(0, 5).map((community) => ({
       title: community.title,
       backgroundUrl: community.background,
-      subtitle: "200 Unggahan",
+      subtitle: `${community.count} Unggahan`,
       id: community.id,
     }));
   }, [categories]);
