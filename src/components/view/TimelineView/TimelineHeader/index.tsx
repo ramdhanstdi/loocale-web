@@ -4,18 +4,18 @@ import PeopleIcon from "@icons/people_icon.svg";
 import TextField from "@components/design/TextField";
 import AddIcon from "@icons/plus_icon.svg";
 import CreatePostDialog from "../CreatePostDialog";
-import { getCurrentUser } from "src/utils/helper";
-import { UserDataInterface } from "src/models/Timeline";
-import sampleUser from "src/utils/sample";
+import NotificationIcon from "@icons/notification_icon.svg";
 import { useGetUser } from "src/services/Timeline";
 import useWindowDimensions from "src/utils/hooks";
 import Hamburger from "@components/design/Hamburger";
 import Link from "next/link";
 import Cookies from "js-cookie";
+import HeartOutlinedIcon from "@icons/heart_outlined_icon.svg";
 
-const AddPost = () => {
+const TimelineHeader = () => {
   const [openCreatePost, setOpenCreatePost] = useState(false);
   const { width } = useWindowDimensions();
+  const [openNotifications, setOpenNotifications] = useState(false);
 
   const { data: currentUser } = useGetUser();
 
@@ -25,6 +25,10 @@ const AddPost = () => {
 
   const handleSignout = () => {
     Cookies.remove("token");
+  };
+
+  const handleClickNotification = () => {
+    setOpenNotifications((prevState) => !prevState);
   };
 
   if (!width || currentUser === undefined) {
@@ -39,7 +43,7 @@ const AddPost = () => {
                 <Image src={"/NavbarLogo.svg"} width={140} height={52} alt="Loocale Logo" />
               </div>
               {currentUser && (
-                <div className="flex gap-6">
+                <div className="flex gap-6 items-center">
                   <div className="flex flex-col">
                     <div className="rounded-full flex justify-center">
                       {!currentUser.users.thumbnail ? (
@@ -58,18 +62,42 @@ const AddPost = () => {
                       {currentUser.users.user_name}
                     </p>
                   </div>
-                  <div className="w-full" onClick={() => setOpenCreatePost(true)}>
+                  <div className="w-full shrink" onClick={() => setOpenCreatePost(true)}>
                     <TextField
                       placeholder="Mulai post baru"
-                      className="mt-[6px] w-full h-9 rounded-full"
+                      className="w-full h-9 rounded-full relative"
                       size="sm"
                       fullWidth
                       endIcon={
-                        <div className="scale-50 absolute top-1 right-0">
+                        <div className="absolute top-1/2 -translate-y-1/2 right-1 scale-50">
                           <AddIcon />
                         </div>
                       }
                     />
+                  </div>
+                  <div className="grow hover:cursor-pointer hover:bg-gray-200 p-1 rounded-full relative">
+                    <div className="relative">
+                      <div className="w-[9px] h-[9px] rounded-full bg-secondary-500 absolute top-0 right-0" />
+                      <NotificationIcon onClick={handleClickNotification} />
+                    </div>
+                    {openNotifications && (
+                      <div className="absolute p-4 bg-white z-20 flex flex-col shadow-md rounded-xl gap-5">
+                        <div className="flex gap-2 items-center text-xs text-primary-800">
+                          <div className="">
+                            <HeartOutlinedIcon width={22} height={22} />
+                          </div>
+                          <p className="w-[120px]">3 orang menyukai postingan kamu</p>
+                          <div className="w-[9px] h-[9px] rounded-full bg-secondary-500" />
+                        </div>
+                        <div className="flex gap-2 items-center text-xs text-primary-800">
+                          <div className="">
+                            <HeartOutlinedIcon width={22} height={22} />
+                          </div>
+                          <p className="w-[120px]">3 orang menyukai postingan kamu</p>
+                          <div className="w-[9px] h-[9px] rounded-full bg-secondary-500" />
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
@@ -100,4 +128,4 @@ const AddPost = () => {
   }
 };
 
-export default AddPost;
+export default TimelineHeader;
