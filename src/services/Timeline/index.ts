@@ -88,6 +88,9 @@ export const useLikePost = () => {
     },
   });
 };
+
+export const deletePost = (postId: number) => request.delete(`/post/${postId}`);
+
 export const getUser = () =>
   request
     .get<GetUserDataInterface>("/user")
