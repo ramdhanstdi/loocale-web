@@ -72,3 +72,14 @@ export interface PostMediaInterface {
   postId: number;
   updatedAt: string;
 }
+
+export interface NotificationInterface {
+  idPost: number;
+  postText: string;
+  likesCount: number;
+  commentCount: number;
+}
+
+export interface DisplayedNotificationInterface extends NotificationInterface {
+	hasBeenSeen: boolean;
+}

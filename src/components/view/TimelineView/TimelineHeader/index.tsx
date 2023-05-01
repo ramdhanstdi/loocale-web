@@ -5,19 +5,22 @@ import TextField from "@components/design/TextField";
 import AddIcon from "@icons/plus_icon.svg";
 import CreatePostDialog from "../CreatePostDialog";
 import NotificationIcon from "@icons/notification_icon.svg";
-import { useGetUser } from "src/services/Timeline";
+import { useGetNotifications, useGetUser } from "src/services/Timeline";
 import useWindowDimensions from "src/utils/hooks";
 import Hamburger from "@components/design/Hamburger";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import HeartOutlinedIcon from "@icons/heart_outlined_icon.svg";
+import { DisplayedNotificationInterface, NotificationInterface } from "src/models/Timeline";
 
 const TimelineHeader = () => {
   const [openCreatePost, setOpenCreatePost] = useState(false);
   const { width } = useWindowDimensions();
   const [openNotifications, setOpenNotifications] = useState(false);
+  const [notifications, setNotifications] = useState<DisplayedNotificationInterface[]>([]);
 
   const { data: currentUser } = useGetUser();
+  const { data: apiNotifications } = useGetNotifications();
 
   const handleCloseDialog = () => {
     setOpenCreatePost(false);
@@ -29,7 +32,42 @@ const TimelineHeader = () => {
 
   const handleClickNotification = () => {
     setOpenNotifications((prevState) => !prevState);
+		localStorage.setItem("notifs", JSON.stringify([{...notifications[0], hasBeenSeen: true}]))
   };
+
+  useEffect(() => {
+    // Load notification from localstorage
+    const localNotificationsString = localStorage.getItem("notifs");
+    if (apiNotifications) {
+      // Compare notifications from localstorage to API, if different, that means its a new notification
+      if (localNotificationsString) {
+        const localNotificationsJSON = JSON.parse(
+          localNotificationsString
+        ) as DisplayedNotificationInterface[];
+
+        const displayedNotifications: DisplayedNotificationInterface[] = []
+        for (let i = 0; i < apiNotifications.length; i++) {
+          const existingNotif = localNotificationsJSON.find(
+            (notif) => apiNotifications[i].idPost === notif.idPost
+          );
+          // If existing notification the same, load the one from localStorage
+          if (existingNotif &&
+            existingNotif.likesCount === apiNotifications[i].likesCount &&
+            existingNotif.commentCount === apiNotifications[i].commentCount
+          ) {
+						displayedNotifications.push({...existingNotif})
+          } else {
+						displayedNotifications.push({...apiNotifications[i], hasBeenSeen: false})
+					}
+        }
+				setNotifications(displayedNotifications)
+      } else {
+        setNotifications(apiNotifications.map((notif) => ({ ...notif, hasBeenSeen: false })));
+      }
+    }
+  }, [apiNotifications]);
+
+	console.log(notifications)
 
   if (!width || currentUser === undefined) {
     return <></>;
