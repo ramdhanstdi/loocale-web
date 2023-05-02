@@ -19,6 +19,7 @@ const Notifications = () => {
   };
 
   const handleClickEachNotification = (postId: number) => {
+		router.push(`/posts/${postId}`);
     setNotifications((currentNotifs) => {
       const newNotifs = [...currentNotifs];
       const clickedNotifsIndex = newNotifs.findIndex((notif) => notif.idPost === postId);
@@ -27,7 +28,6 @@ const Notifications = () => {
       }
       return newNotifs;
     });
-    router.push(`/posts/${postId}`);
   };
 
   useEffect(() => {
@@ -62,8 +62,6 @@ const Notifications = () => {
       }
     }
   }, [apiNotifications]);
-
-  console.log(notifications);
 
   useEffect(() => {
     return () => {
