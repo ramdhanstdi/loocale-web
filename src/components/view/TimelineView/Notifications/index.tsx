@@ -12,12 +12,11 @@ const Notifications = () => {
 
   const { data: apiNotifications } = useGetNotifications();
 
-	const router = useRouter();
+  const router = useRouter();
 
   const handleClickNotificationIcon = () => {
     setOpenNotifications((prevState) => !prevState);
   };
-
 
   const handleClickEachNotification = (postId: number) => {
     setNotifications((currentNotifs) => {
@@ -64,6 +63,8 @@ const Notifications = () => {
     }
   }, [apiNotifications]);
 
+  console.log(notifications);
+
   useEffect(() => {
     return () => {
       if (notifications.length) {
@@ -75,20 +76,25 @@ const Notifications = () => {
   return (
     <div className="grow hover:cursor-pointer hover:bg-gray-200 p-1 rounded-full relative">
       <div className="relative">
-				{/* DISPLAY RED DOT WHEN A NOTIFICATION HAS NOT BEEN SEEN */}
-        {notifications.some((notif) => !notif.hasBeenSeen && notif.commentCount && notif.likesCount) && (
+        {/* DISPLAY RED DOT WHEN A NOTIFICATION HAS NOT BEEN SEEN */}
+        {notifications.some(
+          (notif) => !notif.hasBeenSeen && (notif.likesCount || notif.commentCount)
+        ) && (
           <div className="w-[9px] h-[9px] rounded-full bg-secondary-500 absolute top-0 right-0" />
         )}
         <NotificationIcon onClick={handleClickNotificationIcon} />
       </div>
       {openNotifications && (
-        <div className="absolute p-4 bg-white z-20 flex flex-col shadow-md rounded-xl">
+        <div className="absolute py-4 px-5 bg-white z-20 flex flex-col shadow-md rounded-xl">
+					{notifications.every((notif) => notif.hasBeenSeen || (!notif.likesCount && !notif.likesCount)) && (
+						<p className="text-xs text-primary-800 w-40">Kamu belum memiliki notifikasi baru</p>
+					)}
           {notifications.map((notification) => (
             <div key={notification.idPost} className="flex flex-col">
-							{/* DISPLAY ONLY POST THAT HAVE LIKES */}
-              {notification.likesCount !== 0 && (
+              {/* DISPLAY ONLY POST THAT HAVE LIKES */}
+              {notification.likesCount !== 0 && !notification.hasBeenSeen && (
                 <div
-                  className="flex gap-2 items-center text-xs text-primary-800 mb-5"
+                  className="flex gap-2 items-center text-xs text-primary-800 py-2 hover:underline"
                   onClick={() => handleClickEachNotification(notification.idPost)}
                 >
                   <div className="">
@@ -97,15 +103,13 @@ const Notifications = () => {
                   <p className="w-[120px]">
                     {notification.likesCount} orang menyukai {`"${notification.postText}"`}
                   </p>
-                  {!notification.hasBeenSeen && (
-                    <div className="w-[9px] h-[9px] rounded-full bg-secondary-500" />
-                  )}
+                  <div className="w-[9px] h-[9px] rounded-full bg-secondary-500" />
                 </div>
               )}
-							{/* DISPLAY ONLY POST THAT HAVE COMMENTS */}
-              {notification.commentCount !== 0 && (
+              {/* DISPLAY ONLY POST THAT HAVE COMMENTS */}
+              {notification.commentCount !== 0 && !notification.hasBeenSeen && (
                 <div
-                  className="flex gap-2 items-center text-xs text-primary-800 mb-5"
+                  className="flex gap-2 items-center text-xs text-primary-800 py-2 hover:underline"
                   onClick={() => handleClickEachNotification(notification.idPost)}
                 >
                   <div className="">
@@ -115,9 +119,7 @@ const Notifications = () => {
                     {notification.commentCount} orang memberi komentar di{" "}
                     {`"${notification.postText}"`}
                   </p>
-                  {!notification.hasBeenSeen && (
-                    <div className="w-[9px] h-[9px] rounded-full bg-secondary-500" />
-                  )}
+                  <div className="w-[9px] h-[9px] rounded-full bg-secondary-500" />
                 </div>
               )}
             </div>
