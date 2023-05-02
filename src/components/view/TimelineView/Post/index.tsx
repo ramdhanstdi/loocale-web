@@ -73,11 +73,11 @@ const Post: React.FC<PostDataInterface> = ({
             ) : (
               <PeopleIcon />
             )}
-            <p className="text-white px-1 bg-primary-800 font-bold leading-[18px]">Partner</p>
+            {/*<p className="text-white px-1 bg-primary-800 font-bold leading-[18px]">Partner</p>
             <div className="flex items-center justify-center gap-1">
               <WhatsAppIcon className={"text-green-400"}/>
               <InternetIcon />
-            </div>
+            </div>*/}
           </div>
         </div>
         <div className="flex flex-col grow">
