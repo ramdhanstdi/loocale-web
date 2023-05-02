@@ -55,7 +55,7 @@ const LeftPanel = () => {
       >
         <div className="px-[30px] py-9 rounded-xl shadow-md flex flex-col gap-12">
           {LEFT_PANEL_MENU.map((menu) => (
-            <a href={menu.href} key={menu.id}>
+            <Link href={menu.href} key={menu.id}>
               <div
                 className={`${
                   menu.href === router.pathname ? "text-secondary-500" : "text-primary-800"
@@ -63,7 +63,7 @@ const LeftPanel = () => {
               >
                 {<menu.icon />}
               </div>
-            </a>
+            </Link>
           ))}
           {currentUser && (
             <div className="text-secondary-500" onClick={() => setOpenCreatePost(true)}>
