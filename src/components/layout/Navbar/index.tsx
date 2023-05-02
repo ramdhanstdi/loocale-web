@@ -8,15 +8,15 @@ import Link from "next/link";
 const NAVBAR_MENU = [
   {
     title: "ABOUT",
-    href: "/about",
+    href: "/",
   },
   {
     title: "EXPLORE",
-    href: "#discover",
+    href: "/#discover",
   },
   {
     title: "COMMUNITY",
-    href: "#community",
+    href: "/#community",
   },
 ];
 
@@ -43,13 +43,22 @@ const Navbar = () => {
             ))}
           </ul>
           <Button
-            variant="outlined"
+            variant="contained"
             onClick={() => {
               router.push("/signup");
             }}
             className={"py-1 px-3 rounded-lg font-bold"}
           >
             SIGN UP
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              router.push("/signin");
+            }}
+            className={"py-1 px-3 rounded-lg font-bold"}
+          >
+            SIGN IN
           </Button>
         </div>
         <Hamburger

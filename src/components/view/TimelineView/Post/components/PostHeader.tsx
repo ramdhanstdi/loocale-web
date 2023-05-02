@@ -3,8 +3,9 @@ import { getTimeDifferenceString } from "src/utils/helper";
 import MoreHorizIcon from "@icons/more_horiz_icon.svg";
 import { EventHandler, MouseEventHandler, useState } from "react";
 import { GetUserDataInterface, UserDataInterface } from "src/models/Timeline";
-import { useGetUser } from "src/services/Timeline";
+import { deletePost, useGetUser } from "src/services/Timeline";
 import toast from "react-hot-toast";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface PostHeaderProps {
   full_name: string;
@@ -39,6 +40,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({
       : `https://loocale.id/posts/${postId}`;
 
   const { data: currentUser } = useGetUser();
+  const queryClient = useQueryClient();
 
   const OTHER_USER_POST_MENU = [
     //{
@@ -60,7 +62,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({
     {
       onClick: function (e: React.MouseEvent) {
         e.stopPropagation();
-				toast("Copied to clipboard")
+        toast("Copied to clipboard");
         navigator.clipboard.writeText(postLink);
       },
       content: <span>Share Post</span>,
@@ -75,15 +77,25 @@ const PostHeader: React.FC<PostHeaderProps> = ({
     {
       onClick: function (e: React.MouseEvent) {
         e.stopPropagation();
-				toast("Copied to clipboard")
+        toast("Copied to clipboard");
         navigator.clipboard.writeText(postLink);
       },
       content: <span>Share Post</span>,
     },
-    //{
-    //  onClick: function(){},
-    //  content: <span className="text-secondary-500">Hapus Post</span>,
-    //},
+    {
+      onClick: async function () {
+        try {
+          await deletePost(postId);
+          setTimeout(() => {
+            queryClient.invalidateQueries(["getPosts"]);
+            toast("Success delete post");
+          }, 500);
+        } catch (e) {
+          toast("Failed to delete post");
+        }
+      },
+      content: <span className="text-secondary-500">Hapus Post</span>,
+    },
   ];
 
   const postMenu =
