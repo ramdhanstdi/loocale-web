@@ -62,7 +62,7 @@ const Notifications = () => {
             displayedNotifications.push({
               idPost: apiNotifications[i].idPost,
               count: apiNotifications[i].likesCount,
-              hasBeenSeen: false,
+              hasBeenSeen: apiNotifications[i].likesCount > 0 ? false : true,
               postText: apiNotifications[i].postText,
               type: "like",
             });
@@ -71,7 +71,7 @@ const Notifications = () => {
             displayedNotifications.push({
               idPost: apiNotifications[i].idPost,
               count: apiNotifications[i].commentCount,
-              hasBeenSeen: false,
+              hasBeenSeen: apiNotifications[i].commentCount > 0 ? false : true,
               postText: apiNotifications[i].postText,
               type: "comment",
             });
@@ -84,14 +84,14 @@ const Notifications = () => {
             {
               idPost: notif.idPost,
               count: notif.commentCount,
-              hasBeenSeen: false,
+              hasBeenSeen: notif.commentCount > 0 ? false : true,
               postText: notif.postText,
               type: "comment",
             },
             {
               idPost: notif.idPost,
               count: notif.likesCount,
-              hasBeenSeen: false,
+              hasBeenSeen: notif.likesCount > 0 ? false : true,
               postText: notif.postText,
               type: "like",
             },
