@@ -18,17 +18,18 @@ const Notifications = () => {
     setOpenNotifications((prevState) => !prevState);
   };
 
-  const handleClickEachNotification = (postId: number) => {
-		setOpenNotifications(false);
+	// ! handleClickEachNotification will always be recreated when clicked, need better
+	// ! solution without using notifIndex
+  const handleClickEachNotification = (notifIndex: number) => {
+    setOpenNotifications(false);
     setNotifications((currentNotifs) => {
       const newNotifs = [...currentNotifs];
-      const clickedNotifsIndex = newNotifs.findIndex((notif) => notif.idPost === postId);
-      if (clickedNotifsIndex >= 0) {
-        newNotifs[clickedNotifsIndex] = { ...newNotifs[clickedNotifsIndex], hasBeenSeen: true };
+      if (notifIndex >= 0) {
+        newNotifs[notifIndex] = { ...newNotifs[notifIndex], hasBeenSeen: true };
       }
       return newNotifs;
     });
-		router.push(`/posts/${postId}`);
+    router.push(`/posts/${notifications[notifIndex].idPost}`);
   };
 
   useEffect(() => {
@@ -43,23 +44,59 @@ const Notifications = () => {
 
         const displayedNotifications: DisplayedNotificationInterface[] = [];
         for (let i = 0; i < apiNotifications.length; i++) {
-          const existingNotif = localNotificationsJSON.find(
-            (notif) => apiNotifications[i].idPost === notif.idPost
+          // If existing like notif and comment notif is the same from current API notifications
+          const existingLikeNotifIsSame = localNotificationsJSON.find(
+            (notif) =>
+              apiNotifications[i].idPost === notif.idPost &&
+              notif.type === "like" &&
+              apiNotifications[i].likesCount === notif.count
           );
-          // If existing notification the same, load the one from localStorage
-          if (
-            existingNotif &&
-            existingNotif.likesCount === apiNotifications[i].likesCount &&
-            existingNotif.commentCount === apiNotifications[i].commentCount
-          ) {
-            displayedNotifications.push({ ...existingNotif });
-          } else {
-            displayedNotifications.push({ ...apiNotifications[i], hasBeenSeen: false });
-          }
+          const existingCommentNotifIsSame = localNotificationsJSON.find(
+            (notif) =>
+              apiNotifications[i].idPost === notif.idPost &&
+              notif.type === "comment" &&
+              apiNotifications[i].commentCount === notif.count
+          );
+          // If different
+          if (!existingLikeNotifIsSame) {
+            displayedNotifications.push({
+              idPost: apiNotifications[i].idPost,
+              count: apiNotifications[i].likesCount,
+              hasBeenSeen: false,
+              postText: apiNotifications[i].postText,
+              type: "like",
+            });
+          } else displayedNotifications.push(existingLikeNotifIsSame)
+          if (!existingCommentNotifIsSame) {
+            displayedNotifications.push({
+              idPost: apiNotifications[i].idPost,
+              count: apiNotifications[i].commentCount,
+              hasBeenSeen: false,
+              postText: apiNotifications[i].postText,
+              type: "comment",
+            });
+          } else displayedNotifications.push(existingCommentNotifIsSame)
         }
         setNotifications(displayedNotifications);
       } else {
-        setNotifications(apiNotifications.map((notif) => ({ ...notif, hasBeenSeen: false })));
+        setNotifications(
+          apiNotifications.flatMap((notif) => [
+            {
+              idPost: notif.idPost,
+              count: notif.commentCount,
+              hasBeenSeen: false,
+              postText: notif.postText,
+              type: "comment",
+            },
+            {
+              idPost: notif.idPost,
+              count: notif.likesCount,
+              hasBeenSeen: false,
+              postText: notif.postText,
+              type: "like",
+            },
+          ])
+        );
       }
     }
   }, [apiNotifications]);
@@ -76,46 +113,34 @@ const Notifications = () => {
     <div className="grow hover:cursor-pointer hover:bg-gray-200 p-1 rounded-full relative">
       <div className="relative">
         {/* DISPLAY RED DOT WHEN A NOTIFICATION HAS NOT BEEN SEEN */}
-        {notifications.some(
-          (notif) => !notif.hasBeenSeen && (notif.likesCount || notif.commentCount)
-        ) && (
+        {notifications.some((notif) => !notif.hasBeenSeen) && (
           <div className="w-[9px] h-[9px] rounded-full bg-secondary-500 absolute top-0 right-0" />
         )}
         <NotificationIcon onClick={handleClickNotificationIcon} />
       </div>
       {openNotifications && (
         <div className="absolute py-4 px-5 bg-white z-20 flex flex-col shadow-md rounded-xl">
-					{notifications.every((notif) => notif.hasBeenSeen || (!notif.likesCount && !notif.likesCount)) && (
-						<p className="text-xs text-primary-800 w-40">Kamu belum memiliki notifikasi baru</p>
-					)}
-          {notifications.map((notification) => (
-            <div key={notification.idPost} className="flex flex-col">
+          {notifications.every((notif) => notif.hasBeenSeen) && (
+            <p className="text-xs text-primary-800 w-40">Kamu belum memiliki notifikasi baru</p>
+          )}
+          {notifications.map((notification, index) => (
+            <div key={index} className="flex flex-col">
               {/* DISPLAY ONLY POST THAT HAVE LIKES */}
-              {notification.likesCount !== 0 && !notification.hasBeenSeen && (
+              {!notification.hasBeenSeen && (
                 <div
                   className="flex gap-2 items-center text-xs text-primary-800 py-2 hover:underline"
-                  onClick={() => handleClickEachNotification(notification.idPost)}
+                  onClick={() => handleClickEachNotification(index)}
                 >
                   <div className="">
-                    <HeartOutlinedIcon width={22} height={22} />
+                    {notification.type === "like" ? (
+                      <HeartOutlinedIcon width={22} height={22} />
+                    ) : (
+                      <CommentIcon width={22} height={22} />
+                    )}
                   </div>
                   <p className="w-[120px]">
-                    {notification.likesCount} orang menyukai {`"${notification.postText}"`}
-                  </p>
-                  <div className="w-[9px] h-[9px] rounded-full bg-secondary-500" />
-                </div>
-              )}
-              {/* DISPLAY ONLY POST THAT HAVE COMMENTS */}
-              {notification.commentCount !== 0 && !notification.hasBeenSeen && (
-                <div
-                  className="flex gap-2 items-center text-xs text-primary-800 py-2 hover:underline"
-                  onClick={() => handleClickEachNotification(notification.idPost)}
-                >
-                  <div className="">
-                    <CommentIcon width={22} height={22} />
-                  </div>
-                  <p className="w-[120px]">
-                    {notification.commentCount} orang memberi komentar di{" "}
+                    {notification.count} orang{" "}
+                    {notification.type === "like" ? "menyukai " : "memberi komentar di "}
                     {`"${notification.postText}"`}
                   </p>
                   <div className="w-[9px] h-[9px] rounded-full bg-secondary-500" />

@@ -80,6 +80,10 @@ export interface NotificationInterface {
   commentCount: number;
 }
 
-export interface DisplayedNotificationInterface extends NotificationInterface {
+export interface DisplayedNotificationInterface {
+	idPost: number;
+	postText: string;
+	type: "comment" | "like";
+	count: number
 	hasBeenSeen: boolean;
 }
