@@ -64,6 +64,8 @@ export interface UserDataInterface {
     province: string;
     userId: string;
   }[];
+	phone_number: string
+	user_role: "admin" | "user" | "partner"
 }
 
 export interface PostMediaInterface {

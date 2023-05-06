@@ -73,11 +73,18 @@ const Post: React.FC<PostDataInterface> = ({
             ) : (
               <PeopleIcon />
             )}
-            {/*<p className="text-white px-1 bg-primary-800 font-bold leading-[18px]">Partner</p>
-            <div className="flex items-center justify-center gap-1">
-              <WhatsAppIcon className={"text-green-400"}/>
-              <InternetIcon />
-            </div>*/}
+            {User.user_role === "partner" && (
+              <>
+                <p className="text-white px-1 bg-primary-800 font-bold leading-[18px]">Partner</p>
+                <div className="flex items-center justify-center gap-1">
+									{/* PHONE NUMBER FORMAT IS WITHOUT COUNTRY CODE EX: 81204843324 */}
+                  <a href={`https://api.whatsapp.com/send?phone=${User.phone_number}&text=`} target="_blank" rel="noreferrer">
+                    <WhatsAppIcon className={"text-green-400"} />
+                  </a>
+                  {/*<InternetIcon />*/}
+                </div>
+              </>
+            )}
           </div>
         </div>
         <div className="flex flex-col grow">
