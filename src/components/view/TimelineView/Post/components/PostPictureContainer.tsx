@@ -36,6 +36,7 @@ const PostPictureContainer: React.FC<PostPictureContainerProps> = ({ medias }) =
                 height={144}
                 alt="post-image"
                 className="rounded-md object-cover"
+								sizes="100%"
               />
             </div>
             <Modal open={openFullsizePicture} onClose={() => setOpenFullsizePicture(false)}>

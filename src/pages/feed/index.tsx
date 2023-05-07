@@ -7,7 +7,7 @@ import TimelineContainer from "@components/view/TimelineView/TimelineContainer";
 import Tabs from "@components/view/TimelineView/Tabs";
 import Post from "@components/view/TimelineView/Post";
 import PostsContainer from "@components/view/TimelineView/PostsContainer";
-import getPosts, { useGetUser } from "src/services/Timeline";
+import getPosts, { getNotifications, useGetUser } from "src/services/Timeline";
 import { PostDataInterface } from "src/models/Timeline";
 import Head from "next/head";
 import useWindowDimensions from "src/utils/hooks";
@@ -37,7 +37,7 @@ const Feed: React.FC<FeedProps> = () => {
       {currentUser && currentUser.users.isFirstSignIn ? (
         <FirstSignIn></FirstSignIn>
       ) : (
-        <div className="max-h-screen max-w-screen flex justify-between box-border">
+        <div className="max-h-screen max-w-screen flex justify-between box-border overflow-hidden">
           {width && width >= 1000 && <LeftPanel />}
           <div className="flex flex-col w-full lg:mx-6 shrink">
             <TimelineHeader />
@@ -80,6 +80,11 @@ export async function getServerSideProps() {
       return data;
     },
   });
+
+	await queryClient.prefetchQuery({
+		queryKey: ["getNotifications"],
+		queryFn: getNotifications
+	})
 
   //await queryClient.prefetchQuery({
   //	queryKey: ["getUser"],

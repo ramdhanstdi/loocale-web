@@ -64,6 +64,8 @@ export interface UserDataInterface {
     province: string;
     userId: string;
   }[];
+	phone_number: string
+	user_role: "admin" | "user" | "partner"
 }
 
 export interface PostMediaInterface {
@@ -71,4 +73,19 @@ export interface PostMediaInterface {
   mediaId: number;
   postId: number;
   updatedAt: string;
+}
+
+export interface NotificationInterface {
+  idPost: number;
+  postText: string;
+  likesCount: number;
+  commentCount: number;
+}
+
+export interface DisplayedNotificationInterface {
+	idPost: number;
+	postText: string;
+	type: "comment" | "like";
+	count: number
+	hasBeenSeen: boolean;
 }

@@ -1,7 +1,12 @@
 //import { queryClient } from "@pages/_app";
 import { UseQueryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CommunityListInterface } from "src/models/Home";
-import { GetUserDataInterface, PostDataInterface, UserDataInterface } from "src/models/Timeline";
+import {
+  GetUserDataInterface,
+  NotificationInterface,
+  PostDataInterface,
+  UserDataInterface,
+} from "src/models/Timeline";
 import request from "../request";
 
 export const getPosts = (searchValue?: string) =>
@@ -25,7 +30,6 @@ export const getPostById = (id: string) =>
       console.error(err);
       return null;
     });
-
 
 export const useGetPosts = (searchValue: string = "") =>
   useQuery({
@@ -89,6 +93,21 @@ export const useLikePost = () => {
   });
 };
 
+export const getNotifications = () =>
+  request
+    .get<NotificationInterface[]>("/notif-posts")
+    .then((res) => res.data)
+    .catch((err) => {
+      console.error(err);
+      return null;
+    });
+
+export const useGetNotifications = () => {
+  return useQuery({
+    queryKey: ["getNotifications"],
+    queryFn: getNotifications,
+  });
+};
 export const deletePost = (postId: number) => request.delete(`/post/${postId}`);
 
 export const getUser = () =>

@@ -1,22 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import PeopleIcon from "@icons/people_icon.svg";
 import TextField from "@components/design/TextField";
 import AddIcon from "@icons/plus_icon.svg";
 import CreatePostDialog from "../CreatePostDialog";
-import { getCurrentUser } from "src/utils/helper";
-import { UserDataInterface } from "src/models/Timeline";
-import sampleUser from "src/utils/sample";
-import { useGetUser } from "src/services/Timeline";
+import NotificationIcon from "@icons/notification_icon.svg";
+import { getNotifications, useGetNotifications, useGetUser } from "src/services/Timeline";
 import useWindowDimensions from "src/utils/hooks";
 import Hamburger from "@components/design/Hamburger";
 import Link from "next/link";
 import Cookies from "js-cookie";
+import HeartOutlinedIcon from "@icons/heart_outlined_icon.svg";
+import CommentIcon from "@icons/comment_icon.svg";
+import { DisplayedNotificationInterface } from "src/models/Timeline";
+import { useRouter } from "next/router";
+import { useQuery } from "@tanstack/react-query";
+import Notifications from "../Notifications";
 
-const AddPost = () => {
+const TimelineHeader = () => {
   const [openCreatePost, setOpenCreatePost] = useState(false);
+	
   const { width } = useWindowDimensions();
-
   const { data: currentUser } = useGetUser();
 
   const handleCloseDialog = () => {
@@ -39,7 +43,7 @@ const AddPost = () => {
                 <Image src={"/NavbarLogo.svg"} width={140} height={52} alt="Loocale Logo" />
               </div>
               {currentUser && (
-                <div className="flex gap-6">
+                <div className="flex gap-6 items-center">
                   <div className="flex flex-col">
                     <div className="rounded-full flex justify-center">
                       {!currentUser.users.thumbnail ? (
@@ -58,19 +62,20 @@ const AddPost = () => {
                       {currentUser.users.user_name}
                     </p>
                   </div>
-                  <div className="w-full" onClick={() => setOpenCreatePost(true)}>
+                  <div className="w-full shrink" onClick={() => setOpenCreatePost(true)}>
                     <TextField
                       placeholder="Mulai post baru"
-                      className="mt-[6px] w-full h-9 rounded-full"
+                      className="w-full h-9 rounded-full relative"
                       size="sm"
                       fullWidth
                       endIcon={
-                        <div className="scale-50 absolute top-1 right-0">
+                        <div className="absolute top-1/2 -translate-y-1/2 right-1 scale-50">
                           <AddIcon />
                         </div>
                       }
                     />
                   </div>
+                  <Notifications />
                 </div>
               )}
             </div>
@@ -100,4 +105,4 @@ const AddPost = () => {
   }
 };
 
-export default AddPost;
+export default TimelineHeader;
