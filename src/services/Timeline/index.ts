@@ -1,5 +1,10 @@
 //import { queryClient } from "@pages/_app";
-import { UseQueryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  UseQueryOptions,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { CommunityListInterface } from "src/models/Home";
 import {
   GetUserDataInterface,
@@ -50,7 +55,11 @@ const addPost = (data: {
   formData.append("location", data.location);
   formData.append("location_detail", data.location_detail);
   for (let i = 0; i < data.media_files.length; i++) {
-    formData.append("media_files", data.media_files[i], data.media_files[i].name);
+    formData.append(
+      "media_files",
+      data.media_files[i],
+      data.media_files[i].name
+    );
   }
 
   for (let i = 0; i < data.categories.length; i++) {
@@ -79,7 +88,8 @@ export const useAddPost = (onSuccessHandler: VoidFunction) => {
     },
   });
 };
-export const likePost = (params: { postId: string }) => request.post("/like-post", params);
+export const likePost = (params: { postId: string }) =>
+  request.post("/like-post", params);
 
 export const useLikePost = () => {
   const queryClient = useQueryClient();
@@ -157,7 +167,10 @@ export const getAllCities = (cityName: string) =>
     .catch((err) => console.error(err));
 
 export const useGetAllCities = (cityName: string) =>
-  useQuery({ queryKey: ["getAllCities", cityName], queryFn: () => getAllCities(cityName) });
+  useQuery({
+    queryKey: ["getAllCities", cityName],
+    queryFn: () => getAllCities(cityName),
+  });
 
 export const getDiscoverPageOptions = (searchValue: string = "") =>
   request

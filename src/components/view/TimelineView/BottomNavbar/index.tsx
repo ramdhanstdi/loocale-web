@@ -14,7 +14,11 @@ interface BottomNavbarMenuProps {
   className?: string;
 }
 
-const BottomNavbarMenu: React.FC<BottomNavbarMenuProps> = ({ onClick, children, className }) => {
+const BottomNavbarMenu: React.FC<BottomNavbarMenuProps> = ({
+  onClick,
+  children,
+  className,
+}) => {
   return (
     <div onClick={onClick} className={className}>
       {children}
@@ -36,53 +40,66 @@ const BottomNavbar = () => {
   //if (!currentUser) {
   //  return <></>;
   //} else {
-    return (
-      <>
-        <div className="fixed w-screen bottom-0 bg-white flex justify-between items-center px-5 py-3 border-t border-gray-100">
+  return (
+    <>
+      <div className="fixed w-screen bottom-0 bg-white flex justify-between items-center px-5 py-3 border-t border-gray-100">
+        <BottomNavbarMenu
+          onClick={() => router.push("/feed")}
+          className={`${
+            router.pathname === "/feed"
+              ? "text-secondary-500"
+              : "text-primary-800"
+          }`}
+        >
+          <FeedIcon />
+        </BottomNavbarMenu>
+        <BottomNavbarMenu
+          onClick={() => router.push("/discover")}
+          className={`${
+            router.pathname === "/discover"
+              ? "text-secondary-500"
+              : "text-primary-800"
+          }`}
+        >
+          <GlobeIcon />
+        </BottomNavbarMenu>
+        {currentUser && (
           <BottomNavbarMenu
-            onClick={() => router.push("/feed")}
-            className={`${router.pathname === "/feed" ? "text-secondary-500" : "text-primary-800"}`}
+            onClick={() => setOpenCreatePost(true)}
+            className={`text-secondary-500`}
           >
-            <FeedIcon />
+            <AddIcon />
           </BottomNavbarMenu>
-          <BottomNavbarMenu
-            onClick={() => router.push("/discover")}
-            className={`${
-              router.pathname === "/discover" ? "text-secondary-500" : "text-primary-800"
-            }`}
-          >
-            <GlobeIcon />
+        )}
+        <BottomNavbarMenu
+          onClick={() => router.push("/partners")}
+          className={`${
+            router.pathname === "/partners"
+              ? "text-secondary-500"
+              : "text-primary-800"
+          }`}
+        >
+          <PeopleIcon />
+        </BottomNavbarMenu>
+        {currentUser && (
+          <BottomNavbarMenu onClick={() => {}} className={`flex items-center`}>
+            {!currentUser.users.thumbnail ? (
+              <PeopleIcon></PeopleIcon>
+            ) : (
+              <Image
+                src={currentUser.users.thumbnail}
+                width={40}
+                height={40}
+                className="rounded-full"
+                alt="profile pic"
+              />
+            )}
           </BottomNavbarMenu>
-          {currentUser && (
-            <BottomNavbarMenu
-              onClick={() => setOpenCreatePost(true)}
-              className={`text-secondary-500`}
-            >
-              <AddIcon />
-            </BottomNavbarMenu>
-          )}
-          <BottomNavbarMenu onClick={() => router.push("#")} className={`cursor-not-allowed`}>
-            <PeopleIcon />
-          </BottomNavbarMenu>
-          {currentUser && (
-            <BottomNavbarMenu onClick={() => {}} className={`flex items-center`}>
-              {!currentUser.users.thumbnail ? (
-                <PeopleIcon></PeopleIcon>
-              ) : (
-                <Image
-                  src={currentUser.users.thumbnail}
-                  width={40}
-                  height={40}
-                  className="rounded-full"
-                  alt="profile pic"
-                />
-              )}
-            </BottomNavbarMenu>
-          )}
-        </div>
-        <CreatePostDialog open={openCreatePost} onClose={handleCloseDialog} />
-      </>
-    );
+        )}
+      </div>
+      <CreatePostDialog open={openCreatePost} onClose={handleCloseDialog} />
+    </>
+  );
   //}
 };
 
