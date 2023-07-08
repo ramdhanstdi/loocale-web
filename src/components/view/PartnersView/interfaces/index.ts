@@ -12,5 +12,6 @@ export interface PartnersInterface {
     servis2: string;
     servis3: string;
     whatsapp: string;
+    gmaps: string;
   }[];
 }

@@ -3,8 +3,8 @@ import { FC } from "react";
 import { PartnersInterface } from "./interfaces";
 import Instagram from "@icons/instagram_colored_icon.svg";
 import WhatsApp from "@icons/whatsapp_colored_icon.svg";
-import Link from "next/link";
 import Location from "@icons/location_pin_icon.svg";
+import Gmaps from "@icons/gmaps-icon.svg";
 
 interface ListPartnersProps {
   partners: PartnersInterface;
@@ -76,16 +76,19 @@ const ListPartners: FC<ListPartnersProps> = ({
               </div>
               <div className="flex gap-1 justify-center mt-3">
                 {data.whatsapp && (
-                  <Link href={urlWhatApp} target="_blank">
-                    <div className="h-6 w-6">
-                      <WhatsApp className="h-6 w-6" />
-                    </div>
-                  </Link>
+                  <a href={urlWhatApp} target="_blank" rel="noreferrer">
+                    <WhatsApp className="h-6 w-6" />
+                  </a>
                 )}
                 {data.instagram && (
-                  <Link href={urlInstagram} target="_blank">
+                  <a href={urlInstagram} target="_blank" rel="noreferrer">
                     <Instagram className="h-6 w-6" />
-                  </Link>
+                  </a>
+                )}
+                {data.gmaps && (
+                  <a href={urlInstagram} target="_blank" rel="noreferrer">
+                    <Gmaps className="h-6 w-6" />
+                  </a>
                 )}
               </div>
             </div>
